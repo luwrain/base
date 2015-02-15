@@ -1,0 +1,35 @@
+#!/bin/sh -e
+
+APPS='app-notepad app-news app-fetch app-commander'
+
+PWD=$(pwd)
+DIR="${PWD%/base/scripts*}"
+
+mkdir -p ~/.luwrain
+mkdir -p ~/luwrain
+
+mkdir ~/.luwrain/apps
+mkdir ~/luwrain/jar
+mkdir ~/luwrain/jni
+
+ln -s "$DIR/data" ~/luwrain/data
+ln -s "$DIR/lib" ~/luwrain/lib
+ln -s "$DIR/luwrain/registry" ~/luwrain/registry
+ln -s "$DIR/linux/src/jni/libluwrainlinux.so" ~/luwrain/jni/libluwrainlinux.so
+
+ln -s "$DIR/base/jar/luwrain-base.jar" ~/luwrain/jar/luwrain-base.jar
+ln -s "$DIR/luwrain/jar/luwrain.jar" ~/luwrain/jar/luwrain.jar
+ln -s "$DIR/linux/jar/luwrain-linux.jar" ~/luwrain/jar/luwrain-linux.jar
+ln -s "$DIR/pim/jar/luwrain-pim.jar" ~/luwrain/jar/luwrain-pim.jar
+
+ln -s "$DIR/linux/common.sh" ~/luwrain/luwrain.sh
+
+cp -r "$DIR/luwrain/registry" ~/.luwrain
+
+for i in $APPS; do
+    ln -s "$DIR/$i/jar/luwrain-$i.jar" ~/.luwrain/apps/luwrain-$i.jar
+done 
+
+if ! [ -e ~/.luwrain.conf ]; then
+    cp "$DIR/linux/luwrain.conf.def" ~/.luwrain.conf
+fi

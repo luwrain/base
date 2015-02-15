@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+APPS='app-notepad app-news app-fetch app-commander'
+
+cd ../..
+
+for i in base linux luwrain pim $APPS; do
+    cd $i
+    ant -emacs
+    cd ..
+done
+
+cd linux/src/jni
+make
+
+echo
+echo Everything is built successfully!
