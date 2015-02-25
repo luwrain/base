@@ -16,7 +16,11 @@
 
 package org.luwrain.os;
 
+import java.io.File;
+
 public interface OperatingSystem
 {
     String init();
+    Location[] getImportantLocations();
+    File getRoot(File relativeTo);
 }

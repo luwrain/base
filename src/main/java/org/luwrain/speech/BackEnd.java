@@ -63,7 +63,7 @@ public interface BackEnd
      * including any additional which are addressed specifically to it.
      *
      * @param cmdLine The full command line the Luwrain environment was launched with
-     *      @ return The error description if initialization failes or null if everything is done successfully
+     *  @return The error description if initialization failes or null if everything is done successfully
      */
     String init(String[] cmdLine);
 
