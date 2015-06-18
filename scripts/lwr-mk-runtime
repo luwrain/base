@@ -1,0 +1,29 @@
+#!/bin/sh -e
+
+. init.sh
+
+mkdir -p ~/luwrain
+
+cd ~/luwrain
+mkdir jar news
+ln -s "$SRC_DIR/linux/src/jni" jni
+ln -s "$SRC_DIR/data" data
+ln -s "$SRC_DIR"/lib lib
+ln -s "$SRC_DIR/linux/common.sh" ~/luwrain/luwrain.sh
+ln -s "$SRC_DIR/linux/luwrain.conf.def" ~/luwrain/luwrain.conf.def
+#ln -s "$SRC_DIR/linux/setup.sh" ~/luwrain/setup.sh
+ln -s "$SRC_DIR/registry/default.linux" registry
+ln -s "$SRC_DIR/registry/default.news.ru" news/ru
+
+#Jars
+ln -s "$SRC_DIR/base/jar/luwrain-base.jar" jar/luwrain-base.jar
+
+ln -s "$SRC_DIR/luwrain/jar/luwrain.jar" jar/luwrain.jar
+ln -s "$SRC_DIR/linux/jar/luwrain-linux.jar" jar/luwrain-linux.jar
+ln -s "$SRC_DIR/pim/jar/luwrain-pim.jar" jar/luwrain-pim.jar
+
+for i in $APPS; do
+ln -s "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar/luwrain-app-$i.jar
+done
+
+

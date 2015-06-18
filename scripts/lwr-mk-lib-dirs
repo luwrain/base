@@ -1,0 +1,25 @@
+#!/bin/sh
+
+. init.sh
+
+cd "$SRC_DIR"
+
+for i in 1 2 3 4; do mkdir -p lib-stage$i; done
+
+cd lib-stage1
+for i in "$SRC_DIR/lib"/*.jar; do ln -s $i; done 
+ln -s "$SRC_DIR/base/jar/luwrain-base.jar"
+
+cd ../lib-stage2
+for i in "$SRC_DIR/lib-stage1"/*.jar; do ln -s $i; done 
+ln -s "$SRC_DIR/luwrain/jar/luwrain.jar"
+
+cd ../lib-stage3
+for i in "$SRC_DIR/lib-stage2"/*.jar; do ln -s $i; done 
+ln -s "$SRC_DIR/pim/jar/luwrain-pim.jar"
+
+cd ../lib-stage4
+for i in "$SRC_DIR/lib-stage3"/*.jar; do ln -s $i; done 
+for i in $APPS; do ln -s "$SRC_DIR/app-$i/jar/luwrain-app-$i.jar"; done
+
+cd ..
