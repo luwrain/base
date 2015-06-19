@@ -1,2 +1,3 @@
 
-APPS='notepad news fetch commander twiiter'
+APPS='notepad news fetch commander twitter reader'
+LANGS='en'

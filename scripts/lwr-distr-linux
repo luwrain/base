@@ -1,0 +1,37 @@
+#!/bin/sh -e
+
+. init.sh
+
+DEST_DIR=/tmp/luwrain-linux
+
+mkdir -p $DEST_DIR
+
+cd $DEST_DIR
+mkdir jar news
+cp -r "$SRC_DIR/linux/src/jni" jni
+cp -r "$SRC_DIR/data" data
+cp -r "$SRC_DIR"/lib lib
+cp  "$SRC_DIR/linux/common.sh" luwrain.sh
+cp -r "$SRC_DIR/linux/luwrain.conf.def" luwrain.conf.def
+cp -r "$SRC_DIR/linux/setup.sh" setup.sh
+cp -r "$SRC_DIR/registry/default.linux" registry
+cp -r "$SRC_DIR/registry/default.news.ru" news/ru
+
+#Jars
+cp "$SRC_DIR/base/jar/luwrain-base.jar" jar
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
+cp "$SRC_DIR/linux/jar/luwrain-linux.jar" jar
+cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
+
+for i in $APPS; do
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+done
+
+for i in $LANGS; do
+    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
+done
+
+#Cleaning
+cd jni
+rm -f *.so *.o
+cd ..

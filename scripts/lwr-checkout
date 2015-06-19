@@ -1,0 +1,24 @@
+#!/bin/sh -e
+# The script to fetch Luwrain source code
+
+. init.sh
+cd "$SRC_DIR"
+
+for i in luwrain linux pim i18n registry; do
+    git clone https://github.com/luwrain/$i.git
+done
+
+for i in $APPS; do
+git clone https://github.com/luwrain/app-$i.git
+done
+
+wget http://download.luwrain.org/data/luwrain-data.zip
+wget http://download.luwrain.org/lib/luwrain-lib.zip
+
+for i in data lib; do
+    unzip luwrain-$i.zip
+    rm -f luwrain-$i.zip
+done
+
+echo 
+echo Everything is fetched successfully!

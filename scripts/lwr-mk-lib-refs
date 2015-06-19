@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+. init.sh
+cd "$SRC_DIR"
+
+for i in luwrain linux; do
+    ln -s "$SRC_DIR/lib-stage1" "$i"/lib
+done
+
+for i in pim; do
+    ln -s "$SRC_DIR/lib-stage2" $i/lib
+done
+
+for i in $APPS; do
+    ln -s "$SRC_DIR/lib-stage3" app-$i/lib
+done
+
+ln -s "$SRC_DIR/lib-stage4" i18n/lib
