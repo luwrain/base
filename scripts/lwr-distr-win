@@ -1,0 +1,31 @@
+#!/bin/sh -e
+
+. init.sh
+
+DEST_DIR=/tmp/luwrain-windows
+
+mkdir -p $DEST_DIR
+
+cd $DEST_DIR
+mkdir jar user
+cp "$SRC_DIR/windows/SAPIImpl/exec"/*.dll .
+cp -r "$SRC_DIR/data" data
+cp -r "$SRC_DIR"/lib lib
+cp  "$SRC_DIR/windows/luwrain.bat" luwrain.bat
+cp -r "$SRC_DIR/registry/default.windows" registry
+cp -r "$SRC_DIR/registry/default.news.ru/." registry/org/luwrain/pim/news/groups/
+
+#Jars
+cp "$SRC_DIR/base/jar/luwrain-base.jar" jar
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
+cp "$SRC_DIR/windows/jar/luwrain-windows.jar" jar
+cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
+
+for i in $APPS; do
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+done
+
+for i in $LANGS; do
+    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
+done
+
