@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+. init.sh
+cd "$SRC_DIR"
+
+for i in base linux windows luwrain pim; do
+    cd "$i"
+    ant
+    cd ..
+done
+
+for i in $APPS; do
+    cd app-$i
+    ant
+    cd ..
+done
+
+cd i18n
+for i in $LANGS; do
+    cd $i
+    ant
+    cd ..
+done
+cd ..
+
+echo Everything is built successfully!
