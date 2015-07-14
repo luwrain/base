@@ -3,7 +3,7 @@
 . init.sh
 cd "$SRC_DIR"
 
-for i in luwrain linux; do
+for i in luwrain linux windows; do
     ln -s "$SRC_DIR/lib-stage1" "$i"/lib
 done
 

@@ -4,7 +4,7 @@
 . init.sh
 cd "$SRC_DIR"
 
-for i in luwrain linux pim i18n registry; do
+for i in luwrain linux pim i18n registry windows; do
     git clone https://github.com/luwrain/$i.git
 done
 
