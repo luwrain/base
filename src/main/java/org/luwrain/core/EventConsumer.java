@@ -14,14 +14,9 @@
    General Public License for more details.
 */
 
-package org.luwrain.os;
+package org.luwrain.core;
 
-import java.io.File;
-
-public interface OperatingSystem
+public interface EventConsumer
 {
-    String init();
-    Location[] getImportantLocations();
-    File getRoot(File relativeTo);
-    org.luwrain.hardware.Hardware getHardware();
+    void enqueueEvent(Event event);
 }
