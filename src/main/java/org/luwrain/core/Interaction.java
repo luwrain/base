@@ -33,4 +33,5 @@ public interface Interaction
     void setHotPoint(int x, int y);
     void drawVerticalLine(int top, int bottom, int x);
     void drawHorizontalLine(int left, int right, int y);
+    Browser createBrowser();
 }
