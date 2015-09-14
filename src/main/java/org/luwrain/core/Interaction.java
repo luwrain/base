@@ -16,6 +16,8 @@
 
 package org.luwrain.core;
 
+import org.luwrain.browser.Browser;
+
 public interface Interaction
 {
     boolean init(InteractionParams params);
