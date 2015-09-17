@@ -1,0 +1,27 @@
+#!/bin/bash -e
+
+SQLTOOL=~/luwrain/lib/sqltool.jar
+PREFIX=jdbc:hsqldb:file:
+BASEURL=$PREFIX/tmp/gendb/db/
+SCRIPTSDIR=~/pim.git/sql
+DBS=news
+
+if [ "$1" == --help ]; then
+    java -jar "$SQLTOOL" --help
+    exit 0
+fi
+
+if [ "$1" == --test ]; then
+    URL="$PREFIX$2"
+    java -jar "$SQLTOOL" \
+	--inlineRc=url="$URL",user=sa,password= 
+    exit 0
+fi
+
+for i in $DBS; do
+    URL="$BASEURL$i"
+    echo "Processing $URL"
+    java -jar "$SQLTOOL" \
+	--inlineRc=url="$URL",user=sa,password= \
+	"$SCRIPTSDIR/$i.sql"
+done
