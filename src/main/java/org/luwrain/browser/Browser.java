@@ -16,7 +16,32 @@
 
 package org.luwrain.browser;
 
+import org.luwrain.browser.ElementList.*;
+import org.luwrain.core.Interaction;
+
 public interface Browser
 {
-    String getBrowserTitle();
+    public Browser setInteraction(Interaction interaction);
+    public void Remove();
+    
+    public void setVisibility(boolean enable);
+    public boolean getVisibility();
+    
+    public void RescanDOM();
+    public void load(String link);
+    public void loadContent(String text);
+    public void stop();
+    
+    public String getBrowserTitle();
+    public String getTitle();
+    public String getUrl();
+    
+    public Object executeScript(String script);
+	
+    SelectorALL selectorALL(boolean visible);
+	SelectorTEXT selectorTEXT(boolean visible,String filter);
+	SelectorTAG selectorTAG(boolean visible,String tagName,String attrName,String attrValue);
+	SelectorCSS selectorCSS(boolean visible,String tagName,String styleName,String styleValue);
+	ElementList elementList();
+    
 }
