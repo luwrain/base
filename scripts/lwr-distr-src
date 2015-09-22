@@ -1,0 +1,24 @@
+#!/bin/bash -e
+
+. init.sh
+cd "$SRC_DIR"
+
+[ -e "$SRC_DEST_DIR" ] && echo "$THIS:$SRC_DEST_DIR already exists" >&2 && exit 1
+
+mkdir -p "$SRC_DEST_DIR"
+cp -r . "$SRC_DEST_DIR"
+
+for i in AUTHORS LICENSE README; do
+    cp luwrain/$i "$SRC_DEST_DIR"
+done
+
+cd "$SRC_DEST_DIR"
+ls | while read l; do
+    if [ -e "$l/.git" ]; then
+echo "Removing $l/.git"
+rm -rf "$l/.git"
+fi
+done 
+
+find -name .gitignore -delete
+
