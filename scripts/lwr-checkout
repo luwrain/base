@@ -1,10 +1,10 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # The script to fetch Luwrain source code
 
 . init.sh
 cd "$SRC_DIR"
 
-for i in luwrain linux pim i18n registry windows; do
+for i in $COMPONENTS; do
     git clone https://github.com/luwrain/$i.git
 done
 

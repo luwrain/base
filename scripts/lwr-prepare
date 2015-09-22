@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+./lwr-mk-lib-dirs
+./lwr-mk-lib-refs
