@@ -16,7 +16,7 @@ ln -s "$SRC_DIR/luwrain/jar/luwrain.jar"
 
 cd ../lib-stage3
 for i in "$SRC_DIR/lib-stage2"/*.jar; do ln -s $i; done 
-for i in pim doctree; do
+for i in pim doctree linux; do
     ln -s "$SRC_DIR/$i/jar/luwrain-$i.jar"
 done
 

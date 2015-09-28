@@ -7,11 +7,11 @@ for i in luwrain linux windows; do
     ln -s "$SRC_DIR/lib-stage1" "$i"/lib
 done
 
-for i in pim doctree; do
+for i in pim doctree extensions; do
     ln -s "$SRC_DIR/lib-stage2" $i/lib
 done
 
-for i in extensions $APPS; do
+for i in $APPS; do
     ln -s "$SRC_DIR/lib-stage3" app-$i/lib
 done
 

@@ -2,3 +2,4 @@
 
 ./lwr-mk-lib-dirs
 ./lwr-mk-lib-refs
+./lwr-hsqldb
