@@ -10,4 +10,5 @@ public interface BrowserEvents
 	public String onPrompt(String message,String value);
 	public void onError(String message);
 	public boolean onDownloadStart(String url);
+	public Boolean onConfirm(String message);
 }
