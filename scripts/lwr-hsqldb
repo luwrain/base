@@ -1,22 +1,26 @@
 #!/bin/bash -e
 
-SQLTOOL=~/luwrain/lib/sqltool.jar
+. init.sh
+
+DEST_DIR=$SRC_DIR/hsqldb
+SQLTOOL=$SRC_DIR/lib/sqltool.jar
 PREFIX=jdbc:hsqldb:file:
-BASEURL=$PREFIX/tmp/gendb/db/
-SCRIPTSDIR=~/pim.git/sql
-DBS=news
+BASEURL=$PREFIX$DEST_DIR/
+SCRIPTSDIR=$SRC_DIR/pim/sql
+
+mkdir -p "$DEST_DIR"
 
 if [ "$1" == --help ]; then
     java -jar "$SQLTOOL" --help
     exit 0
 fi
 
-if [ "$1" == --test ]; then
-    URL="$PREFIX$2"
-    java -jar "$SQLTOOL" \
-	--inlineRc=url="$URL",user=sa,password= 
-    exit 0
-fi
+#if [ "$1" == --test ]; then
+#    URL="$PREFIX$2"
+#    java -jar "$SQLTOOL" \
+#	--inlineRc=url="$URL",user=sa,password= 
+#    exit 0
+#fi
 
 for i in $DBS; do
     URL="$BASEURL$i"
@@ -24,4 +28,5 @@ for i in $DBS; do
     java -jar "$SQLTOOL" \
 	--inlineRc=url="$URL",user=sa,password= \
 	"$SCRIPTSDIR/$i.sql"
+    rmdir $DEST_DIR/$i.tmp
 done

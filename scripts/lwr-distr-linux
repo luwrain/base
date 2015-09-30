@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 . init.sh
 
@@ -18,10 +18,14 @@ cp -r "$SRC_DIR/registry/default.linux" registry
 cp -r "$SRC_DIR/registry/default.news.ru" news/ru
 
 #Jars
-cp "$SRC_DIR/base/jar/luwrain-base.jar" jar
+#cp "$SRC_DIR/base/jar/luwrain-base.jar" jar
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-cp "$SRC_DIR/linux/jar/luwrain-linux.jar" jar
-cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
+#cp "$SRC_DIR/linux/jar/luwrain-linux.jar" jar
+#cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
+
+for i in base linux pim doctree; do
+    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
+done
 
 for i in $APPS; do
     cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
@@ -31,7 +35,13 @@ for i in $LANGS; do
     cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
 done
 
+for i in $EXTENSIONS; do
+    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
+done
+
+cp -r "$SRC_DIR"/hsqldb .
+
 #Cleaning
 cd jni
-rm -f *.so *.o
+rm -f *.so *.o .gitignore
 cd ..

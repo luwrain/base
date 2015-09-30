@@ -1,13 +1,13 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 . init.sh
 cd "$SRC_DIR"
 
-for i in luwrain linux windows; do
+for i in luwrain linux windows interaction-javafx; do
     ln -s "$SRC_DIR/lib-stage1" "$i"/lib
 done
 
-for i in pim; do
+for i in pim doctree extensions; do
     ln -s "$SRC_DIR/lib-stage2" $i/lib
 done
 

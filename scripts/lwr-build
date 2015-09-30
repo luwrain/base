@@ -1,9 +1,9 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 . init.sh
 cd "$SRC_DIR"
 
-for i in base linux windows luwrain pim; do
+for i in base linux windows luwrain pim doctree; do
     cd "$i"
     ant
     cd ..
@@ -17,6 +17,14 @@ done
 
 cd i18n
 for i in $LANGS; do
+    cd $i
+    ant
+    cd ..
+done
+cd ..
+
+cd extensions
+for i in $EXTENSIONS; do
     cd $i
     ant
     cd ..
