@@ -16,11 +16,9 @@
 
 package org.luwrain.core;
 
-import java.awt.Color;
-
 public class InteractionParams
 {
-    public String backend = "awt";
+    public String backend = "javafx";
     public int wndLeft = 0;
     public int wndTop = 0;
     public int wndWidth = -1;//-1 means screen with;
@@ -29,9 +27,9 @@ public class InteractionParams
     public int marginTop = 16;
     public int marginRight = 16;
     public int marginBottom = 16;
-    public Color fontColor = new Color(255, 255, 255);
-    public Color bkgColor = new Color(0, 0, 0);
-    public Color splitterColor = new Color(128, 128, 128);
+    public InteractionParamColor fontColor = new InteractionParamColor(InteractionParamColor.Predefined.WHITE);
+    public InteractionParamColor bkgColor = new InteractionParamColor(InteractionParamColor.Predefined.BLACK);
+    public InteractionParamColor splitterColor = new InteractionParamColor(InteractionParamColor.Predefined.GRAY);
     public int initialFontSize = 14;
-    public String fontName = java.awt.Font.MONOSPACED;
+    public String fontName = "Monospaced";
 }
