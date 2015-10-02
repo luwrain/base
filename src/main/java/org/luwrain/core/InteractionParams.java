@@ -18,7 +18,6 @@ package org.luwrain.core;
 
 public class InteractionParams
 {
-    public String backend = "javafx";
     public int wndLeft = 0;
     public int wndTop = 0;
     public int wndWidth = -1;//-1 means screen with;
