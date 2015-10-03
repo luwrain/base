@@ -9,6 +9,7 @@ public interface ElementList
 	boolean first(ElementList wel);
 	boolean next(ElementList wel);
 	boolean prev(ElementList wel);
+	boolean to(ElementList wel,int pos);
     }
 
     public static interface SelectorALL extends Selector
@@ -50,6 +51,7 @@ public interface ElementList
 	boolean check(ElementList wel);
     }
 
+    int getPos();
     String getType();
     String getText();
     String getComputedText();
@@ -61,4 +63,20 @@ public interface ElementList
     String getComputedStyleAll();
 
     void clickEmulate();
+	
+	static public class SplitedLine
+	{
+		public String type;
+		public String text;
+		public SplitedLine(String type,String text)
+		{
+			this.type=type;
+			this.text=text;
+		}
+	};
+
+	SplitedLine[][] getSplitedLines();
+	int getSplitedCount();
+	void splitAllElementsTextToLines(int width,Selector selector);
+	SplitedLine getSplitedLineByIndex(int index);
 }
