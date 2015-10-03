@@ -3,7 +3,7 @@
 . init.sh
 cd "$SRC_DIR"
 
-for i in base linux windows luwrain pim doctree; do
+for i in base linux windows luwrain pim doctree interaction-javafx; do
     cd "$i"
     ant
     cd ..
