@@ -1,6 +1,8 @@
 
 package org.luwrain.browser;
 
+import org.luwrain.browser.ElementList.SplitedLine;
+
 public interface ElementList
 {
     public static abstract interface Selector
@@ -68,10 +70,14 @@ public interface ElementList
 	{
 		public String type;
 		public String text;
-		public SplitedLine(String type,String text)
+		public int pos; // element position in domidx
+		public int index; // line index in global line count
+		public SplitedLine(String type,String text,int pos,int index)
 		{
 			this.type=type;
 			this.text=text;
+			this.pos=pos;
+			this.index=index;
 		}
 	};
 
@@ -79,4 +85,5 @@ public interface ElementList
 	int getSplitedCount();
 	void splitAllElementsTextToLines(int width,Selector selector);
 	SplitedLine getSplitedLineByIndex(int index);
+	SplitedLine[] getSplitedLineByPos(int pos);
 }
