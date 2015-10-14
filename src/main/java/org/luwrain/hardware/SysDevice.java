@@ -1,7 +1,7 @@
 
 package org.luwrain.hardware;
 
-public class Device
+public class SysDevice
 {
     public final static int UNKNOWN = 0;
     public final static int PCI = 1;

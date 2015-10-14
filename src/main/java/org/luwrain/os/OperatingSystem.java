@@ -21,7 +21,5 @@ import java.io.File;
 public interface OperatingSystem
 {
     String init();
-    Location[] getImportantLocations();
-    File getRoot(File relativeTo);
     org.luwrain.hardware.Hardware getHardware();
 }
