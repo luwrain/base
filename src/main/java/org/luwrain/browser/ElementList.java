@@ -1,6 +1,8 @@
 
 package org.luwrain.browser;
 
+import org.luwrain.browser.ElementList.SelectorTEXT;
+
 //import org.luwrain.browser.ElementList.SplittedLine;
 
 public interface ElementList
@@ -65,4 +67,5 @@ public interface ElementList
     String getComputedStyleAll();
 
     void clickEmulate();
+	boolean isChangedAround(Selector selector,int pos,int count);
 }
