@@ -1,9 +1,7 @@
 
 package org.luwrain.browser;
 
-import org.luwrain.browser.ElementList.SelectorTEXT;
-
-//import org.luwrain.browser.ElementList.SplittedLine;
+import java.awt.Rectangle;
 
 public interface ElementList
 {
@@ -60,6 +58,7 @@ public interface ElementList
     String getText();
     String getComputedText();
     String getLink();
+	Rectangle getRect();
     boolean isEditable();
     void setText(String text);
     String getAttributeProperty(String name);
