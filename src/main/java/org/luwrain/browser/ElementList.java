@@ -56,6 +56,7 @@ public interface ElementList
     int getPos();
     String getType();
     String getText();
+	String[] getMultipleText();
     String getComputedText();
     String getLink();
 	Rectangle getRect();
