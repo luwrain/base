@@ -1,11 +1,10 @@
 
 package org.luwrain.browser;
 
-import javafx.concurrent.Worker.State;
-
 public interface BrowserEvents
 {
-    void onChangeState(State state);
+	public enum WebState {CANCELLED,FAILED,READY,RUNNING,SCHEDULED,SUCCEEDED};
+    void onChangeState(WebState state);
     void onProgress(Number progress);
     void onAlert(String message);
     String onPrompt(String message,String value);

@@ -9,6 +9,8 @@ public interface Browser
     Browser setInteraction(Interaction interaction);
     void Remove();
 
+    boolean isBusy();
+
     void setVisibility(boolean enable);
     boolean getVisibility();
 
