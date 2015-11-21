@@ -1,3 +1,19 @@
+/*
+   Copyright 2015 Roman Volovodov <gr.rPman@gmail.com>
+   Copyright 2012-2015 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+
+   This file is part of the LUWRAIN.
+
+   LUWRAIN is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either
+   version 3 of the License, or (at your option) any later version.
+
+   LUWRAIN is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+*/
 
 package org.luwrain.browser;
 
@@ -22,12 +38,13 @@ public interface Browser
     String getBrowserTitle();
     String getTitle();
     String getUrl();
+    int numElements();
 
     Object executeScript(String script);
 
-    SelectorALL selectorALL(boolean visible);
-    SelectorTEXT selectorTEXT(boolean visible,String filter);
-    SelectorTAG selectorTAG(boolean visible,String tagName,String attrName,String attrValue);
-    SelectorCSS selectorCSS(boolean visible,String tagName,String styleName,String styleValue);
+    SelectorAll selectorAll(boolean visible);
+    SelectorText selectorText(boolean visible,String filter);
+    SelectorTag selectorTag(boolean visible,String tagName,String attrName,String attrValue);
+    SelectorCss selectorCss(boolean visible,String tagName,String styleName,String styleValue);
     ElementList elementList();
 }
