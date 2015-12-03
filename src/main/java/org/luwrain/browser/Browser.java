@@ -17,16 +17,14 @@
 
 package org.luwrain.browser;
 
-import org.luwrain.browser.ElementList.*;
-import org.luwrain.core.Interaction;
-
 public interface Browser
 {
-    Browser setInteraction(Interaction interaction);
+    String getTitle();
+    String getUrl();
+    int numElements();
+
+    void init(Events events);
     void Remove();
-
-    boolean isBusy();
-
     void setVisibility(boolean enable);
     boolean getVisibility();
 
@@ -34,17 +32,12 @@ public interface Browser
     void load(String link);
     void loadContent(String text);
     void stop();
-
-    String getBrowserTitle();
-    String getTitle();
-    String getUrl();
-    int numElements();
-
     Object executeScript(String script);
+    boolean isBusy();
 
     SelectorAll selectorAll(boolean visible);
     SelectorText selectorText(boolean visible,String filter);
     SelectorTag selectorTag(boolean visible,String tagName,String attrName,String attrValue);
     SelectorCss selectorCss(boolean visible,String tagName,String styleName,String styleValue);
-    ElementList elementList();
+    ElementList iterator();
 }

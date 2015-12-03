@@ -110,7 +110,7 @@ public class KeyboardEvent extends Event
 	leftAltPressed = false;
 	rightAltPressed = false;
     }
-    /**@todo It is better to rename it to equalKeysOnKeyboard()*/
+    /*FIXME:It is better to rename it to equalKeysOnKeyboard()*/
     public boolean equals(KeyboardEvent event)
     {
 	return (cmd == event.cmd &&
