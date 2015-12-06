@@ -62,6 +62,8 @@ public class Event
      * same thread as the main thread of the core (there are no any
      * corresponding checks). The improper use of this method will hang the
      * system infinitely.
+     *
+     * @throws InterruptedException if the thread should terminate
      */
     public void waitForBeProcessed() throws InterruptedException
     {

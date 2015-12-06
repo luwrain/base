@@ -17,22 +17,14 @@
 
 package org.luwrain.browser;
 
-import java.awt.Rectangle;
-
-public interface ElementList
+public interface Events
 {
-    int getPos();
-    String getType();
-    String getText();
-    String[] getMultipleText();
-    String getComputedText();
-    String getLink();
-    Rectangle getRect();
-    boolean isEditable();
-    void setText(String text);
-    String getAttributeProperty(String name);
-    String getComputedStyleProperty(final String name);
-    String getComputedStyleAll();
-    void clickEmulate();
-    boolean isChangedAround(Selector selector, int pos, int count);
+	public enum WebState {CANCELLED,FAILED,READY,RUNNING,SCHEDULED,SUCCEEDED};
+    void onChangeState(WebState state);
+    void onProgress(Number progress);
+    void onAlert(String message);
+    String onPrompt(String message,String value);
+    void onError(String message);
+    boolean onDownloadStart(String url);
+    Boolean onConfirm(String message);
 }
