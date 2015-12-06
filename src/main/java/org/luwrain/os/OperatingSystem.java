@@ -22,4 +22,5 @@ public interface OperatingSystem
 {
     String init();
     org.luwrain.hardware.Hardware getHardware();
+    void fileOpendDesktopDefault(File file);
 }

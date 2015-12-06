@@ -17,10 +17,11 @@
 package org.luwrain.core;
 
 import org.luwrain.browser.Browser;
+import org.luwrain.os.OperatingSystem;
 
 public interface Interaction
 {
-    boolean init(InteractionParams params);
+    boolean init(InteractionParams params,OperatingSystem os);
     void close();
     void startInputEventsAccepting(EventConsumer eventConsumer);
     void stopInputEventsAccepting();
