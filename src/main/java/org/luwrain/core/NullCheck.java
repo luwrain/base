@@ -23,4 +23,12 @@ public class NullCheck
 	if (obj == null)
 	    throw new NullPointerException(objName + " may not be null");
     }
+
+    static public void notNullItems(Object[] items, String name)
+    {
+	notNull(items, name);
+	for(int i = 0;i < items.length;++i)
+	    if (items[i] == null)
+		throw new NullPointerException(name + "[" + i + "] may not be null");
+    }
 }
