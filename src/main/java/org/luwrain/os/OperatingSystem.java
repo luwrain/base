@@ -17,10 +17,12 @@
 package org.luwrain.os;
 
 import java.io.File;
+import org.luwrain.core.EventConsumer;
 
 public interface OperatingSystem
 {
     String init();
     org.luwrain.hardware.Hardware getHardware();
-    void fileOpendDesktopDefault(File file);
+    void openFileInDesktop(File file);
+    KeyboardHandler getCustomKeyboardHandler(String subsystem);
 }
