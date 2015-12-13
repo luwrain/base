@@ -17,10 +17,14 @@
 package org.luwrain.os;
 
 import java.io.File;
+import org.luwrain.core.EventConsumer;
+import org.luwrain.core.Registry;
 
 public interface OperatingSystem
 {
     String init();
     org.luwrain.hardware.Hardware getHardware();
-    void fileOpendDesktopDefault(File file);
+    org.luwrain.speech.Channel loadSpeechChannel(String[] cmdLine, Registry registry, String path);
+    void openFileInDesktop(File file);
+    KeyboardHandler getCustomKeyboardHandler(String subsystem);
 }

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # The script to fetch Luwrain source code
 
-COMPONENTS='luwrain linux pim i18n registry windows doctree extensions interaction-javafx'
+COMPONENTS='luwrain linux pim i18n registry windows doctree extensions interaction-javafx network'
 
 . init.sh
 cd "$SRC_DIR"
