@@ -51,17 +51,55 @@ public class RegistryProxy
 					      }
 					      final String paramName = RegistryPath.join(regDir, new String(b));
 
-					      //Reading a string value
+					      //Reading a string
 					      if (returnType.equals(String.class) && name.startsWith("get"))
 					      {
-
 						  final int valueType = registry.getTypeOf(paramName);
 						  if (valueType == Registry.INVALID)
+						  {
+						      if (args != null && args.length == 1 && args[0] != null &&
+							  args[0].getClass().equals(java.lang.String.class))
+							  return (java.lang.String)args[0];
 						      throw new IllegalArgumentException("There is no registry value " + paramName);
+						  }
 						  if (valueType != Registry.STRING)
 						      throw new IllegalArgumentException("Registry value " + paramName + " is not a string");
 						  return registry.getString(paramName);
 					      }
+
+					      //Reading a boolean
+					      if (returnType.equals(boolean.class) && name.startsWith("get"))
+					      {
+						  final int valueType = registry.getTypeOf(paramName);
+						  if (valueType == Registry.INVALID)
+						  {
+						      if (args != null && args.length == 1 && args[0] != null
+							  && args[0].getClass().equals(java.lang.Boolean.class))
+							  return ((java.lang.Boolean)args[0]).booleanValue();
+						      throw new IllegalArgumentException("There is no registry value " + paramName);
+						  }
+						  if (valueType != Registry.BOOLEAN)
+						      throw new IllegalArgumentException("Registry value " + paramName + " is not a boolean");
+						  return registry.getBoolean(paramName);
+					      }
+
+					      //Reading an integer
+					      if (returnType.equals(int.class) && name.startsWith("get"))
+					      {
+						  final int valueType = registry.getTypeOf(paramName);
+						  if (valueType == Registry.INVALID)
+						  {
+						      if (args != null && args.length == 1 && args[0] != null &&
+							  args[0].getClass().equals(java.lang.Integer.class))
+							  return ((java.lang.Integer)args[0]).intValue();
+						      throw new IllegalArgumentException("There is no registry value " + paramName);
+						  }
+						  if (valueType != Registry.INTEGER)
+						      throw new IllegalArgumentException("Registry value " + paramName + " is not an integer");
+						  return registry.getInteger(paramName);
+					      }
+
+
 
 					      return null;
 					  });

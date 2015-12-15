@@ -31,7 +31,8 @@ public interface Channel
     void speak(String text);
     void speak(String text, int relPitch, int relRate);
     void speak(String text, Listener listener, int relPitch, int relRate);
-    boolean synth(String text, int pitch, int rate, AudioFormat format, OutputStream stream);
-    void speak(String text, OutputStream stream, int relPitch, int relRate);
     void silence();
+
+    boolean synth(String text, int pitch, int rate, AudioFormat format, OutputStream stream);
+    AudioFormat[] getSynthSupportedFormats();
 }
