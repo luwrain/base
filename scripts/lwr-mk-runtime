@@ -18,7 +18,7 @@ ln -s "$SRC_DIR/hsqldb" hsqldb
 
 #Jars
 ln -s "$SRC_DIR/luwrain/jar/luwrain.jar" jar/luwrain.jar
-for i in base linux pim doctree interaction-javafx; do
+for i in base linux pim doctree interaction-javafx network; do
     ln -s "$SRC_DIR/$i/jar/luwrain-$i.jar" jar/luwrain-$i.jar
 done 
 

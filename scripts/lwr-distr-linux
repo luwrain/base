@@ -23,7 +23,7 @@ cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
 #cp "$SRC_DIR/linux/jar/luwrain-linux.jar" jar
 #cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
 
-for i in base linux pim doctree interaction-javafx; do
+for i in base linux pim doctree interaction-javafx network; do
     cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
 
