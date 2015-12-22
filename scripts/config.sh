@@ -1,6 +1,6 @@
 
 
-APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player'
+APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player calc'
 LANGS='ru'
 EXTENSIONS='yatran'
 DBS='news contacts mail'
