@@ -99,6 +99,15 @@ public class RegistryProxy
 						  return registry.getInteger(paramName);
 					      }
 
+					      //Writing a string
+					      if (name.startsWith("set") &&
+						  args != null && args.length == 1 && args[0] != null && args[0].getClass().equals(java.lang.String.class))
+					      {
+						  if (!registry.setString(paramName, (java.lang.String)args[0]))
+						      throw new Exception("Unable to write to registry the string value " + paramName);
+						  return null;
+					      }
+
 
 
 					      return null;
