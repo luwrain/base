@@ -108,6 +108,16 @@ public class RegistryProxy
 						  return null;
 					      }
 
+					      //Writing an integer
+					      if (name.startsWith("set") &&
+						  args != null && args.length == 1 && args[0] != null && args[0].getClass().equals(int.class))
+					      {
+						  if (!registry.setInteger(paramName, ((java.lang.Integer)args[0]).intValue()))
+						      throw new Exception("Unable to write to registry the integer value " + paramName);
+						  return null;
+					      }
+
+
 
 
 					      return null;
