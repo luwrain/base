@@ -15,24 +15,34 @@ public interface Channel
 	CAN_NOTIFY_WHEN_FINISHED,
     };
 
+    public enum PuncMode {
+	ALL,
+	NONE,
+    };
+
     public interface Listener 
     {
 	void onFinished();
     }
 
+    //Registry and path may be null, meaning the initialization should be used from command line options
     boolean init(String[] cmdLine, Registry registry, String path);
+    void close();
     Voice[] getVoices();
     String getChannelName();
     Set<Features>  getFeatures();
     boolean isDefault();
-    void setDefaultVoice(String name);
+    String getCurrentVoiceName();
+    void setCurrentVoice(String name);
+    int getDefaultPitch();
     void setDefaultPitch(int value);
+    int getDefaultRate();
     void setDefaultRate(int value);
-    void speak(String text);
-    void speak(String text, int relPitch, int relRate);
+    PuncMode getCurrentPuncMode();
+    void setCurrentPuncMode(PuncMode mode);
     void speak(String text, Listener listener, int relPitch, int relRate);
+    void speakLetter(char letter, Listener listener, int relPitch, int relRate);
     void silence();
-
-    boolean synth(String text, int pitch, int rate, AudioFormat format, OutputStream stream);
     AudioFormat[] getSynthSupportedFormats();
+    boolean synth(String text, int pitch, int rate, AudioFormat format, OutputStream stream);
 }
