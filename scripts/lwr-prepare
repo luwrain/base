@@ -6,6 +6,9 @@
 ./lwr-mk-lib-refs
 ./lwr-hsqldb
 
+mkdir -p "$SRC_DIR/data/scripts"
+cp -r "$SRC_DIR/network/scripts/." "$SRC_DIR/data/scripts"
+
 cat <<EOF > "$SRC_DIR/data/DESKTOP.ru.txt"
 
 Добро пожаловать в LUWRAIN!

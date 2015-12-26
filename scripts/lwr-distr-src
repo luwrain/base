@@ -8,7 +8,11 @@ cd "$SRC_DIR"
 mkdir -p "$SRC_DEST_DIR"
 cp -r . "$SRC_DEST_DIR"
 
-for i in AUTHORS LICENSE README; do
+for i in AUTHORS LICENSE; do
+find "$SRC_DEST_DIR" -name $i -delete
+done
+
+for i in AUTHORS LICENSE README.md; do
     cp luwrain/$i "$SRC_DEST_DIR"
 done
 
