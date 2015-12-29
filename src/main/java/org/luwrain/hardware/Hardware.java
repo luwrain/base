@@ -11,4 +11,5 @@ public interface Hardware
     int umountAllPartitions(StorageDevice device);
     Partition[] getMountedPartitions();
     File getRoot(File relativeTo);
+    AudioMixer getAudioMixer();
 }

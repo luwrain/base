@@ -22,7 +22,7 @@ import org.luwrain.core.Registry;
 
 public interface OperatingSystem
 {
-    String init();
+    String init(String dataDir);
     org.luwrain.hardware.Hardware getHardware();
     org.luwrain.speech.Channel loadSpeechChannel(String[] cmdLine, Registry registry, String path);
     void openFileInDesktop(File file);
