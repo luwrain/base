@@ -9,6 +9,7 @@ import org.luwrain.core.Registry;
 
 public interface Channel
 {
+    static public final int DEFAULT_PARAM_VALUE = 50;
     public enum Features {
 	CAN_SYNTH_TO_STREAM,
 	CAN_SYNTH_TO_SPEAKERS,
@@ -40,9 +41,34 @@ public interface Channel
     void setDefaultRate(int value);
     PuncMode getCurrentPuncMode();
     void setCurrentPuncMode(PuncMode mode);
-    void speak(String text, Listener listener, int relPitch, int relRate);
-    void speakLetter(char letter, Listener listener, int relPitch, int relRate);
+
+    /**
+     * Synthesize speech with sending the result to speakers directly. This
+     * methods is always executed asynchronously returning control to the
+     * caller immediately.  Partial implementation may ignore
+     * {@code listener} argument, if it doesn't supports notifying about finishing
+     * the work (synthesizing a speech and its complete playing in computer
+     * speakers).
+     *
+     * @param text A text to speak
+     * @param listener A listener object to catch the moment of finishing the speaking (may be null and may be ignord)
+     * @param relPitch Relative value of desired pitch (0 means to use default)
+     * @param relPitch Relative value of desired rate (0 means to use default)
+     * @return An identifier of the accepted task
+     */
+    long speak(String text, Listener listener,
+int relPitch, int relRate);
+    long speakLetter(char letter, Listener listener, int relPitch, int relRate);
     void silence();
     AudioFormat[] getSynthSupportedFormats();
     boolean synth(String text, int pitch, int rate, AudioFormat format, OutputStream stream);
+
+    static int adjustParamValue(int value)
+    {
+	if (value < 0)
+	    return 0;
+	if (value > 100)
+	    return 100;
+	return value;
+    }
 }
