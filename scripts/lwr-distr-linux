@@ -11,8 +11,7 @@ mkdir jar news
 cp -r "$SRC_DIR/linux/src/jni" jni
 cp -r "$SRC_DIR/data" data
 cp -r "$SRC_DIR"/lib lib
-cp  "$SRC_DIR/linux/common.sh" luwrain.sh
-cp -r "$SRC_DIR/linux/luwrain.conf.def" luwrain.conf.def
+cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
 cp -r "$SRC_DIR/linux/setup.sh" setup.sh
 cp -r "$SRC_DIR/registry/default.linux" registry
 cp -r "$SRC_DIR/registry/default.news.ru" news/ru
