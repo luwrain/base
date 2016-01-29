@@ -23,7 +23,8 @@ public interface Channel
 
     public interface Listener 
     {
-	void onFinished();
+	//Called only on successful finishing, not on cancelling 
+	void onFinished(long id);
     }
 
     //Registry and path may be null, meaning the initialization should be used from command line options
@@ -59,6 +60,8 @@ public interface Channel
     long speak(String text, Listener listener,
 int relPitch, int relRate);
     long speakLetter(char letter, Listener listener, int relPitch, int relRate);
+
+    //Cancels speaking, listener will never get onFinished call
     void silence();
     AudioFormat[] getSynthSupportedFormats();
     boolean synth(String text, int pitch, int rate, AudioFormat format, OutputStream stream);
