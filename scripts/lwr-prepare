@@ -7,7 +7,10 @@
 ./lwr-hsqldb
 
 mkdir -p "$SRC_DIR/data/scripts"
-cp -r "$SRC_DIR/network/scripts/." "$SRC_DIR/data/scripts"
+
+for i in network linux app-reader; do
+    cp -r "$SRC_DIR/$i/scripts/." "$SRC_DIR/data/scripts"
+done
 
 cat <<EOF > "$SRC_DIR/data/DESKTOP.ru.txt"
 
