@@ -20,7 +20,7 @@ package org.luwrain.browser;
 /** General navigation operations based on the behaviour of {@code suits()} method*/
 public interface Selector
 {
-    boolean suits(ElementList list);
+    boolean suits(ElementIterator list);
 
     /** Moves the iterator to the first element, approved by the {@code suits()} 
      * method. If there is no such element, the method restored 
@@ -29,7 +29,7 @@ public interface Selector
      * @param list The iterator to move
      * @return True if the iterator gets necessary position, false otherwise
      */
-    boolean moveFirst(ElementList list);
+    boolean moveFirst(ElementIterator list);
 
     /** Moves the iterator to the next element, approved by the {@code suits()} 
      * method. If there is no such element, the method restored 
@@ -38,7 +38,7 @@ public interface Selector
      * @param list The iterator to move
      * @return True if the iterator gets necessary position, false otherwise
      */
-    boolean moveNext(ElementList list);
+    boolean moveNext(ElementIterator list);
 
     /** Moves the iterator to the previous element, approved by the {@code suits()} 
      * method. If there is no such element, the method restored 
@@ -47,7 +47,7 @@ public interface Selector
      * @param list The iterator to move
      * @return True if the iterator gets necessary position, false otherwise
      */
-    boolean movePrev(ElementList list);
+    boolean movePrev(ElementIterator list);
 
-    boolean moveToPos(ElementList list, int pos);
+    boolean moveToPos(ElementIterator list, int pos);
 }
