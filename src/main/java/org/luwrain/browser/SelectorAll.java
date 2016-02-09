@@ -21,5 +21,5 @@ public interface SelectorAll extends Selector
 {
     boolean isVisible();
     void setVisible(boolean visible);
-    boolean checkVisible(ElementList list);
+    boolean checkVisible(ElementIterator list);
 }

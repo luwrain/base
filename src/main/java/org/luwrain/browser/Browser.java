@@ -39,5 +39,5 @@ public interface Browser
     SelectorText selectorText(boolean visible,String filter);
     SelectorTag selectorTag(boolean visible,String tagName,String attrName,String attrValue);
     SelectorCss selectorCss(boolean visible,String tagName,String styleName,String styleValue);
-    ElementList iterator();
+    ElementIterator iterator();
 }

@@ -19,7 +19,7 @@ package org.luwrain.browser;
 
 import java.awt.Rectangle;
 
-public interface ElementList
+public interface ElementIterator
 {
     int getPos();
     String getType();
