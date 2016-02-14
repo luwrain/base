@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+./lwr-checkout
+./lwr-distr-src
+./lwr-prepare
+./lwr-build
+./lwr-distr-linux
+./lwr-mk-runtime
+
+echo 'OK!'
