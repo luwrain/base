@@ -19,7 +19,6 @@ done
 cd "$SRC_DEST_DIR"
 ls | while read l; do
     if [ -e "$l/.git" ]; then
-echo "Removing $l/.git"
 rm -rf "$l/.git"
 fi
 done 
