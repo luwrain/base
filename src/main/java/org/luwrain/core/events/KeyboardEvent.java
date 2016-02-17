@@ -42,12 +42,33 @@ public class KeyboardEvent extends Event
     private boolean leftAltPressed = false;
     private boolean rightAltPressed = false;
 
+    public KeyboardEvent(Special special)
+    {
+	this.cmd = true;
+	this.cmdCode = special;
+	this.nonCmdChar = '\0';
+	this.shiftPressed = false;
+	this.controlPressed = false;
+	this.leftAltPressed = false;
+	this.rightAltPressed = false;
+    }
+
+    public KeyboardEvent(char ch)
+    {
+	this.cmd = false;
+	this.cmdCode = null;
+	this.nonCmdChar = ch;
+	this.shiftPressed = false;
+	this.controlPressed = false;
+	this.leftAltPressed = false;
+	this.rightAltPressed = false;
+    }
+
     public KeyboardEvent(boolean cmd,
 			 Special cmdCode, char nonCmdChar,
 			 boolean shiftPressed, boolean controlPressed,
 			 boolean leftAltPressed, boolean rightAltPressed)
     {
-	super(KEYBOARD_EVENT);
 	this.cmd = cmd;
 	this.cmdCode = cmdCode;
 	this.nonCmdChar = nonCmdChar;
@@ -60,7 +81,7 @@ public class KeyboardEvent extends Event
     public KeyboardEvent(boolean cmd,
 			 Special cmdCode, char nonCmdChar)
     {
-	super(KEYBOARD_EVENT);
+	//	super(KEYBOARD_EVENT);
 	this.cmd = cmd;
 	this.cmdCode = cmdCode;
 	this.nonCmdChar = nonCmdChar;
@@ -154,16 +175,17 @@ public class KeyboardEvent extends Event
 
     @Override public String toString()
     {
-	String res = cmd?("[CMD] " + cmdCode):("\'" + nonCmdChar + "\'");
-	if (shiftPressed)
-	    res += " SHIFT";
+	final StringBuilder b = new StringBuilder();
 	if (controlPressed)
-	    res += " CTRL";
-	if (leftAltPressed)
-	    res += " LEFT-ALT";
-	if (rightAltPressed)
-	    res += " RIGHT-ALT";
-	return res;
+	    b.append("Ctrl+");
+	if (leftAltPressed || rightAltPressed)
+	    b.append("Alt+");
+	if (shiftPressed)
+	    b.append("Shift+");
+	if (cmd)
+	    b.append(cmdCode); else
+	    b.append(nonCmdChar);
+	return new String(b);
     }
 
     static public Special translateSpecial(String value)
