@@ -35,4 +35,8 @@ public interface ElementIterator
     String getComputedStyleAll();
     void clickEmulate();
     boolean isChangedAround(Selector selector, int pos, int count);
+    ElementIterator getParent();
+	Selector getChilds(boolean visible);
+	boolean isVisible();
+	ElementIterator clone();
 }
