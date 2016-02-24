@@ -36,7 +36,7 @@ public interface ElementIterator
     void clickEmulate();
     boolean isChangedAround(Selector selector, int pos, int count);
     ElementIterator getParent();
-	Selector getChilds(boolean visible);
+	SelectorChilds getChilds(boolean visible);
 	boolean isVisible();
 	ElementIterator clone();
 }
