@@ -19,24 +19,8 @@ package org.luwrain.core;
 
 public class Event
 {
-    static public final int KEYBOARD_EVENT = 1;
-    public static final int ENVIRONMENT_EVENT = 2;
-    public static final int AREA_QUERY_EVENT = 3;
-    public static final int UI_EVENT = 4;
-
-    private int eventType;
     private boolean processed = false;
-    private Object syncObj = new Object();
-
-    public Event(int eventType)
-    {
-	this.eventType = eventType;
-    }
-
-    public int eventType()
-    {
-	return eventType;
-    }
+    private final Object syncObj = new Object();
 
     /**
      * Signals that the processing of this event is finished. Do not touch
