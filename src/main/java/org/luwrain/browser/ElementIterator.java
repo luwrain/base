@@ -38,5 +38,6 @@ public interface ElementIterator
     ElementIterator getParent();
 	SelectorChilds getChilds(boolean visible);
 	boolean isVisible();
+    boolean forTEXT();
 	ElementIterator clone();
 }
