@@ -20,6 +20,6 @@ public interface Listener
 {
     void onNewPlaylist(Playlist playlist);
     void onNewTrack(int trackNum);
-    void onTrackTime(int sec);
+    void onTrackTime(long msecs);
     void onPlayerStop();
 }
