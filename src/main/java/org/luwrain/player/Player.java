@@ -20,7 +20,19 @@ public interface Player
 {
     static public final String SHARED_OBJECT_NAME = "luwrain.player";
 
-    void play(Playlist playlist);
+    /**
+     * Starts playing of the specified playlist. This method acts in separate
+     * thread and returns the control immediately. If there is a previous
+     * playing, initiated prior to this call, it will be silently
+     * cancelled. You may specify the desired track number and a position in
+     * audio file to begin playing from.
+     *
+     * @param playlist A playlist to play
+     * @param startingTrackNum A desired 0-based track number to play from
+     * @param startingPosMsec A position in audio file in milliseconds to start playing from
+     */
+    void play(Playlist playlist, int startingTrackNum, long startingPosMsec);
+
     void stop();
     Playlist getCurrentPlaylist();
     int getCurrentTrackNum();
