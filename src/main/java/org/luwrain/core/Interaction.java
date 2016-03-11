@@ -33,6 +33,7 @@ public interface Interaction
     void startDrawSession();
     void clearRect(int left, int top, int right, int bottom);
     void drawText(int x, int y, String text);
+	void drawText(int x,int y,String text,boolean font2);
     void endDrawSession();
     void setHotPoint(int x, int y);
     void drawVerticalLine(int top, int bottom, int x);

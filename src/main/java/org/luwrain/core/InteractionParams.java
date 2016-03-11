@@ -29,6 +29,8 @@ public class InteractionParams
     public int marginBottom = 16;
     public InteractionParamColor fontColor = new InteractionParamColor(InteractionParamColor.Predefined.WHITE);
     public InteractionParamColor bkgColor = new InteractionParamColor(InteractionParamColor.Predefined.BLACK);
+    public InteractionParamColor fontColor2 = new InteractionParamColor(InteractionParamColor.Predefined.RED);
+    public InteractionParamColor bkgColor2 = new InteractionParamColor(InteractionParamColor.Predefined.BLACK);
     public InteractionParamColor splitterColor = new InteractionParamColor(InteractionParamColor.Predefined.GRAY);
     public int initialFontSize = 14;
     public String fontName = "Monospaced";
