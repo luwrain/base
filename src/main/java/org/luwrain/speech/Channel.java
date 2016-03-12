@@ -43,8 +43,8 @@ public interface Channel
 	void onFinished(long id);
     }
 
-    //Registry and path may be null, meaning the initialization should be used from command line options
-    boolean init(String[] cmdLine, Registry registry, String path);
+    boolean initByRegistry(Registry registry, String path);
+    boolean initByArgs(String[] args);
     void close();
     Voice[] getVoices();
     String getChannelName();

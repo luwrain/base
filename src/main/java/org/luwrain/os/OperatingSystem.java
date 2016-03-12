@@ -26,8 +26,7 @@ public interface OperatingSystem
 {
     boolean init(String dataDir);
     Hardware getHardware();
-    Channel loadSpeechChannelByRegistry(Registry registry, String path);
-    Channel loadSpeechChannelByParams(String type, String[] args);
+    Channel loadSpeechChannel(String type);
     boolean shutdown();
     boolean reboot();
     boolean suspend(boolean hibernate);
