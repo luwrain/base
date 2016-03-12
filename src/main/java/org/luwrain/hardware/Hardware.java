@@ -26,6 +26,7 @@ public interface Hardware
     int mountAllPartitions(StorageDevice device);
     int umountAllPartitions(StorageDevice device);
     Partition[] getMountedPartitions();
-    File getRoot(File relativeTo);
+    //    File getRoot(File relativeTo);
     AudioMixer getAudioMixer();
+    Battery[] getBatteries();
 }

@@ -34,6 +34,7 @@ public interface Player
     void play(Playlist playlist, int startingTrackNum, long startingPosMsec);
 
     void stop();
+    void jump(long offsetMsec);
     Playlist getCurrentPlaylist();
     int getCurrentTrackNum();
     Playlist[] loadRegistryPlaylists();
