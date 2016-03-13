@@ -5,6 +5,7 @@
 ./lwr-prepare
 ./lwr-build
 ./lwr-distr-linux
+./lwr-distr-iso
 ./lwr-mk-runtime
 
 echo 'OK!'
