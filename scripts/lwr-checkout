@@ -16,8 +16,9 @@ done
 
 wget http://download.luwrain.org/data/luwrain-data.zip
 wget http://download.luwrain.org/lib/luwrain-lib.zip
+wget http://download.luwrain.org/ubuntu/precompiled/luwrain-ubuntu-precompiled.zip
 
-for i in data lib; do
+for i in data lib ubuntu-precompiled; do
     unzip luwrain-$i.zip
     rm -f luwrain-$i.zip
 done
