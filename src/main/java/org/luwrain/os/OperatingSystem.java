@@ -25,6 +25,7 @@ import org.luwrain.speech.Channel;
 public interface OperatingSystem
 {
     boolean init(String dataDir);
+    String getProperty(String propName);
     Hardware getHardware();
     Channel loadSpeechChannel(String type);
     boolean shutdown();
