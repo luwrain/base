@@ -1,12 +1,10 @@
 #!/bin/bash -e
 # The script to fetch Luwrain source code
 
-COMPONENTS='luwrain linux pim i18n registry windows doctree extensions interaction-javafx network'
-
 . init.sh
 cd "$SRC_DIR"
 
-for i in $COMPONENTS; do
+for i in $GITS; do
     git clone https://github.com/luwrain/$i.git
 done
 
