@@ -3,6 +3,12 @@
 . init.sh
 cd "$SRC_DIR"
 
+if [ -n "$1" ]; then
+    SRC_DEST_DIR="$1"
+else
+    SRC_DEST_DIR=/tmp/luwrain-src
+fi
+
 [ -e "$SRC_DEST_DIR" ] && echo "$THIS:$SRC_DEST_DIR already exists" >&2 && exit 1
 
 mkdir -p "$SRC_DEST_DIR"
