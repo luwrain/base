@@ -5,7 +5,9 @@
 cd "$SRC_DIR"
 
 for i in $GITS; do
-    git clone https://github.com/luwrain/$i.git
+    if [ "$1" -ne base ]; then
+	git clone https://github.com/luwrain/$i.git
+    fi
 done
 
 for i in $APPS; do
