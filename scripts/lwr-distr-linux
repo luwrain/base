@@ -2,7 +2,11 @@
 
 . init.sh
 
-DEST_DIR=/tmp/luwrain-linux
+if [ -n "$1" ]; then 
+    DEST_DIR="$1"
+else
+    DEST_DIR=/tmp/luwrain-linux
+fi
 
 mkdir -p $DEST_DIR
 

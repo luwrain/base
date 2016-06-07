@@ -2,6 +2,7 @@
 
 TEMP_DIR=$(mktemp -d)
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
+LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
 
 echo "Working in $TEMP_DIR"
 cd $TEMP_DIR
@@ -13,8 +14,8 @@ cd base/scripts
 ./lwr-checkout &> checkout.log
 ./lwr-distr-src "$TEMP_DIR/$SRC_RES_DIR"
 ./lwr-prepare
-./lwr-build
-#./lwr-distr-linux
+./lwr-build &> build.log
+./lwr-distr-linux "$LINUX_RES_DIR"
 #./lwr-distr-iso
 
 echo 'OK!'
