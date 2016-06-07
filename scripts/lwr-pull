@@ -10,7 +10,7 @@ pushd $i
 done			
 
 for i in $APPS; do
-pushd $i
+pushd app-$i
 git pull	
 popd		
 done

@@ -12,7 +12,7 @@ check-repo()
     cd ..
 }
 
-for i in luwrain base doctree linux windows registry interaction-javafx pim network; do
+for i in $GITS; do
     check-repo "$i"
 done
 

@@ -7,3 +7,4 @@ EXTENSIONS='yatran'
 DBS='news contacts mail'
 
 SRC_DEST_DIR=/tmp/luwrain-src
+PROPERTIES_FILE=luwrain.properties
