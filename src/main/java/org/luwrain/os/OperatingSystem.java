@@ -27,6 +27,7 @@ public interface OperatingSystem
     boolean init(String dataDir);
     String getProperty(String propName);
     Hardware getHardware();
+    Braille getBraille();
     Channel loadSpeechChannel(String type);
     boolean shutdown();
     boolean reboot();
