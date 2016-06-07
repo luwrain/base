@@ -5,7 +5,7 @@
 cd "$SRC_DIR"
 
 for i in $GITS; do
-    if [ "$1" -ne base ]; then
+    if [ "$1" != base ]; then
 	git clone https://github.com/luwrain/$i.git
     fi
 done
