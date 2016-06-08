@@ -17,8 +17,23 @@ cp -r "$SRC_DIR/data" data
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
 cp -r "$SRC_DIR/linux/setup.sh" setup.sh
-cp -r "$SRC_DIR/registry/default.linux" registry
-cp -r "$SRC_DIR/registry/default.news.ru" news/ru
+
+mkdir -p registry/org/luwrain i18n
+for i in base; do
+    cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
+done
+for i in "$SRC_DIR/registry"/i18n.*; do
+    D=i18n/"${i##*.}/org/luwrain"
+mkdir -p "$D"
+    cp -r "$i/." "$D"
+done
+find ./registry/org -type d | while read l; do
+    touch $l/strings.txt
+    touch $l/booleans.txt
+    touch $l/integers.txt
+done
+
+
 
 #Jars
 #cp "$SRC_DIR/base/jar/luwrain-base.jar" jar

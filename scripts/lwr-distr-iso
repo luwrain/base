@@ -3,13 +3,19 @@
 . init.sh
 
 if [ -n "$1" ]; then
-    DEST_DIR="$1"
+    ORIG_DEST_DIR="$1"
 else
-    DEST_DIR=/tmp/linux-iso
+    ORIG_DEST_DIR=/tmp/luwrain-iso
 fi
 
+LANG=ru
+
 for ARCH in i386 amd64; do
-    DEST_DIR=$DEST_DIR/$ARCH
+    DEST_DIR=$ORIG_DEST_DIR/$LANG.$ARCH/
+    for i in profile etc opt; do
+	mkdir -p "$DEST_DIR/$i"
+    done
+DEST_DIR=$DEST_DIR/profile
     mkdir -p $DEST_DIR/luwrain $DEST_DIR/.luwrain
 
     cd $DEST_DIR/luwrain
@@ -21,7 +27,7 @@ for ARCH in i386 amd64; do
 
 #Jars
     cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-    for i in $BASIC_COMPONENTS; do
+    for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
 	cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
     done
     for i in $APPS; do
@@ -36,7 +42,18 @@ for ARCH in i386 amd64; do
 
     cd ../.luwrain
     cp -r "$SRC_DIR"/hsqldb .
-    cp -r "$SRC_DIR"/registry/default.iso ./registry
+
+    mkdir -p ./registry/org/luwrain
+    for i in base iso.$LANG i18n.$LANG; do
+	cp -r "$SRC_DIR"/registry/$i/. ./registry/org/luwrain
+done
+    find ./registry/org -type d | while read l; do
+	touch $l/strings.txt
+	touch $l/booleans.txt
+	touch $l/integers.txt
+done
+
     mkdir extensions
 
+cd ..
 done
