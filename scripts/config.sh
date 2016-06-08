@@ -1,6 +1,7 @@
 
 
 GITS='base doctree extensions i18n interaction-javafx linux luwrain network pim registry windows'
+BASIC_COMPONENTS=base linux pim doctree interaction-javafx network
 APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player calc'
 LANGS='en ru'
 EXTENSIONS='yatran'

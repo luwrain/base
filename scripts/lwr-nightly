@@ -3,6 +3,7 @@
 TEMP_DIR=$(mktemp -d)
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
 LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
+ISO_RES_DIR=luwrain-iso-nightly-$(date --iso-8601)
 SDK_RES_DIR=luwrain-sdk-nightly-$(date --iso-8601) &> ../../../sdk.log
 
 echo "Working in $TEMP_DIR"
@@ -20,9 +21,8 @@ echo 'Compiling sources'
 ./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
 ./lwr-distr-linux "$TEMP_DIR/$LINUX_RES_DIR"
-#./lwr-distr-iso
+./lwr-distr-iso "$TEMP_DIR/$ISO_RES_DIR"
 ./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR" &> ../../../sdk.log
-
 
 cd "$TEMP_DIR"
 for i in $SRC_RES_DIR $LINUX_RES_DIR $SDK_RES_DIR; do
