@@ -25,7 +25,7 @@ echo 'Compiling sources'
 ./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR" &> ../../../sdk.log
 
 cd "$TEMP_DIR"
-for i in $SRC_RES_DIR $LINUX_RES_DIR $SDK_RES_DIR; do
+for i in $SRC_RES_DIR $LINUX_RES_DIR $SDK_RES_DIR $ISO_RES_DIR; do
     tar -c $i/ > $i.tar
     echo "Compressing $i.tar"
 gzip $i.tar

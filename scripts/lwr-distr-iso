@@ -8,7 +8,7 @@ else
     DEST_DIR=/tmp/linux-iso
 fi
 
-for ARCH in i386; do
+for ARCH in i386 amd64; do
     DEST_DIR=$DEST_DIR/$ARCH
     mkdir -p $DEST_DIR/luwrain $DEST_DIR/.luwrain
 
