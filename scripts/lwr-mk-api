@@ -2,6 +2,12 @@
 
 . init.sh
 
+if [ -n "$1" ]; then 
+    DEST_DIR="$1"
+else
+    DEST_DIR=/tmp/lwr-api
+fi
+
 jars()
 {
     find "$1" -iname '*.jar' | 
@@ -11,9 +17,9 @@ jars()
     echo
 }
 
-rm -rf /tmp/lwr-api
-mkdir /tmp/lwr-api
-cd /tmp/lwr-api
+rm -rf "$DEST_DIR"
+mkdir "$DEST_DIR"
+cd "$DEST_DIR"
 
 javadoc -classpath "$(jars "$SRC_DIR"/lib-stage4)" \
 $(find "$SRC_DIR"/luwrain/src/main/java/ -iname '*.java') \

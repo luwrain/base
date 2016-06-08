@@ -3,19 +3,30 @@
 TEMP_DIR=$(mktemp -d)
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
 LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
+SDK_RES_DIR=luwrain-sdk-nightly-$(date --iso-8601)
 
 echo "Working in $TEMP_DIR"
 cd $TEMP_DIR
 mkdir src
 cd src
-git clone https://github.com/luwrain/base.git &> clone-base.log
+git clone https://github.com/luwrain/base.git &> ../../../clone-base.log
 cd base/scripts
 
-./lwr-checkout &> checkout.log
+./lwr-checkout &> ../../../checkout.log
 ./lwr-distr-src "$TEMP_DIR/$SRC_RES_DIR"
 ./lwr-prepare
-./lwr-build &> build.log
-./lwr-distr-linux "$LINUX_RES_DIR"
+./lwr-build &> ../../../build.log
+./lwr-distr-linux "$TEMP_DIR/$LINUX_RES_DIR"
 #./lwr-distr-iso
+
+./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR"
+
+for i in $SRC_RES_DIR $LINUX_RES_DIR $SDK_RES_DIR; do
+    tar -c $i/ > $i.tar
+    echo Compressing $i.tar"
+gzip $i.tar
+md5sum --binary $i.tar.gz >> md5sum.txt
+sha1sum "$i.tar.gz" >> sha1sum.txt
+done
 
 echo 'OK!'
