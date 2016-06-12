@@ -34,93 +34,112 @@ public class KeyboardEvent extends Event
 	ALTERNATIVE_HOME, ALTERNATIVE_END, ALTERNATIVE_PAGE_UP, ALTERNATIVE_PAGE_DOWN, ALTERNATIVE_DELETE,
     };
 
-    private boolean cmd = false;
-    private Special cmdCode = null;
-    private char nonCmdChar = 0;
-    private boolean shiftPressed = false;
-    private boolean controlPressed = false;
-    private boolean leftAltPressed = false;
-    private boolean rightAltPressed = false;
+    protected boolean isSpecial = false;
+    protected Special special = null;
+    protected char nonSpecialChar = 0;
+    protected boolean shiftPressed = false;
+    protected boolean controlPressed = false;
+    protected boolean altPressed = false;
 
     public KeyboardEvent(Special special)
     {
-	this.cmd = true;
-	this.cmdCode = special;
-	this.nonCmdChar = '\0';
+	NullCheck.notNull(special, "special");
+	this.isSpecial = true;
+	this.special = special;
+	this.nonSpecialChar = '\0';
 	this.shiftPressed = false;
 	this.controlPressed = false;
-	this.leftAltPressed = false;
-	this.rightAltPressed = false;
+	this.altPressed = false;
     }
 
-    public KeyboardEvent(char ch)
-    {
-	this.cmd = false;
-	this.cmdCode = null;
-	this.nonCmdChar = ch;
-	this.shiftPressed = false;
-	this.controlPressed = false;
-	this.leftAltPressed = false;
-	this.rightAltPressed = false;
-    }
-
-    public KeyboardEvent(boolean cmd,
-			 Special cmdCode, char nonCmdChar,
+    public KeyboardEvent(Special special,
 			 boolean shiftPressed, boolean controlPressed,
-			 boolean leftAltPressed, boolean rightAltPressed)
+			 boolean altPressed)
     {
-	this.cmd = cmd;
-	this.cmdCode = cmdCode;
-	this.nonCmdChar = nonCmdChar;
+	NullCheck.notNull(special, "special");
+	this.isSpecial = true;
+	this.special = special;
+	this.nonSpecialChar = '\0';
 	this.shiftPressed = shiftPressed;
 	this.controlPressed = controlPressed;
-	this.leftAltPressed = leftAltPressed;
-	this.rightAltPressed = rightAltPressed;
+	this.altPressed = altPressed;
     }
 
-    public KeyboardEvent(boolean cmd,
-			 Special cmdCode, char nonCmdChar)
+    public KeyboardEvent(char nonSpecialChar)
     {
-	//	super(KEYBOARD_EVENT);
-	this.cmd = cmd;
-	this.cmdCode = cmdCode;
-	this.nonCmdChar = nonCmdChar;
+	this.isSpecial = false;
+	this.special = null;
+	this.nonSpecialChar = nonSpecialChar;
+	this.shiftPressed = false;
+	this.controlPressed = false;
+	this.altPressed = false;
+    }
+
+    public KeyboardEvent(char nonSpecialChar,
+			 boolean shiftPressed, boolean controlPressed,
+			 boolean altPressed)
+    {
+	this.isSpecial = false;
+	this.special = null;
+	this.nonSpecialChar = nonSpecialChar;
+	this.shiftPressed = shiftPressed;
+	this.controlPressed = controlPressed;
+	this.altPressed = altPressed;
+    }
+
+    public KeyboardEvent(boolean isSpecial,
+			 Special special, char nonSpecialChar,
+			 boolean shiftPressed, boolean controlPressed,
+			 boolean altPressed)
+    {
+	this.isSpecial = isSpecial;
+	this.special = special;
+	this.nonSpecialChar = nonSpecialChar;
+	this.shiftPressed = shiftPressed;
+	this.controlPressed = controlPressed;
+	this.altPressed = altPressed;
+    }
+
+    public KeyboardEvent(boolean isSpecial,
+			 Special special, char nonSpecialChar)
+    {
+	this.isSpecial = isSpecial;
+	this.special = special;
+	this.nonSpecialChar = nonSpecialChar;
 	shiftPressed = false;
 	controlPressed = false;
-	leftAltPressed = false;
-	rightAltPressed = false;
+	altPressed = false;
     }
 
     /*FIXME:It is better to rename it to equalKeysOnKeyboard()*/
     public boolean equals(KeyboardEvent event)
     {
-	return (cmd == event.cmd &&
-		(!cmd || cmdCode == event.cmdCode) &&
-		(cmd || EqualKeys.equalKeys(nonCmdChar, event.nonCmdChar)) &&
+	return (isSpecial == event.isSpecial &&
+		(!isSpecial || special == event.special) &&
+		(isSpecial || EqualKeys.equalKeys(nonSpecialChar, event.nonSpecialChar)) &&
 		shiftPressed == event.shiftPressed &&
 		controlPressed == event.controlPressed &&
-		leftAltPressed == event.leftAltPressed &&
-		rightAltPressed == event.rightAltPressed);
+		altPressed == event.altPressed);
     }
 
     public boolean isSpecial()
     {
-	return cmd;
+	return isSpecial;
     }
 
     public char getChar()
     {
-	return nonCmdChar;
+	return nonSpecialChar;
     }
 
     public Special getSpecial()
     {
-	return cmdCode;
+	return special;
     }
 
     public boolean isModified()
     {
-	return shiftPressed || controlPressed || leftAltPressed || rightAltPressed;
+	return shiftPressed || controlPressed || altPressed;
     }
 
     public boolean withShift()
@@ -130,7 +149,7 @@ public class KeyboardEvent extends Event
 
     public boolean withShiftOnly()
     {
-	return shiftPressed && !controlPressed && !leftAltPressed && !rightAltPressed;
+	return shiftPressed && !controlPressed && !altPressed;
     }
 
     public boolean withControl()
@@ -140,37 +159,17 @@ public class KeyboardEvent extends Event
 
     public boolean withControlOnly()
     {
-	return controlPressed && !shiftPressed && !leftAltPressed && !rightAltPressed;
+	return controlPressed && !shiftPressed && !altPressed;
     }
 
     public boolean withAlt()
     {
-	return leftAltPressed || rightAltPressed;
+	return altPressed;
     }
 
     public boolean withAltOnly()
     {
-	return (leftAltPressed || rightAltPressed) && !shiftPressed && !controlPressed;
-    }
-
-    public boolean withLeftAlt()
-    {
-	return leftAltPressed;
-    }
-
-    public boolean withLeftAltOnly()
-    {
-	return leftAltPressed && !rightAltPressed && !shiftPressed && !controlPressed;
-    }
-
-    public boolean withRightAlt()
-    {
-	return rightAltPressed;
-    }
-
-    public boolean withRightAltOnly()
-    {
-	return rightAltPressed && !leftAltPressed && !shiftPressed && !controlPressed;
+	return altPressed && !shiftPressed && !controlPressed;
     }
 
     @Override public String toString()
@@ -178,13 +177,13 @@ public class KeyboardEvent extends Event
 	final StringBuilder b = new StringBuilder();
 	if (controlPressed)
 	    b.append("Ctrl+");
-	if (leftAltPressed || rightAltPressed)
+	if (altPressed)
 	    b.append("Alt+");
 	if (shiftPressed)
 	    b.append("Shift+");
-	if (cmd)
-	    b.append(cmdCode); else
-	    b.append(nonCmdChar);
+	if (isSpecial)
+	    b.append(special); else
+	    b.append(nonSpecialChar);
 	return new String(b);
     }
 
