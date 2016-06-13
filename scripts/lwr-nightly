@@ -2,7 +2,7 @@
 
 TEMP_DIR=$(mktemp -d)
 
-rm -f /tmp/nightly $TEMP_DIR /tmp/nightly
+[ -e /tmp/nightly ] && rm -f /tmp/nightly $TEMP_DIR /tmp/nightly
 ln -s 
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
 LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
