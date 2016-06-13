@@ -1,4 +1,4 @@
-#!/bin/bash -e -evx
+#!/bin/bash -evx
 
 TEMP_DIR=$(mktemp -d)
 
