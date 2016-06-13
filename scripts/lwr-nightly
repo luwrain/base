@@ -1,9 +1,9 @@
-#!/bin/bash -e
+#!/bin/bash -e -evx
 
 TEMP_DIR=$(mktemp -d)
 
 [ -e /tmp/nightly ] && rm -f /tmp/nightly
-ln -s  $TEMP_DIR /tmp/nightly
+ln -s $TEMP_DIR /tmp/nightly
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
 LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
 ISO_RES_DIR=luwrain-iso-nightly-$(date --iso-8601)
