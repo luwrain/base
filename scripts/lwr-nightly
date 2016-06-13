@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
 TEMP_DIR=$(mktemp -d)
+
+rm -f /tmp/nightly $TEMP_DIR /tmp/nightly
+ln -s 
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
 LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
 ISO_RES_DIR=luwrain-iso-nightly-$(date --iso-8601)
@@ -28,7 +31,7 @@ cd "$TEMP_DIR"
 for i in $SRC_RES_DIR $LINUX_RES_DIR $ISO_RES_DIR; do
     tar -c $i/ > $i.tar
     echo "Compressing $i.tar"
-    gzip $i.tar
+    gzip $i.tar &> /dev/null
     md5sum --binary $i.tar.gz >> md5sum.txt
     sha1sum "$i.tar.gz" >> sha1sum.txt
 done
