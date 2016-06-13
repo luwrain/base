@@ -118,6 +118,17 @@ public class RegistryProxy
 						  return null;
 					      }
 
+					      //Writing an boolean
+					      if (name.startsWith("set") &&
+						  args != null && args.length == 1 && args[0] != null && args[0].getClass().equals(java.lang.Boolean.class))
+					      {
+						  if (!registry.setBoolean(paramName, ((java.lang.Boolean)args[0]).booleanValue()))
+						      throw new Exception("Unable to write to registry the boolean value " + paramName);
+						  return null;
+					      }
+
+
+
 
 
 
