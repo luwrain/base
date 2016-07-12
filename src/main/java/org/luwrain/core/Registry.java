@@ -55,4 +55,29 @@ public interface Registry
 	    return part1 + part2;
 	return part1 + "/" + part2;
     }
-}
+
+    static public int nextFreeNum(Registry registry, String path)
+    {
+	NullCheck.notNull(registry, "registry");
+	NullCheck.notNull(path, "path");
+	final String[] values = registry.getDirectories(path);
+	int res = 0;
+	for(String s: values)
+	{
+	    if (s.isEmpty())
+		continue;
+	    int value = 0;
+	    try {
+		value = Integer.parseInt(s);
+	    }
+	    catch (NumberFormatException e)
+	    {
+		e.printStackTrace();
+		continue;
+	    }
+	    if (value > res)
+		res = value;
+	}
+	return res + 1;
+    }
+    }
