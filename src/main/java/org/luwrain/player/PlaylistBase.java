@@ -50,6 +50,4 @@ protected final Vector<String> items = new Vector<String>();
     {
 	return title;
     }
-
-
 }

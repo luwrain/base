@@ -19,11 +19,11 @@ package org.luwrain.core;
 
 import java.util.*;
 
-public class CmdLineUtils
+public class CmdLine
 {
     private String[] cmdLine;
 
-    public CmdLineUtils(String[] cmdLine)
+    public CmdLine(String[] cmdLine)
     {
 	NullCheck.notNullItems(cmdLine, "cmdLine");
 	this.cmdLine = cmdLine;

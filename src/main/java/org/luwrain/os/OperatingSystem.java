@@ -18,9 +18,9 @@
 package org.luwrain.os;
 
 import java.nio.file.*;
+
 import org.luwrain.core.Registry;
 import org.luwrain.hardware.Hardware;
-import org.luwrain.speech.Channel;
 
 public interface OperatingSystem
 {
@@ -28,7 +28,6 @@ public interface OperatingSystem
     String getProperty(String propName);
     Hardware getHardware();
     Braille getBraille();
-    Channel loadSpeechChannel(String type);
     boolean shutdown();
     boolean reboot();
     boolean suspend(boolean hibernate);

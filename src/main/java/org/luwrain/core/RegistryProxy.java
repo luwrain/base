@@ -19,7 +19,6 @@ package org.luwrain.core;
 
 import java.lang.reflect.*;
 
-import org.luwrain.util.RegistryPath;
 
 public class RegistryProxy
 {
@@ -50,7 +49,7 @@ public class RegistryProxy
 						  } else
 						      b.append(Character.toLowerCase(c));
 					      }
-					      final String paramName = RegistryPath.join(regDir, new String(b));
+					      final String paramName = Registry.join(regDir, new String(b));
 
 					      //Reading a string
 					      if (returnType.equals(String.class) && name.startsWith("get"))
