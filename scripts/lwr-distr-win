@@ -2,30 +2,37 @@
 
 . init.sh
 
-DEST_DIR=/tmp/luwrain-windows
+if [ -n "$1" ]; then 
+    DEST_DIR="$1"
+else
+    DEST_DIR=/tmp/luwrain-windows
+fi
 
 mkdir -p $DEST_DIR
 
 cd $DEST_DIR
-mkdir jar user
-cp "$SRC_DIR/windows/SAPIImpl/exec"/*.dll .
+mkdir jar
+#cp "$SRC_DIR/windows/SAPIImpl/exec"/*.dll .
 cp -r "$SRC_DIR/data" data
+rm -rf data/scripts
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/windows/luwrain.bat" luwrain.bat
-cp -r "$SRC_DIR/registry/default.windows" registry
-cp -r "$SRC_DIR/registry/default.news.ru/." registry/org/luwrain/pim/news/groups/
+#cp -r "$SRC_DIR/registry/default.windows" registry
+#cp -r "$SRC_DIR/registry/default.news.ru/." registry/org/luwrain/pim/news/groups/
 
 #Jars
-cp "$SRC_DIR/base/jar/luwrain-base.jar" jar
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-cp "$SRC_DIR/windows/jar/luwrain-windows.jar" jar
-cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
-
-for i in $APPS; do
-    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+for i in $BASIC_COMPONENTS $WINDOWS_COMPONENTS; do
+cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
-
+for i in $APPS; do
+if [ $i != term ]; then
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+fi
+done
 for i in $LANGS; do
     cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
 done
-
+for i in $WINDOWS_DIST_EXTENSIONS; do
+    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
+done

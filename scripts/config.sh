@@ -8,7 +8,8 @@ COMPONENTS="$BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS"
 APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player calc'
 LANGS='en ru'
 EXTENSIONS='voiceman emacspeak cmdtts yatran'
-SDK_JARS='base pim doctree network'
+WINDOWS_DIST_EXTENSIONS='yatran'
+SDK_JARS='base pim doctree network linux windows'
 DBS='news contacts mail'
 
 SRC_DEST_DIR=/tmp/luwrain-src
