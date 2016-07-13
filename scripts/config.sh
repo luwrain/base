@@ -3,9 +3,11 @@
 GITS='base doctree education extensions i18n interaction-javafx linux luwrain network pim registry windows'
 BASIC_COMPONENTS='base pim doctree interaction-javafx'
 LINUX_COMPONENTS='linux network'
+WINDOWS_COMPONENTS='windows'
+COMPONENTS="$BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS"
 APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player calc'
 LANGS='en ru'
-EXTENSIONS='yatran'
+EXTENSIONS='voiceman emacspeak cmdtts yatran'
 SDK_JARS='base pim doctree network'
 DBS='news contacts mail'
 

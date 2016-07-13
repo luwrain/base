@@ -13,15 +13,21 @@ ln -s "$SRC_DIR/base/jar/luwrain-base.jar"
 cd ../lib-stage2
 for i in "$SRC_DIR/lib-stage1"/*.jar; do ln -s $i; done 
 ln -s "$SRC_DIR/luwrain/jar/luwrain.jar"
+for i in linux windows; do
+    ln -s "$SRC_DIR/$i/jar/luwrain-$i.jar"
+done
 
 cd ../lib-stage3
 for i in "$SRC_DIR/lib-stage2"/*.jar; do ln -s $i; done 
-for i in pim doctree linux network; do
+for i in $COMPONENTS; do
+if ! [ -L luwrain-$i.jar ]; then
     ln -s "$SRC_DIR/$i/jar/luwrain-$i.jar"
+fi
 done
 
 cd ../lib-stage4
 for i in "$SRC_DIR/lib-stage3"/*.jar; do ln -s $i; done 
 for i in $APPS; do ln -s "$SRC_DIR/app-$i/jar/luwrain-app-$i.jar"; done
+for i in $EXTENSIONS; do ln -s "$SRC_DIR/extensions/$i/jar/luwrain-ext-$i.jar"; done
 
 cd ..

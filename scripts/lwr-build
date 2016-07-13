@@ -3,7 +3,13 @@
 . init.sh
 cd "$SRC_DIR"
 
-for i in base linux luwrain pim doctree interaction-javafx network; do
+for i in base luwrain; do
+    cd "$i"
+    ant
+    cd ..
+done
+
+for i in $BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS; do
     cd "$i"
     ant
     cd ..
@@ -15,16 +21,16 @@ for i in $APPS; do
     cd ..
 done
 
-cd i18n
-for i in $LANGS; do
+cd extensions
+for i in $EXTENSIONS; do
     cd $i
     ant
     cd ..
 done
 cd ..
 
-cd extensions
-for i in $EXTENSIONS; do
+cd i18n
+for i in $LANGS; do
     cd $i
     ant
     cd ..
