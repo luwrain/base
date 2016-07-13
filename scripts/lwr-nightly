@@ -6,7 +6,7 @@ TEMP_DIR=$(mktemp -d)
 ln -s $TEMP_DIR /tmp/nightly
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
 LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
-LINUX_RES_DIR=luwrain-windows-nightly-$(date --iso-8601)
+WINDOWS_RES_DIR=luwrain-windows-nightly-$(date --iso-8601)
 ISO_RES_DIR=luwrain-iso-nightly-$(date --iso-8601)
 SDK_RES_DIR=luwrain-sdk-nightly-$(date --iso-8601)
 
@@ -40,7 +40,7 @@ done
 for i in $SDK_RES_DIR $WINDOWS_RES_DIR; do
     echo "Compressing $i.zip"
     zip -r $i.zip $i &> /dev/null
-md5sum --binary $$i.zip >> md5sum.txt
+md5sum --binary $i.zip >> md5sum.txt
 sha1sum $i.zip >> sha1sum.txt
 done
 
