@@ -30,7 +30,7 @@ public class SingleLocalFilePlaylist implements Playlist
 
     @Override public String getPlaylistTitle()
     {
-	return "-";
+	return "";
     }
 
     @Override public String[] getPlaylistItems()
