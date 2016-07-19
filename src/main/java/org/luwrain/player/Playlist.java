@@ -22,4 +22,7 @@ public interface Playlist
     String[] getPlaylistItems();
     boolean isStreaming();
     boolean hasBookmark();
+    int getStartingTrackNum();
+    long getStartingPosMsec();
+    void updateStartingPos(int trackNum, long posMsec);
 }

@@ -18,7 +18,7 @@ package org.luwrain.player;
 
 import org.luwrain.core.NullCheck;
 
-public class SingleLocalFilePlaylist implements Playlist
+public class SingleLocalFilePlaylist extends PlaylistBase
 {
     private String uri ;
 

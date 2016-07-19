@@ -18,13 +18,12 @@ package org.luwrain.player;
 
 import java.util.*;
 
-class PlaylistBase implements Playlist
+class PlaylistBase implements Playlist, Comparable
 {
-protected String title;
-    protected String url;
+    protected String title;
     protected boolean streaming = false;
     protected boolean hasBookmark = false;
-protected final Vector<String> items = new Vector<String>();
+    protected final Vector<String> items = new Vector<String>();
 
     @Override public String getPlaylistTitle()
     {
@@ -46,8 +45,29 @@ protected final Vector<String> items = new Vector<String>();
 	return hasBookmark;
     }
 
+    @Override public int getStartingTrackNum()
+    {
+	return 0;
+    }
+
+    @Override public long getStartingPosMsec()
+    {
+	return 0;
+    }
+
+    @Override public void updateStartingPos(int trackNum, long posMsec)
+    {
+    }
+
     @Override public String toString()
     {
 	return title;
+    }
+
+    @Override public int compareTo(Object o)
+    {
+	if (o == null || !(o instanceof PlaylistBase))
+	    return 0;
+	return title.compareTo(((PlaylistBase)o).title);
     }
 }
