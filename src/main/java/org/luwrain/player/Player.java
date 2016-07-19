@@ -37,6 +37,8 @@ public interface Player
     void stop();
     void pauseResume();
     void jump(long offsetMsec);
+    void nextTrack();
+    void prevTrack();
     Playlist getCurrentPlaylist();
     int getCurrentTrackNum();
     Playlist[] loadRegistryPlaylists();
