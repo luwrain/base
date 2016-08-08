@@ -17,55 +17,114 @@
 
 package org.luwrain.core;
 
-//TODO:Thread safety;
+import java.util.*;
 
 public class Log
 {
+    public enum Level {DEBUG, INFO, WARNING, ERROR, FATAL};
+
+    static public class Message
+    {
+	private Level level;
+	private String component;
+	private String message;
+
+	Message(Level level, String component, String message)
+	{
+	    this.level = level;
+	    this.component = component;
+	    this.message = message;
+	}
+
+	public Level level() {return level;}
+	public String component() {return component;}
+	public String message() {return message;}
+    }
+
+    public interface Listener
+    {
+	void onLogMessage(Message message);
+    }
+
+    static private final Vector<Listener> listeners = new Vector<Listener>();
+    static private final LinkedList<Message> history = new LinkedList<Message>();
+    static private final Object syncObj = new Object();
+
+    public Message[] getHistory()
+    {
+	synchronized (syncObj) {
+	return history.toArray(new Message[history.size()]);
+	}
+    }
+
+    static public void addListener(Listener listener)
+    {
+	synchronized (syncObj) {
+	NullCheck.notNull(listener, "listener");
+	for(int i = 0;i < listeners.size();++i)
+	    if (listeners.get(i) == listener)
+		return;
+	listeners.add(listener);
+	}
+    }
+
+    static public void removeListener(Listener listener)
+    {
+	synchronized (syncObj) {
+	NullCheck.notNull(listener, "listener");
+	for(int i = 0;i < listeners.size();++i)
+	    if (listeners.get(i) == listener)
+	    {
+		listeners.remove(i);
+		return;
+	    }
+	}
+    }
+
+    static private void message(Level level,
+				String component, String message)
+    {
+	if (level == null || component == null || message == null)
+	    return;
+	synchronized (syncObj) 
+{
+	final Message msg = new Message(level, component, message);
+	history.add(msg);
+	for(Listener l: listeners)
+	    l.onLogMessage(msg);
+	if (level != Level.DEBUG)
+	System.out.println("" + level + ":" + component + ":" + message); else
+	    System.out.println(component + ":" + message);
+}
+    }
+
     public static void debug(String component, String message)
     {
-	if (component == null || message == null)
-	    return;
-	if (component.isEmpty())
-	    System.out.println(message); else
-	    System.out.println(component + ":" + message);
+	if (message != null)
+	    message(Level.DEBUG, (component != null && !component.isEmpty())?component:"-", message);
     }
 
-    public static void info(String component, String message)
+    static public void info(String component, String message)
     {
-	if (component == null || message == null)
-	    return;
-	if (component.isEmpty())
-	    System.out.println(message); else
-	    System.out.println(component + ":" + message);
+	if (message != null)
+	    message(Level.INFO, (component != null && !component.isEmpty())?component:"-", message);
     }
 
-    public static void warning(String component, String message)
+    static public void warning(String component, String message)
     {
-	if (component == null || message == null)
-	    return;
-	if (component.isEmpty())
-	    System.out.println("WARNING:" + message); else
-	    System.out.println("WARNING:" + component + ":" + message);
+	if (message != null)
+	    message(Level.WARNING, (component != null && !component.isEmpty())?component:"-", message);
     }
 
-    public static void error(String component, String message)
+    static public void error(String component, String message)
     {
-	if (component == null || message == null)
-	    return;
-	if (component.isEmpty())
-	    System.out.println("ERROR:" + message); else
-	    System.out.println("ERROR:" + component + ":" + message);
+	if (message != null)
+	    message(Level.ERROR, (component != null && !component.isEmpty())?component:"-", message);
     }
 
-    public static void fatal(String component, String message)
+    static public void fatal(String component, String message)
     {
-	if (component == null || message == null)
-	    return;
-	if (component.isEmpty())
-	    System.out.println("FATAL:" + message); else
-	    System.out.println("FATAL:" + component + ":" + message);
+	if (message != null)
+	    message(Level.FATAL, (component != null && !component.isEmpty())?component:"-", message);
     }
-
-
-
 }
