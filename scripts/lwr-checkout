@@ -14,12 +14,10 @@ for i in $APPS; do
 git clone https://github.com/luwrain/app-$i.git
 done
 
-wget http://download.luwrain.org/data/luwrain-data.zip
-wget http://download.luwrain.org/lib/luwrain-lib.zip
-wget http://download.luwrain.org/ubuntu/precompiled/luwrain-ubuntu-precompiled.zip
 
 for i in data lib ubuntu-precompiled; do
-    unzip luwrain-$i.zip
+    wget http://download.luwrain.org/compilation/$i.zip
+    unzip $i.zip
     rm -f luwrain-$i.zip
 done
 
