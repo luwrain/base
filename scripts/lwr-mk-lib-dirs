@@ -4,6 +4,11 @@
 
 cd "$SRC_DIR"
 
+for i in 1 2 3 4; do 
+find lib-stage$i -type l -delete
+rmdir lib-stage$i 
+done
+
 for i in 1 2 3 4; do mkdir -p lib-stage$i; done
 
 cd lib-stage1
