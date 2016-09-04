@@ -18,7 +18,7 @@ done
 for i in data lib ubuntu-precompiled; do
     wget http://download.luwrain.org/compilation/$i.zip
     unzip $i.zip
-    rm -f luwrain-$i.zip
+    rm -f $i.zip
 done
 
 echo 
