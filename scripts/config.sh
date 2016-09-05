@@ -1,7 +1,7 @@
 
 
 GITS='base doctree education extensions i18n interaction-javafx linux luwrain network pim registry windows'
-BASIC_COMPONENTS='base pim doctree interaction-javafx'
+BASIC_COMPONENTS='base pim doctree interaction-javafx education'
 LINUX_COMPONENTS='linux network'
 WINDOWS_COMPONENTS='windows'
 COMPONENTS="$BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS"
