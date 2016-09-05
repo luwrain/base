@@ -6,10 +6,17 @@
 ./lwr-mk-lib-refs
 ./lwr-hsqldb
 
-mkdir -p "$SRC_DIR/data/scripts"
+for i in scripts properties; do
+    mkdir -p "$SRC_DIR/data/$i"
+done
 
 for i in network linux app-reader; do
     cp -r "$SRC_DIR/$i/scripts/." "$SRC_DIR/data/scripts"
+
+
+for i in education; do
+    cp -r "$SRC_DIR/$i/properties/." "$SRC_DIR/data/properties"
+done
 done
 
 cat <<EOF > "$SRC_DIR/data/DESKTOP.ru.txt"
