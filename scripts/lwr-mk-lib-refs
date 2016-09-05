@@ -3,11 +3,11 @@
 . init.sh
 cd "$SRC_DIR"
 
-for i in luwrain linux windows interaction-javafx education; do
+for i in luwrain linux windows interaction-javafx; do
     ln -s "$SRC_DIR/lib-stage1" "$i"/lib
 done
 
-for i in pim doctree extensions network; do
+for i in pim doctree extensions network education; do
     ln -s "$SRC_DIR/lib-stage2" $i/lib
 done
 
