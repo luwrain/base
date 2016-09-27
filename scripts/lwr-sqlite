@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+. init.sh
+
+DEST_DIR=$SRC_DIR/sqlite
+SCRIPTSDIR=$SRC_DIR/pim/sql
+
+mkdir -p "$DEST_DIR"
+
+for i in news mail; do
+sqlite3 "$DEST_DIR/$i.db" < "$SCRIPTSDIR/$i.sqlite"
+done

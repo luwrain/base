@@ -4,7 +4,7 @@
 
 ./lwr-mk-lib-dirs
 ./lwr-mk-lib-refs
-./lwr-hsqldb
+./lwr-sqlite
 
 for i in scripts properties; do
     mkdir -p "$SRC_DIR/data/$i"
