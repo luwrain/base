@@ -19,7 +19,7 @@ package org.luwrain.os;
 
 import java.nio.file.*;
 
-import org.luwrain.core.Registry;
+import org.luwrain.core.*;
 import org.luwrain.hardware.Hardware;
 
 public interface OperatingSystem
@@ -33,4 +33,5 @@ public interface OperatingSystem
     boolean suspend(boolean hibernate);
     void openFileInDesktop(Path path);
     KeyboardHandler getCustomKeyboardHandler(String subsystem);
+    OsCommand runOsCommand(String cmd, OsCommand.Output output, OsCommand.Listener listener);
 }
