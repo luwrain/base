@@ -17,12 +17,14 @@
 
 package org.luwrain.core.events;
 
-//TODO:Rename Command -> Action;
+import java.util.*;
 
 import org.luwrain.core.*;
 
 public class KeyboardEvent extends Event
 {
+    public enum Modifiers {ALT, SHIFT, CONTROL};
+
     public enum Special {
 	ENTER, BACKSPACE, ESCAPE, TAB,
 	ARROW_DOWN, ARROW_UP, ARROW_LEFT, ARROW_RIGHT,
@@ -52,6 +54,18 @@ public class KeyboardEvent extends Event
 	this.altPressed = false;
     }
 
+    public KeyboardEvent(Special special, Set<Modifiers> modifiers)
+    {
+	NullCheck.notNull(special, "special");
+	NullCheck.notNull(modifiers, "modifiers");
+	this.isSpecial = true;
+	this.special = special;
+	this.nonSpecialChar = '\0';
+	this.shiftPressed = modifiers.contains(Modifiers.SHIFT);
+	this.altPressed = modifiers.contains(Modifiers.ALT);
+	this.controlPressed = modifiers.contains(Modifiers.CONTROL);
+    }
+
     public KeyboardEvent(Special special,
 			 boolean shiftPressed, boolean controlPressed,
 			 boolean altPressed)
@@ -73,6 +87,17 @@ public class KeyboardEvent extends Event
 	this.shiftPressed = false;
 	this.controlPressed = false;
 	this.altPressed = false;
+    }
+
+    public KeyboardEvent(char nonSpecialChar, Set<Modifiers> modifiers)
+    {
+	NullCheck.notNull(modifiers, "modifiers");
+	this.isSpecial = false;
+	this.special = null;
+	this.nonSpecialChar = nonSpecialChar;
+	this.shiftPressed = modifiers.contains(Modifiers.SHIFT);
+	this.altPressed = modifiers.contains(Modifiers.ALT);
+	this.controlPressed = modifiers.contains(Modifiers.CONTROL);
     }
 
     public KeyboardEvent(char nonSpecialChar,
