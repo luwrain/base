@@ -33,5 +33,5 @@ public interface OperatingSystem
     boolean suspend(boolean hibernate);
     void openFileInDesktop(Path path);
     KeyboardHandler getCustomKeyboardHandler(String subsystem);
-    OsCommand runOsCommand(String cmd, OsCommand.Output output, OsCommand.Listener listener);
+    OsCommand runOsCommand(String cmd, String dir, OsCommand.Output output, OsCommand.Listener listener);
 }
