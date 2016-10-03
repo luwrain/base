@@ -14,10 +14,13 @@ for i in $TAKE_SCRIPTS; do
     cp -r "$SRC_DIR/$i/scripts/." "$SRC_DIR/data/scripts"
 done
 
-
 for i in $TAKE_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." "$SRC_DIR/data/properties"
 done
+
+cat  <<EOF > "$SRC_DIR/data/properties/$PROPERTIES_FILE"
+luwrain.version = Nightly $(date --iso-8601)
+EOF
 
 cat <<EOF > "$SRC_DIR/data/DESKTOP.ru.txt"
 LUWRAIN (отладочная версия)

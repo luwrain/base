@@ -59,10 +59,6 @@ done
 
 cp -r "$SRC_DIR"/hsqldb .
 
-cat  <<EOF > "$PROPERTIES_FILE"
-luwrain.version = Nightly $(date --iso-8601)
-EOF
-
 #Cleaning
 cd jni
 rm -f *.so *.o .gitignore
