@@ -11,14 +11,13 @@ fi
 mkdir -p $DEST_DIR
 
 cd $DEST_DIR
-mkdir jar news
+mkdir -p jar i18n registry/org/luwrain
 cp -r "$SRC_DIR/linux/src/jni" jni
 cp -r "$SRC_DIR/data" data
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
 cp -r "$SRC_DIR/linux/setup.sh" setup.sh
 
-mkdir -p registry/org/luwrain i18n
 for i in base; do
     cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
 done
@@ -27,21 +26,16 @@ for i in "$SRC_DIR/registry"/i18n.*; do
 mkdir -p "$D"
     cp -r "$i/." "$D"
 done
-find ./registry/org -type d | while read l; do
-    touch $l/strings.txt
-    touch $l/booleans.txt
-    touch $l/integers.txt
-done
+#find ./registry/org -type d | while read l; do
+#    touch $l/strings.txt
+#    touch $l/booleans.txt
+#    touch $l/integers.txt
+#done
 
 
 
 #Jars
-#cp "$SRC_DIR/base/jar/luwrain-base.jar" jar
-cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-#cp "$SRC_DIR/linux/jar/luwrain-linux.jar" jar
-#cp "$SRC_DIR/pim/jar/luwrain-pim.jar" jar
-
-for i in base linux pim doctree interaction-javafx network; do
+for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
     cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
 
@@ -57,7 +51,7 @@ for i in $EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
 
-cp -r "$SRC_DIR"/hsqldb .
+cp -r "$SRC_DIR"/sqlite .
 
 #Cleaning
 cd jni
