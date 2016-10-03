@@ -11,8 +11,7 @@ fi
 mkdir -p $DEST_DIR
 
 cd $DEST_DIR
-mkdir -p jar i18n registry/org/luwrain
-cp -r "$SRC_DIR/linux/src/jni" jni
+mkdir -p jar jni i18n registry/org/luwrain
 cp -r "$SRC_DIR/data" data
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
@@ -53,7 +52,12 @@ done
 
 cp -r "$SRC_DIR"/sqlite .
 
-#Cleaning
-cd jni
+cp -r "$SRC_DIR/linux/src/jni" jni-src
+cd jni-src
 rm -f *.so *.o .gitignore
 cd ..
+zip -r jni-src.zip jni-src/ > /dev/null
+rm -rf jni-src
+cp -r "$SRC_DIR/ubuntu-precompiled/." jni
+
+
