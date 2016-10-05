@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+. init.sh
+cd "$SRC_DIR"
+
+for i in $GITS; do
+    pushd $i 
+    git push origin
+    popd		
+done			
+
+for i in $APPS; do
+    pushd app-$i
+git push origin
+popd		
+done
