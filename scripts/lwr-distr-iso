@@ -41,7 +41,7 @@ DEST_DIR=$DEST_DIR/profile
     done
 
     cd ../.luwrain
-    cp -r "$SRC_DIR"/hsqldb .
+    cp -r "$SRC_DIR"/sqlite .
 
     mkdir -p ./registry/org/luwrain
     for i in base iso.$LANG i18n.$LANG; do

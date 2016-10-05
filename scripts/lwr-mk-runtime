@@ -13,7 +13,7 @@ ln -s "$SRC_DIR/linux/luwrain.sh" ~/luwrain/luwrain.sh
 ln -s "$SRC_DIR/linux/setup.sh" ~/luwrain/setup.sh
 ln -s "$SRC_DIR/registry/default.linux" registry
 ln -s "$SRC_DIR/registry/default.news.ru" news/ru
-ln -s "$SRC_DIR/hsqldb" hsqldb
+ln -s "$SRC_DIR/sqlite" sqlite
 
 #Jars
 ln -s "$SRC_DIR/luwrain/jar/luwrain.jar" jar/luwrain.jar
