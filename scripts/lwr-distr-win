@@ -19,10 +19,17 @@ cp -r "$SRC_DIR/data" data
 rm -rf data/scripts
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/windows/luwrain.bat" luwrain.bat
-mkdir registry/org/luwrain
+mkdir -p registry/org/luwrain
 for i in base i18n.$LANG win.$LANG; do
     cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
 done
+
+	find registry/org -type d | while read l; do
+	    touch $l/strings.txt
+	    touch $l/booleans.txt
+	    touch $l/integers.txt
+	done
+
 
 #Jars
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
