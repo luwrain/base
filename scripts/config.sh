@@ -8,11 +8,11 @@ COMPONENTS="$BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS"
 APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player calc'
 LANGS='en ru'
 ISO_LANGS='ru'
-EXTENSIONS='voiceman emacspeak cmdtts yatran msapi'
+EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi'
 DBS='news contacts mail'
 TAKE_SCRIPTS='network linux app-reader'
 TAKE_PROPERTIES=education
-WINDOWS_DIST_EXTENSIONS='yatran msapi'
+WINDOWS_DIST_EXTENSIONS='yatran mssapi'
 SDK_JARS='base pim doctree network linux windows'
 
 SRC_DEST_DIR=/tmp/luwrain-src
