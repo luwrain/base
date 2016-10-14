@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -evx
 
 . init.sh
 
@@ -7,6 +7,8 @@ if [ -n "$1" ]; then
 else
     DEST_DIR=/tmp/luwrain-windows
 fi
+
+LANG=ru
 
 mkdir -p $DEST_DIR
 
@@ -17,8 +19,10 @@ cp -r "$SRC_DIR/data" data
 rm -rf data/scripts
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/windows/luwrain.bat" luwrain.bat
-#cp -r "$SRC_DIR/registry/default.windows" registry
-#cp -r "$SRC_DIR/registry/default.news.ru/." registry/org/luwrain/pim/news/groups/
+mkdir registry/org/luwrain
+for i in base i18n.$LANG win.$LANG; do
+    cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
+done
 
 #Jars
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar

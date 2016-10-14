@@ -12,8 +12,7 @@ EXTENSIONS='voiceman emacspeak cmdtts yatran'
 DBS='news contacts mail'
 TAKE_SCRIPTS='network linux app-reader'
 TAKE_PROPERTIES=education
-
-WINDOWS_DIST_EXTENSIONS='yatran'
+WINDOWS_DIST_EXTENSIONS='yatran msapi'
 SDK_JARS='base pim doctree network linux windows'
 
 SRC_DEST_DIR=/tmp/luwrain-src
