@@ -15,7 +15,6 @@ mkdir -p jar jni i18n registry/org/luwrain
 cp -r "$SRC_DIR/data" data
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
-cp -r "$SRC_DIR/linux/setup.sh" setup.sh
 
 for i in base; do
     cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
@@ -25,13 +24,6 @@ for i in "$SRC_DIR/registry"/i18n.*; do
 mkdir -p "$D"
     cp -r "$i/." "$D"
 done
-#find ./registry/org -type d | while read l; do
-#    touch $l/strings.txt
-#    touch $l/booleans.txt
-#    touch $l/integers.txt
-#done
-
-
 
 #Jars
 for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
@@ -51,7 +43,6 @@ for i in $EXTENSIONS; do
 done
 
 cp -r "$SRC_DIR"/sqlite .
-
 cp -r "$SRC_DIR/linux/src/jni" jni-src
 cd jni-src
 rm -f *.so *.o .gitignore
@@ -59,5 +50,4 @@ cd ..
 zip -r jni-src.zip jni-src/ > /dev/null
 rm -rf jni-src
 cp -r "$SRC_DIR/ubuntu-precompiled/." jni
-
-
+echo "luwrain.class.os = org.luwrain.linux.Linux" >> data/properties/"$PROPERTIES_FILE"

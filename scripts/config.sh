@@ -11,9 +11,9 @@ ISO_LANGS='ru'
 EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi'
 DBS='news contacts mail'
 TAKE_SCRIPTS='network linux app-reader'
-TAKE_PROPERTIES=education
+TAKE_PROPERTIES=education luwrain
 WINDOWS_DIST_EXTENSIONS='yatran mssapi'
 SDK_JARS='base pim doctree network linux windows'
 
 SRC_DEST_DIR=/tmp/luwrain-src
-PROPERTIES_FILE=luwrain.properties
+PROPERTIES_FILE=release.properties
