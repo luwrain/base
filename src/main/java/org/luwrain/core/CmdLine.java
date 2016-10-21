@@ -40,7 +40,7 @@ public class CmdLine
 
     public String getFirstArg(String prefix)
     {
-	NullCheck.notNull(prefix, "prefix");
+	NullCheck.notEmpty(prefix, "prefix");
 	for(String s: cmdLine)
 	{
 	    if (s.length() < prefix.length() || !s.startsWith(prefix))
