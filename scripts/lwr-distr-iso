@@ -21,7 +21,7 @@ for ARCH in i386 amd64; do
 	mkdir -p $DEST_DIR/luwrain $DEST_DIR/.luwrain
 	cd $DEST_DIR/luwrain
 	mkdir jar
-	cp -r "$SRC_DIR/ubuntu-precompiled/$ARCH"  jni
+	cp -r "$SRC_DIR/precompiled/linux-x86/."  jni
 	cp -r "$SRC_DIR/data" data
 	cp -r "$SRC_DIR"/lib lib
 	cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
