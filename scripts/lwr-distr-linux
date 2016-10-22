@@ -47,5 +47,5 @@ rm -f *.so *.o .gitignore
 cd ..
 zip -r jni-src.zip jni-src/ > /dev/null
 rm -rf jni-src
-cp -r "$SRC_DIR/ubuntu-precompiled/." jni
+cp -r "$SRC_DIR/precompiled/linux-x86/." jni
 echo "luwrain.class.os = org.luwrain.linux.Linux" >> data/properties/"$PROPERTIES_FILE"

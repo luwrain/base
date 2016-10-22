@@ -14,7 +14,7 @@ mkdir -p $DEST_DIR
 
 cd $DEST_DIR
 mkdir jar
-#cp "$SRC_DIR/windows/SAPIImpl/exec"/*.dll .
+cp -r "$SRC_DIR/precompiled/windows/." .
 cp -r "$SRC_DIR/data" data
 rm -rf data/scripts
 cp -r "$SRC_DIR"/lib lib
