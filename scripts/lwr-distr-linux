@@ -26,7 +26,7 @@ mkdir -p "$D"
 done
 
 #Jars
-cp "$SRC_DIR/$i/jar/luwrain.jar" jar
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
 for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
     cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
