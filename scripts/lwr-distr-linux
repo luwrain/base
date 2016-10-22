@@ -26,18 +26,16 @@ mkdir -p "$D"
 done
 
 #Jars
+cp "$SRC_DIR/$i/jar/luwrain.jar" jar
 for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
     cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
-
 for i in $APPS; do
     cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
 done
-
 for i in $LANGS; do
     cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
 done
-
 for i in $EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
