@@ -16,6 +16,8 @@ cd $DEST_DIR
 mkdir jar
 cp -r "$SRC_DIR/precompiled/windows/." .
 cp -r "$SRC_DIR/data" data
+echo "luwrain.class.os = org.luwrain.windows.Windows" >> data/properties/"$PROPERTIES_FILE"
+cp -r "$SRC_DIR/sqlite" sqlite
 rm -rf data/scripts
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/windows/luwrain.bat" luwrain.bat
