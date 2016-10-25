@@ -15,6 +15,7 @@ mkdir -p jar jni i18n registry/org/luwrain
 cp -r "$SRC_DIR/data" data
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
+cp "$SRC_DIR/luwrain/LICENSE" LICENSE.en.txt
 
 for i in base; do
     cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
