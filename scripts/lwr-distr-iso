@@ -8,55 +8,16 @@ else
     ORIG_DEST_DIR=/tmp/luwrain-iso
 fi
 
-#for ARCH in i386 amd64; do
-    for LANG in $ISO_LANGS; do
-	DEST_DIR=$ORIG_DEST_DIR/ubuntu-15.10-$LANG
-	for i in profile etc opt; do
-	    mkdir -p "$DEST_DIR/$i"
-	done
-	OPT="$DEST_DIR/opt"
-	mkdir "$OPT/greeter"
-	cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
-#	DEST_DIR=$DEST_DIR/profile
-#	mkdir -p $DEST_DIR/luwrain $DEST_DIR/.luwrain
-#	cd $DEST_DIR/luwrain
-#	mkdir jar
-#	cp -r "$SRC_DIR/precompiled/linux-x86/."  jni
-#	cp -r "$SRC_DIR/data" data
-#	cp -r "$SRC_DIR"/lib lib
-#	cp  "$SRC_DIR/linux/luwrain.sh" luwrain.sh
-
-	#Jars
-#	cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-#	for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
-#	    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
-#	done
-#	for i in $APPS; do
-#	    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
-#	done
-#	for i in $LANGS; do
-#	    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
-#	done
-#	for i in $EXTENSIONS; do
-#	    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
-#	done
-
-##	cd ../.luwrain
-#	cp -r "$SRC_DIR"/sqlite .
-
-#	mkdir -p ./registry/org/luwrain
-#	for i in base i18n.$LANG iso.$LANG; do
-#	    cp -r "$SRC_DIR"/registry/$i/. ./registry/org/luwrain
-#	done
-#	find ./registry/org -type d | while read l; do
-#	    touch $l/strings.txt
-#	    touch $l/booleans.txt
-#	    touch $l/integers.txt
-#	done
-
-#	mkdir extensions
-
-#	cd ..
-#	cp -r luwrain "$OPT"
-#    done
+for LANG in $ISO_LANGS; do
+    DEST_DIR=$ORIG_DEST_DIR/ubuntu-15.10-$LANG
+    for i in profile etc opt bin; do
+	mkdir -p "$DEST_DIR/$i"
+    done
+    OPT="$DEST_DIR/opt"
+    mkdir "$OPT/greeter"
+    cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
+    mkdir -p "$OPT/luwrain"
+    pushd "$SRC_DIR/base/scripts"
+    ./lwr-dist-linux "$OPT/luwrain"
+    popd
 done
