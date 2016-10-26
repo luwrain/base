@@ -1,4 +1,4 @@
-#!/bin/bash -evx
+#!/bin/bash -e
 
 . init.sh
 
@@ -17,7 +17,5 @@ for LANG in $ISO_LANGS; do
     mkdir "$OPT/greeter"
     cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
     mkdir -p "$OPT/luwrain"
-    pushd "$SRC_DIR/base/scripts"
-    ./lwr-dist-linux "$OPT/luwrain"
-    popd
+    ./lwr-distr-linux "$OPT/luwrain"
 done
