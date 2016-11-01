@@ -29,7 +29,7 @@ public class Event
      * loop. Once this method is called, all threads freezed on {@code waitForBeProcessed()}
      * method continue the execution.
      */
-    public void markAsProcessed()
+    public final void markAsProcessed()
     {
 	if (processed)
 	    return;
@@ -50,12 +50,11 @@ public class Event
      *
      * @throws InterruptedException if the thread should terminate
      */
-    public void waitForBeProcessed() throws InterruptedException
+    public final void waitForBeProcessed() throws InterruptedException
     {
 	if (processed)
 	    return;
-	synchronized (syncObj)
-	{
+	synchronized (syncObj) {
 	    while (!processed)
 		syncObj.wait();
 	}
