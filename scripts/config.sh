@@ -8,6 +8,7 @@ COMPONENTS="$BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS"
 APPS='notepad news fetch commander twitter reader message mail term contacts browser writer player calc chat'
 LANGS='en ru'
 ISO_LANGS='en ru'
+WIN_LANGS='ru'
 EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi'
 DBS='news contacts mail'
 TAKE_SCRIPTS='network linux app-reader'

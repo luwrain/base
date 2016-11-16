@@ -8,8 +8,6 @@ else
     DEST_DIR=/tmp/luwrain-windows
 fi
 
-LANG=ru
-
 mkdir -p $DEST_DIR
 
 cd $DEST_DIR
@@ -22,16 +20,14 @@ rm -rf data/scripts
 cp -r "$SRC_DIR"/lib lib
 cp  "$SRC_DIR/windows/luwrain.bat" luwrain.bat
 mkdir -p registry/org/luwrain
-for i in base i18n.$LANG win.$LANG; do
+for i in base base.win; do
     cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
 done
 
-	find registry/org -type d | while read l; do
-	    touch $l/strings.txt
-	    touch $l/booleans.txt
-	    touch $l/integers.txt
-	done
-
+for i in $WIN_LANGS; do
+mkdir -p i18n/$i/org/luwrain
+cp -r "$SRC_DIR/registry/i18n.$i/." i18n/$i/org/luwrain
+done
 
 #Jars
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
