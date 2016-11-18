@@ -5,15 +5,15 @@
 mkdir -p ~/luwrain
 
 cd ~/luwrain
-mkdir jar news
-ln -s "$SRC_DIR/linux/src/jni" jni
-ln -s "$SRC_DIR/data" data
-ln -s "$SRC_DIR"/lib lib
+mkdir jar
+for i in sqlite lib data; do
+    ln -s "$SRC_DIR/$i" $i
+done 
 ln -s "$SRC_DIR/linux/luwrain.sh" ~/luwrain/luwrain.sh
-ln -s "$SRC_DIR/linux/setup.sh" ~/luwrain/setup.sh
-ln -s "$SRC_DIR/registry/default.linux" registry
-ln -s "$SRC_DIR/registry/default.news.ru" news/ru
-ln -s "$SRC_DIR/sqlite" sqlite
+mkdir -p registry/org/luwrain 
+cp -r "$SRC_DIR/registry/base/." registry/org/luwrain
+mkdir -p i18n/ru/org/luwrain
+cp -r "$SRC_DIR/registry/i18n.ru/." i18n/ru/org/luwrain
 
 #Jars
 ln -s "$SRC_DIR/luwrain/jar/luwrain.jar" jar/luwrain.jar
