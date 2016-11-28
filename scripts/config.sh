@@ -9,11 +9,11 @@ APPS='notepad news fetch commander twitter reader message mail term contacts bro
 LANGS='en ru'
 ISO_LANGS='en ru'
 WIN_LANGS='ru'
-EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi'
+EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice'
 DBS='news contacts mail'
 TAKE_SCRIPTS='network linux app-reader'
 TAKE_PROPERTIES='education luwrain'
-WINDOWS_DIST_EXTENSIONS='yatran mssapi'
+WINDOWS_DIST_EXTENSIONS='yatran mssapi rhvoice'
 SDK_JARS='base pim doctree network linux windows'
 
 SRC_DEST_DIR=/tmp/luwrain-src
