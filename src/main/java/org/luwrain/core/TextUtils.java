@@ -1,8 +1,7 @@
 /*
    Copyright 2012-2016 Michael Pozhidaev <michael.pozhidaev@gmail.com>
-   Copyright 2015-2016 Roman Volovodov <gr.rPman@gmail.com>
 
-   This file is part of the LUWRAIN.
+   This file is part of LUWRAIN.
 
    LUWRAIN is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -15,10 +14,41 @@
    General Public License for more details.
 */
 
-package org.luwrain.util;
+package org.luwrain.core;
 
-public class Str
+public class TextUtils
 {
+    static public String getLastWord(String text, int upToPos)
+    {
+	NullCheck.notNull(text, "text");
+	String word = new String();
+	boolean broken = false;
+	for(int i = 0;i < text.length() && i < upToPos;++i)
+	{
+	    final char c = text.charAt(i);
+	if (Character.getType(c) == Character.UPPERCASE_LETTER ||
+	    Character.getType(c) == Character.LOWERCASE_LETTER ||
+	    Character.getType(c) == Character.DECIMAL_DIGIT_NUMBER)
+	{
+	    if (broken)
+		word = "";
+	    broken = false;
+	    word += c;
+	    continue;
+	}
+	broken = true;
+	}
+	return word;
+    }
+
+    static public String sameCharString(char c, int count)
+    {
+	final StringBuilder b = new StringBuilder();
+	for(int i = 0;i < count;++i)
+	    b.append(c);
+	return new String(b);
+    }
+
     static public String removeIsoControlChars(String value)
     {
 	final StringBuilder b = new StringBuilder();
