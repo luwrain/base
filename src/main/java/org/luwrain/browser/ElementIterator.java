@@ -21,9 +21,13 @@ import java.awt.Rectangle;
 
 public interface ElementIterator
 {
+	/** element position in Browser's nodes list */
     int getPos();
+    /** return text abstract type FIXME: remove it and move this functionality to app-browser */
     String getType();
+    /** get computed node text */
     String getText();
+    /** get list of values for HTML SELECT FIXME: it's awful */
     String[] getMultipleText();
     String getComputedText();
     String getLink();
@@ -33,6 +37,7 @@ public interface ElementIterator
     String getAttributeProperty(String name);
     String getComputedStyleProperty(final String name);
     String getComputedStyleAll();
+    String getHtmlTagName();
     void clickEmulate();
     boolean isChangedAround(Selector selector, int pos, int count);
     ElementIterator getParent();
