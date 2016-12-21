@@ -17,6 +17,11 @@
 
 package org.luwrain.browser;
 
+import java.util.LinkedHashMap;
+import java.util.Vector;
+
+import org.w3c.dom.Node;
+
 public interface Browser
 {
     String getTitle();
@@ -35,10 +40,7 @@ public interface Browser
     Object executeScript(String script);
     boolean isBusy();
 
-    SelectorAll selectorAll(boolean visible);
-    SelectorText selectorText(boolean visible,String filter);
-    SelectorTag selectorTag(boolean visible,String tagName,String attrName,String attrValue);
-    SelectorCss selectorCss(boolean visible,String tagName,String styleName,String styleValue);
-    SelectorChildren rootChildren(boolean visible);
     ElementIterator iterator();
+	Vector<NodeInfo> getDOMList();
+	LinkedHashMap<Node,Integer> getDOMmap();
 }

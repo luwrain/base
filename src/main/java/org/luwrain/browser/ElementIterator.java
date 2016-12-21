@@ -21,8 +21,11 @@ import java.awt.Rectangle;
 
 public interface ElementIterator
 {
+	/** return browser object for this ElementIterator */
+	Browser getBrowser();
 	/** element position in Browser's nodes list */
     int getPos();
+	void setPos(int integer);
     /** return text abstract type FIXME: remove it and move this functionality to app-browser */
     String getType();
     /** get computed node text */
@@ -39,9 +42,9 @@ public interface ElementIterator
     String getComputedStyleAll();
     String getHtmlTagName();
     void clickEmulate();
-    boolean isChangedAround(Selector selector, int pos, int count);
+    //boolean isChangedAround(Selector selector, int pos, int count); FIXME: make it withiout selector
     ElementIterator getParent();
-    SelectorChildren getChildren(boolean visible);
+    //SelectorChildren getChildren(boolean visible);
     boolean isVisible();
     boolean forTEXT();
     ElementIterator clone();
