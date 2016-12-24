@@ -1,0 +1,64 @@
+#!/bin/bash -e
+
+. init.sh
+
+if [ -n "$1" ]; then 
+    DEST_DIR="$1"
+else
+    DEST_DIR=/tmp/luwrain-linux-nojre
+fi
+
+if [ -d "$DEST_DIR" ]; then
+    rm -rf "$DEST_DIR"
+fi
+
+mkdir -p $DEST_DIR
+
+cd $DEST_DIR
+mkdir -p jar i18n registry/org/luwrain
+cp -r "$SRC_DIR/data" data
+cp -r "$SRC_DIR"/lib lib
+cp "$SRC_DIR/luwrain/LICENSE" LICENSE.en.txt
+cp -r "$SRC_DIR"/sqlite .
+cp "$SRC_DIR/linux/luwrain.sh" .
+
+# registry
+for i in base base.linux; do
+    if [ -d "$SRC_DIR/registry/$i" ]; then
+	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
+    fi
+done
+for i in $LINUX_LANGS; do
+    mkdir -p "i18n/$i/org/luwrain"
+    if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
+    fi
+    if [ -d "$SRC_DIR/registry/i18n.$i.linux" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i.linux/." "i18n/$i/org/luwrain"
+    fi
+done
+
+#Jars
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
+for i in $BASIC_COMPONENTS $LINUX_COMPONENTS; do
+    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
+done
+for i in $LINUX_APPS; do
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+done
+for i in $LINUX_LANGS; do
+    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
+done
+for i in $LINUX_EXTENSIONS; do
+    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
+done
+
+cp -r "$SRC_DIR/linux/src/jni" jni-src
+pushd jni-src
+rm -f *.so *.o .gitignore
+popd
+zip -r jni-src.zip jni-src/ > /dev/null
+rm -rf jni-src
+
+cp -r "$SRC_DIR/precompiled/linux-x86/"libluwrainlinux* .
+echo "luwrain.class.os = org.luwrain.linux.Linux" >> data/properties/"$PROPERTIES_FILE"
