@@ -9,7 +9,7 @@ for i in base luwrain; do
     cd ..
 done
 
-for i in $BASIC_COMPONENTS $LINUX_COMPONENTS $WINDOWS_COMPONENTS; do
+for i in $COMPONENTS; do
     cd "$i"
     ant
     cd ..
