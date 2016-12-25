@@ -7,6 +7,6 @@ SCRIPTSDIR=$SRC_DIR/pim/sql
 
 mkdir -p "$DEST_DIR"
 
-for i in news mail; do
+for i in $DBS; do
 sqlite3 "$DEST_DIR/$i.db" < "$SCRIPTSDIR/$i.sqlite"
 done

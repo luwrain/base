@@ -5,8 +5,10 @@ TEMP_DIR=$(mktemp -d)
 [ -e /tmp/nightly ] && rm -f /tmp/nightly
 ln -s $TEMP_DIR /tmp/nightly
 SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
-LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
-WINDOWS_RES_DIR=luwrain-windows-nightly-$(date --iso-8601)
+LINUX_PKG_RES_DIR=luwrain-linux-pkg-nightly-$(date --iso-8601)
+LINUX_NOJRE_RES_DIR=luwrain-linux-nojre-nightly-$(date --iso-8601)
+WINDOWS_PKG_RES_DIR=luwrain-windows-pkg-nightly-$(date --iso-8601)
+WINDOWS_NOJRE_RES_DIR=luwrain-windows-nojre-nightly-$(date --iso-8601)
 ISO_RES_DIR=luwrain-iso-nightly-$(date --iso-8601)
 SDK_RES_DIR=luwrain-sdk-nightly-$(date --iso-8601)
 
@@ -24,20 +26,24 @@ cd base/scripts
 echo 'Compiling sources'
 ./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
-./lwr-distr-linux "$TEMP_DIR/$LINUX_RES_DIR"
-./lwr-distr-iso "$TEMP_DIR/$ISO_RES_DIR"
+
+./lwr-distr-linux-pkg "$TEMP_DIR/$LINUX_PKG_RES_DIR"
+./lwr-distr-linux-nojre "$TEMP_DIR/$LINUX_NOJRE_RES_DIR"
+./lwr-distr-win-pkg "$TEMP_DIR/$WINDOWS_PKG_RES_DIR"
+./lwr-distr-win-nojre "$TEMP_DIR/$WINDOWS_NOJRE_RES_DIR"
+
+#./lwr-distr-iso "$TEMP_DIR/$ISO_RES_DIR"
 ./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR" &> ../../../sdk.log
-./lwr-distr-win "$TEMP_DIR/$WINDOWS_RES_DIR"
 
 cd "$TEMP_DIR"
-for i in $SRC_RES_DIR $LINUX_RES_DIR $ISO_RES_DIR; do
+for i in $SRC_RES_DIR $LINUX_PKG_RES_DIR $LINUX_NOJRE_RES_DIR; do
     tar -c $i/ > $i.tar
     echo "Compressing $i.tar"
     gzip $i.tar &> /dev/null
     md5sum --binary $i.tar.gz >> md5sum.txt
     sha1sum "$i.tar.gz" >> sha1sum.txt
 done
-for i in $SDK_RES_DIR $WINDOWS_RES_DIR; do
+for i in $SDK_RES_DIR $WINDOWS_PKG_RES_DIR $WINDOWS_NOJRE_RES_DIR; do
     echo "Compressing $i.zip"
     zip -r $i.zip $i &> /dev/null
 md5sum --binary $i.zip >> md5sum.txt
