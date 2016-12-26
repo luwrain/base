@@ -48,4 +48,5 @@ public interface ElementIterator
     boolean isVisible();
     boolean forTEXT();
     ElementIterator clone();
+	void submitEmulate();
 }

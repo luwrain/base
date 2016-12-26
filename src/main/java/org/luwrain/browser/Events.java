@@ -27,4 +27,5 @@ public interface Events
     void onError(String message);
     boolean onDownloadStart(String url);
     Boolean onConfirm(String message);
+	void onPageChanged();
 }

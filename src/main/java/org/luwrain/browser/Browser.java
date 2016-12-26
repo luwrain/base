@@ -43,4 +43,9 @@ public interface Browser
     ElementIterator iterator();
 	Vector<NodeInfo> getDOMList();
 	LinkedHashMap<Node,Integer> getDOMmap();
+	/** update watch array of node's indexes in dom list to observe page modification */
+	void setWatchNodes(Iterable<Integer> indexes);
+	/** restart update timer as fast as possble */
+	void doFastUpdate();
+	long getLastTimeChanged();
 }
