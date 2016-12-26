@@ -62,7 +62,7 @@ for ARCH in $LINUX_ARCH; do
     zip -r jni-src.zip jni-src/ > /dev/null
     rm -rf jni-src
 
-    cp -r "$SRC_DIR/precompiled/linux-x86/." .
+    cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
     echo "luwrain.class.os = org.luwrain.linux.Linux" >> data/properties/"$PROPERTIES_FILE"
     popd
 done
