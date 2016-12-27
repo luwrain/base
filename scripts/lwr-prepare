@@ -18,16 +18,29 @@ for i in $TAKE_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." "$SRC_DIR/data/properties"
 done
 
+#cat  <<EOF > "$SRC_DIR/data/properties/$PROPERTIES_FILE"
+#luwrain.version = Nightly $(date --iso-8601)
+#EOF
+
 cat  <<EOF > "$SRC_DIR/data/properties/$PROPERTIES_FILE"
-luwrain.version = Nightly $(date --iso-8601)
+luwrain.version = $VERSION
 EOF
 
+
+#cat <<EOF > "$SRC_DIR/data/DESKTOP.ru.txt"
+#LUWRAIN (отладочная версия)
+#Дата релиза: $(date --iso-8601)
+#Авторы: Роман Воловодов, Алексей Голошумов, Екатерина Корякина, Михаил Пожидаев и Елена Теплых
+#Веб-сайт: http://luwrain.org/
+#EOF
+
 cat <<EOF > "$SRC_DIR/data/DESKTOP.ru.txt"
-LUWRAIN (отладочная версия)
-Дата релиза: $(date --iso-8601)
-Авторы: Алексей Голошумов и Михаил Пожидаев
+LUWRAIN
+Версия: $VERSION
+Авторы: Роман Воловодов, Алексей Голошумов, Екатерина Корякина, Михаил Пожидаев и Елена Теплых
 Веб-сайт: http://luwrain.org/
 EOF
+
 
 #Добро пожаловать в LUWRAIN!
 #
