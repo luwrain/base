@@ -57,7 +57,7 @@ rm -rf data/scripts
     done
 
     cp -r "$SRC_DIR/precompiled/windows/." .
-    echo "luwrain.class.os = org.luwrain.windows/Windows" >> data/properties/"$PROPERTIES_FILE"
+    echo "luwrain.class.os = org.luwrain.windows.Windows" >> data/properties/"$PROPERTIES_FILE"
 popd
 done
 

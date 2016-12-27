@@ -55,4 +55,4 @@ for i in $WIN_EXTENSIONS; do
 done
 
 cp -r "$SRC_DIR/precompiled/windows/." .
-echo "luwrain.class.os = org.luwrain.windows/Windows" >> data/properties/"$PROPERTIES_FILE"
+echo "luwrain.class.os = org.luwrain.windows.Windows" >> data/properties/"$PROPERTIES_FILE"
