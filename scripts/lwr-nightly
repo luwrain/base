@@ -23,6 +23,13 @@ cd base/scripts
 ./lwr-checkout &> ../../../checkout.log
 ./lwr-distr-src "$TEMP_DIR/$SRC_RES_DIR"
 
+cd ../..
+if [ -x ~/lwr-subst ]; then
+    echo "Performing substitution"
+    ~/lwr-subst
+fi
+cd base/scripts
+
 echo 'Compiling sources'
 ./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
