@@ -49,4 +49,5 @@ public interface ElementIterator
     boolean forTEXT();
     ElementIterator clone();
 	void submitEmulate();
+	String getAltText();
 }
