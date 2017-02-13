@@ -15,9 +15,9 @@
    General Public License for more details.
 */
 
-package org.luwrain.os;
+package org.luwrain.interaction;
 
-import org.luwrain.core.EventConsumer;
+import org.luwrain.base.EventConsumer;
 
 public interface KeyboardHandler
 {

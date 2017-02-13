@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2016 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+   Copyright 2012-2017 Michael Pozhidaev <michael.pozhidaev@gmail.com>
    Copyright 2015-2016 Roman Volovodov <gr.rPman@gmail.com>
 
    This file is part of the LUWRAIN.
@@ -15,19 +15,18 @@
    General Public License for more details.
 */
 
-package org.luwrain.hardware;
+package org.luwrain.base;
 
-public class SysDevice
+import java.io.File;
+
+public interface Hardware
 {
-    public final static int UNKNOWN = 0;
-    public final static int PCI = 1;
-    public final static int YUSB = 2;
-
-    public int type = UNKNOWN;
-    public String id = "";
-    public String cls = "";
-    public String vendor = "";
-    public String model = "";
-    public String driver = "";
-    public String module = "";
+    SysDevice[] getSysDevices();
+    StorageDevice[] getStorageDevices();
+    int mountAllPartitions(StorageDevice device);
+    int umountAllPartitions(StorageDevice device);
+    Partition[] getMountedPartitions();
+    //    File getRoot(File relativeTo);
+    AudioMixer getAudioMixer();
+    Battery[] getBatteries();
 }

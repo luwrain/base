@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2016 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+   Copyright 2012-2017 Michael Pozhidaev <michael.pozhidaev@gmail.com>
    Copyright 2015-2016 Roman Volovodov <gr.rPman@gmail.com>
 
    This file is part of the LUWRAIN.
@@ -15,12 +15,15 @@
    General Public License for more details.
 */
 
-package org.luwrain.hardware;
+package org.luwrain.base;
 
-public class StorageDevice
+import org.luwrain.core.*;
+
+public interface Braille
 {
-    public String devName;
-    public String model;
-    public long capacity;
-    public boolean removable;
+    InitResult init(EventConsumer eventConsumer);
+    String getDriverName();
+    int getDisplayWidth();
+    int getDisplayHeight();
+    void writeText(String text);
 }

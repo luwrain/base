@@ -17,10 +17,10 @@
 
 package org.luwrain.base;
 
-import java.nio.file.*;
-
-public interface CoreProperties
+public class StorageDevice
 {
-    String getProperty(String propName);
-    Path getPathProperty(String propName);
+    public String devName;
+    public String model;
+    public long capacity;
+    public boolean removable;
 }
