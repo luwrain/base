@@ -23,7 +23,7 @@ public interface FilesOperation extends Runnable
 
     public final class Result 
     {
-	public enum Type { OK, INTERRUPTED, EXCEPTION, MOVE_DEST_NOT_DIR};
+	public enum Type { OK, INTERRUPTED, EXCEPTION, MOVE_DEST_NOT_DIR, SOURCE_PARENT_OF_DEST};
 
 	private final Type type;
 	private final String extInfo;
