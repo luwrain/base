@@ -96,7 +96,5 @@ public interface FilesOperation extends Runnable
     void interrupt();
     boolean isFinished();
     Result getResult();
-    Path getExtInfoPath();
-    IOException getExtInfoIoException();
     boolean finishingAccepted();
 }
