@@ -1,6 +1,5 @@
 
-
-VERSION=1.0.0
+VERSION=1.1.0
 GITS='base doctree education extensions i18n interaction-javafx linux luwrain network pim registry windows'
 PROPERTIES_FILE=release.properties
 
