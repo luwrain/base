@@ -1,0 +1,58 @@
+#!/bin/bash -e
+# Must not be invoked directly, called by lwr-distr-iso
+
+. init.sh
+
+THIS="${0##*/}"
+
+ARCH="$1"
+LANG="$2"
+DEST_DIR="$3"
+
+[ -z "$ARCH" ] && echo "$THIS:no arch given" >&2 && exit 1
+[ -z "$LANG" ] && echo "$THIS:no lang given" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
+
+mkdir -p $DEST_DIR
+cd $DEST_DIR
+
+mkdir -p jar i18n registry/org/luwrain
+cp "$SRC_DIR/luwrain/LICENSE" LICENSE.en.txt
+
+for i in lib data sqlite; do
+    cp -r "$SRC_DIR/$i" "$i"
+done
+
+# registry
+for i in base base.iso; do
+    if [ -d "$SRC_DIR/registry/$i" ]; then
+	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
+    fi
+done
+for i in $LANG; do
+    mkdir -p "i18n/$i/org/luwrain"
+    if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
+    fi
+    if [ -d "$SRC_DIR/registry/i18n.$i.linux" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i.linux/." "i18n/$i/org/luwrain"
+    fi
+done
+
+#Jars
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
+for i in $LINUX_COMPONENTS; do
+    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
+done
+for i in $LINUX_APPS; do
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+done
+for i in $LANG; do
+    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
+done
+for i in $LINUX_EXTENSIONS; do
+    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
+done
+
+    cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
+    echo "luwrain.class.os = org.luwrain.linux.Linux" >> data/properties/"$PROPERTIES_FILE"
