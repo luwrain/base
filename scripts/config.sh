@@ -10,8 +10,6 @@ APPS='notepad news fetch commander twitter reader message mail term contacts bro
 EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice'
 COMPONENTS='base pim doctree interaction-javafx education linux windows network'
 
-BASIC_COMPONENTS='base pim doctree interaction-javafx education'
-
 LINUX_ARCH=64
 LINUX_LANGS='ru'
 LINUX_COMPONENTS='base pim doctree interaction-javafx education linux'
