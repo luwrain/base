@@ -1,34 +1,42 @@
-#!/bin/bash -e
+#!/bin/bash -evx
 
 . init.sh
+
+[ -d ~/luwrain ] && echo ~/luwrain" exists, delete it explicitly and try again" >&2 && exit 1
 
 mkdir -p ~/luwrain
 
 cd ~/luwrain
 mkdir jar
-for i in sqlite lib data; do
-    ln -s "$SRC_DIR/$i" $i
-done 
+for i in sqlite data; do
+    cp -r "$SRC_DIR/$i" $i
+done
+ln -s "$SRC_DIR/lib" lib
 ln -s "$SRC_DIR/linux/luwrain.sh" ~/luwrain/luwrain.sh
-mkdir -p registry/org/luwrain 
-cp -r "$SRC_DIR/registry/base/." registry/org/luwrain
-mkdir -p i18n/ru/org/luwrain
-cp -r "$SRC_DIR/registry/i18n.ru/." i18n/ru/org/luwrain
 
+mkdir -p registry/org/luwrain
+for i in base base.linux; do
+    if [ -d "$SRC_DIR/registry/$i" ]; then
+	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
+    fi
+done
+for i in $LANGS; do
+if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
+mkdir -p i18n/$i/org/luwrain
+cp -r "$SRC_DIR/registry/i18n.$i/." i18n/$i/org/luwrain
+fi
+done
 #Jars
 ln -s "$SRC_DIR/luwrain/jar/luwrain.jar" jar/luwrain.jar
-for i in base linux pim doctree interaction-javafx network; do
+for i in $COMPONENTS; do
     ln -s "$SRC_DIR/$i/jar/luwrain-$i.jar" jar/luwrain-$i.jar
 done 
-
 for i in $APPS; do
 ln -s "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar/luwrain-app-$i.jar
 done
-
 for i in $LANGS; do
 ln -s "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar/luwrain-lang-$i.jar
 done
-
 for i in $EXTENSIONS; do
 ln -s "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar/luwrain-ext-$i.jar
 done
