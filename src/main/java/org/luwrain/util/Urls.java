@@ -11,6 +11,8 @@ public class Urls
     static public File toFile(URL url)
     {
 NullCheck.notNull(url, "url");
+if (url.getProtocol() == null || !url.getProtocol().toLowerCase().equals("file"))
+    return null;
 try {
 return new File(url.toURI());
 }
