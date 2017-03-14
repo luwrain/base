@@ -19,7 +19,7 @@ package org.luwrain.core;
 
 public class Event
 {
-    private boolean processed = false;
+    private volatile boolean processed = false;
     private final Object syncObj = new Object();
 
     /**
