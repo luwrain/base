@@ -13,31 +13,23 @@ public class DefaultPlaylist implements Playlist, Comparable
 
     protected final String title;
     protected final String[] items;
-    protected final int startingTrackNum;
-    protected final long startingPosMsec;
     protected final Listener listener;
 
-    public DefaultPlaylist(String title, String[] items,
-			   int startingTrackNum, long startingPosMsec,
-			   Listener listener)
+    public DefaultPlaylist(String title, String[] items, Listener listener)
     {
 	NullCheck.notNull(title, "title");
 	NullCheck.notNullItems(items, "items");
 	this.title = title;
 	this.items = items;
-	this.startingTrackNum = startingTrackNum;
-	this.startingPosMsec = startingPosMsec;
 	this.listener = listener;
     }
 
-    @Override public int getStartingTrackNum()
+    public DefaultPlaylist(String singleUrl)
     {
-	return startingTrackNum;
-    }
-
-    @Override public long getStartingPosMsec()
-    {
-	return startingPosMsec;
+	NullCheck.notEmpty(singleUrl, "singleUrl");
+	this.title = "";
+	this.items = new String[]{singleUrl};
+	this.listener = null;
     }
 
     @Override public void updateStartingPos(int trackNum, long posMsec)
