@@ -9,10 +9,11 @@ else
 fi
 
 for LANG in $ISO_LANGS; do
-    DEST_DIR=$ORIG_DEST_DIR/ubuntu-15.10-$LANG
+    DEST_DIR=$ORIG_DEST_DIR/ubuntu-16.04-$LANG
     for i in profile etc opt bin; do
 	mkdir -p "$DEST_DIR/$i"
     done
+    cp "$SRC_DIR/linux/luwrain.sh" "$DEST_DIR/bin"
     OPT="$DEST_DIR/opt"
     mkdir "$OPT/greeter"
     cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"

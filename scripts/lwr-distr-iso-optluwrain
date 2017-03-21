@@ -34,23 +34,23 @@ for i in $LANG; do
     if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
 	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
     fi
-    if [ -d "$SRC_DIR/registry/i18n.$i.linux" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i.linux/." "i18n/$i/org/luwrain"
+    if [ -d "$SRC_DIR/registry/i18n.$i.iso" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i.iso/." "i18n/$i/org/luwrain"
     fi
 done
 
 #Jars
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-for i in $LINUX_COMPONENTS; do
+for i in $ISO_COMPONENTS; do
     cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
-for i in $LINUX_APPS; do
+for i in $ISO_APPS; do
     cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
 done
 for i in $LANG; do
     cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
 done
-for i in $LINUX_EXTENSIONS; do
+for i in $ISO_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
 
