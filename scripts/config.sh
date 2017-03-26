@@ -16,7 +16,7 @@ WIN_COMPONENTS='base pim doctree interaction-javafx education windows'
 WIN_APPS='notepad news fetch commander twitter reader message mail contacts browser player chat'
 WIN_EXTENSIONS='mssapi cmdtts yatran rhvoice'
 
-LINUX_ARCH=64
+LINUX_ARCH='32 64'
 LINUX_LANGS='ru'
 LINUX_COMPONENTS='base pim doctree interaction-javafx education linux'
 LINUX_APPS='notepad news fetch commander twitter reader message mail term contacts browser player chat'
