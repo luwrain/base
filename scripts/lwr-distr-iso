@@ -10,7 +10,7 @@ fi
 
 for LANG in $ISO_LANGS; do
     for ARCH in $ISO_ARCH; do
-	DEST_DIR=$ORIG_DEST_DIR/ubuntu-16.04-$ARCHbit-$LANG
+	DEST_DIR=$ORIG_DEST_DIR/ubuntu-16.04-"$ARCH"bit-$LANG
 	for i in profile etc opt bin; do
 	    mkdir -p "$DEST_DIR/$i"
 	done
