@@ -22,7 +22,7 @@ LINUX_COMPONENTS='base pim doctree interaction-javafx education linux'
 LINUX_APPS='notepad news fetch commander twitter reader message mail term contacts browser player chat'
 LINUX_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
 
-ISO_ARCH=64
+ISO_ARCH='32 64'
 ISO_LANGS='ru'
 ISO_COMPONENTS='base pim doctree interaction-javafx education network linux'
 ISO_APPS='notepad news fetch commander twitter reader message mail term contacts browser player chat'

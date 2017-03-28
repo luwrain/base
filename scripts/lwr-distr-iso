@@ -9,14 +9,16 @@ else
 fi
 
 for LANG in $ISO_LANGS; do
-    DEST_DIR=$ORIG_DEST_DIR/ubuntu-16.04-$LANG
-    for i in profile etc opt bin; do
-	mkdir -p "$DEST_DIR/$i"
+    for ARCH in $ISO_ARCH; do
+	DEST_DIR=$ORIG_DEST_DIR/ubuntu-16.04-$ARCHbit-$LANG
+	for i in profile etc opt bin; do
+	    mkdir -p "$DEST_DIR/$i"
+	done
+	cp "$SRC_DIR/linux/luwrain.sh" "$DEST_DIR/bin/luwrain"
+	OPT="$DEST_DIR/opt"
+	mkdir "$OPT/greeter"
+	cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
+	mkdir -p "$OPT/luwrain"
+	./lwr-distr-iso-optluwrain $ARCH $LANG "$OPT/luwrain"
     done
-    cp "$SRC_DIR/linux/luwrain.sh" "$DEST_DIR/bin/luwrain"
-    OPT="$DEST_DIR/opt"
-    mkdir "$OPT/greeter"
-    cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
-    mkdir -p "$OPT/luwrain"
-    ./lwr-distr-iso-optluwrain 64 $LANG "$OPT/luwrain"
 done
