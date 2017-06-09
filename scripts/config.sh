@@ -11,13 +11,13 @@ EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice'
 COMPONENTS='base pim doctree interaction-javafx education linux windows network'
 
 WIN_ARCH=32
-WIN_LANGS='ru'
+WIN_LANGS='en ru'
 WIN_COMPONENTS='base pim doctree interaction-javafx education windows'
 WIN_APPS='notepad news fetch commander twitter reader message mail contacts browser player chat'
 WIN_EXTENSIONS='mssapi cmdtts yatran rhvoice'
 
 LINUX_ARCH='32 64'
-LINUX_LANGS='ru'
+LINUX_LANGS='en ru'
 LINUX_COMPONENTS='base pim doctree interaction-javafx education linux'
 LINUX_APPS='notepad news fetch commander twitter reader message mail term contacts browser player chat'
 LINUX_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
