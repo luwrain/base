@@ -29,5 +29,6 @@ rm -rf "$l/.git"
 fi
 done 
 
+rm -rf apptemplate-win-32 precompiled
 find -name .gitignore -delete
 
