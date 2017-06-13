@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+. init.sh
+
+if [ -n "$1" ]; then 
+    DEST_DIR="$1"
+else
+    DEST_DIR=/tmp/luwrain-windows-app
+fi
+
+if [ -d "$DEST_DIR" ]; then
+    rm -rf "$DEST_DIR"
+fi
+
+PKG_DIR="$2"
+
+mkdir -p $DEST_DIR
+
+cd $DEST_DIR
+mkdir 32
+cd 32
+
+cp -r "$SRC_DIR/apptemplate-win-32/." .
+for i in data lib jar i18n registry sqlite; do
+    cp "$PKG_DIR/32/$i" app
+done

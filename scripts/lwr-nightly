@@ -9,6 +9,7 @@ LINUX_PKG_RES_DIR=luwrain-linux-pkg-nightly-$(date --iso-8601)
 LINUX_NOJRE_RES_DIR=luwrain-linux-nojre-nightly-$(date --iso-8601)
 WINDOWS_PKG_RES_DIR=luwrain-windows-pkg-nightly-$(date --iso-8601)
 WINDOWS_NOJRE_RES_DIR=luwrain-windows-nojre-nightly-$(date --iso-8601)
+WINDOWS_APP_RES_DIR=luwrain-windows-app-nightly-$(date --iso-8601)
 ISO_RES_DIR=luwrain-iso-nightly-$(date --iso-8601)
 SDK_RES_DIR=luwrain-sdk-nightly-$(date --iso-8601)
 
@@ -39,6 +40,7 @@ echo 'Compiling sources'
 ./lwr-distr-linux-nojre "$TEMP_DIR/$LINUX_NOJRE_RES_DIR"
 ./lwr-distr-win-pkg "$TEMP_DIR/$WINDOWS_PKG_RES_DIR"
 ./lwr-distr-win-nojre "$TEMP_DIR/$WINDOWS_NOJRE_RES_DIR"
+./lwr-distr-win-app "$TEMP_DIR/$WINDOWS_APP_RES_DIR" "$TEMP_DIR/$WINDOWS_PKG_RES_DIR"
 ./lwr-distr-iso "$TEMP_DIR/$ISO_RES_DIR"
 ./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR" &> ../../../sdk.log
 ) &> ../../../packaging.log
