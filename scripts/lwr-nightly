@@ -53,7 +53,7 @@ for i in $SRC_RES_DIR $LINUX_PKG_RES_DIR $LINUX_NOJRE_RES_DIR $ISO_RES_DIR; do
     md5sum --binary $i.tar.gz >> md5sum.txt
     sha1sum "$i.tar.gz" >> sha1sum.txt
 done
-for i in $SDK_RES_DIR $WINDOWS_PKG_RES_DIR $WINDOWS_NOJRE_RES_DIR; do
+for i in $SDK_RES_DIR $WINDOWS_PKG_RES_DIR $WINDOWS_APP_RES_DIR $WINDOWS_NOJRE_RES_DIR; do
     echo "Compressing $i.zip"
     zip -r $i.zip $i &> /dev/null
 md5sum --binary $i.zip >> md5sum.txt
