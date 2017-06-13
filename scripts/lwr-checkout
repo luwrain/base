@@ -15,7 +15,7 @@ git clone https://github.com/luwrain/app-$i.git
 done
 
 
-for i in data lib precompiled; do
+for i in data lib precompiled apptemplate-win-32; do
     wget http://download.luwrain.org/compilation/$i.zip
     unzip $i.zip
     rm -f $i.zip
