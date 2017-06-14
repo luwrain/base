@@ -30,6 +30,6 @@ ISO_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
 
 
 TAKE_SCRIPTS='network linux app-reader'
-TAKE_PROPERTIES='luwrain'
+TAKE_PROPERTIES='luwrain education'
 SDK_JARS='base pim doctree network linux windows'
 SRC_DEST_DIR=/tmp/luwrain-src
