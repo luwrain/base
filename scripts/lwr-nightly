@@ -60,4 +60,8 @@ md5sum --binary $i.zip >> md5sum.txt
 sha1sum $i.zip >> sha1sum.txt
 done
 
+RELEASE_DIR=~/nightly-`date -I`
+mkdir -p "$RELEASE_DIR"
+mv *.txt *.gz *.zip "$RELEASE_DIR"
+
 echo 'OK!'
