@@ -48,8 +48,6 @@ public interface Browser
     void loadByText(String text);
     void stop();
     Object executeScript(String script);
-    void lock();
-    void unlock();
     BrowserIterator createIterator();
 Vector<NodeInfo> getDOMList();
     int getNodeIndex(org.w3c.dom.Node node);
