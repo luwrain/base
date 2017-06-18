@@ -21,18 +21,10 @@ import java.awt.Rectangle;
 
 public interface BrowserIterator
 {
-	/** return browser object for this ElementIterator */
 	Browser getBrowser();
-
-	/** element position in Browser's nodes list */
     int getPos();
-
-	void setPos(int integer);
-
-    /** return text abstract type FIXME: remove it and move this functionality to app-browser */
-    String getType();
-
-    /** get computed node text */
+    /** although it is strongly discouraged to use this method.*/ 
+boolean setPos(int index);
     String getText();
 
     /** get list of values for HTML SELECT FIXME: it's awful */
