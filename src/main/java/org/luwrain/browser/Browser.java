@@ -43,13 +43,13 @@ public interface Browser
     void setVisibility(boolean enable);
     boolean getVisibility();
 
-    void RescanDOM();
+    void rescanDom();
     void loadByUrl(String url);
     void loadByText(String text);
     void stop();
     Object executeScript(String script);
     boolean isBusy();
-    ElementIterator iterator();
+    BrowserIterator createIterator();
 	Vector<NodeInfo> getDOMList();
     int getNodeIndex(org.w3c.dom.Node node);
 	/** update watch array of node's indexes in dom list to observe page modification */
