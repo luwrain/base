@@ -17,7 +17,7 @@
 
 package org.luwrain.browser;
 
-public interface Events
+public interface BrowserEvents
 {
     public enum State {CANCELLED, FAILED, READY, RUNNING, SCHEDULED, SUCCEEDED};
 

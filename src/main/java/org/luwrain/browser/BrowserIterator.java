@@ -56,4 +56,8 @@ BrowserIterator getParent();
 BrowserIterator clone();
 	void submitEmulate();
 	String getAltText();
+
+    boolean withoutParent();
+    boolean isParent(BrowserIterator it);
+
 }

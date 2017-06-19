@@ -34,26 +34,24 @@ import java.util.Vector;
  */
 public interface Browser
 {
+    void close();
+    BrowserIterator createIterator();
     String getTitle();
     String getUrl();
-    int numElements();
-
-    void init(Events events);
-    void Remove();
-    void setVisibility(boolean enable);
     boolean getVisibility();
-
-    void rescanDom();
+    Object executeScript(String script);
+    void init(BrowserEvents events);
     void loadByUrl(String url);
     void loadByText(String text);
+    int numElements();
+    void rescanDom();
+    void setVisibility(boolean enable);
     void stop();
-    Object executeScript(String script);
-    BrowserIterator createIterator();
-Vector<NodeInfo> getDOMList();
-    int getNodeIndex(org.w3c.dom.Node node);
-	/** update watch array of node's indexes in dom list to observe page modification */
-	void setWatchNodes(Iterable<Integer> indexes);
-	/** restart update timer as fast as possble */
-	void doFastUpdate();
-	long getLastTimeChanged();
+
+    //Experimental
+    /** update watch array of node's indexes in dom list to observe page modification */
+    void setWatchNodes(Iterable<Integer> indexes);
+    /** restart update timer as fast as possble */
+    void doFastUpdate();
+    long getLastTimeChanged();
 }
