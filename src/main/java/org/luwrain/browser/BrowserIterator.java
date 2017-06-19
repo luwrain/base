@@ -39,25 +39,21 @@ boolean setPos(int index);
     boolean isEditable();
 
     void setText(String text);
-
     String getAttributeProperty(String name);
-
     String getComputedStyleProperty(final String name);
-
     String getComputedStyleAll();
-
     String getHtmlTagName();
-
-    void clickEmulate();
+    void emulateClick();
+	void emulateSubmit();
 
 BrowserIterator getParent();
     boolean isVisible();
     boolean forTEXT();
 BrowserIterator clone();
-	void submitEmulate();
+
 	String getAltText();
 
-    boolean withoutParent();
+    boolean hasParent();
     boolean isParent(BrowserIterator it);
 
 }

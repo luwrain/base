@@ -18,6 +18,7 @@
 package org.luwrain.browser;
 
 import java.util.Vector;
+import java.util.concurrent.Callable;
 
 /**
  * An interface to web-browser engine. This interface provides
@@ -45,6 +46,7 @@ public interface Browser
     void loadByText(String text);
     int numElements();
     void rescanDom();
+    Object runSafely(Callable callable);
     void setVisibility(boolean enable);
     void stop();
 
