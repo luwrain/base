@@ -39,7 +39,7 @@ boolean setPos(int index);
     boolean isEditable();
 
     void setText(String text);
-    String getAttributeProperty(String name);
+    String getAttribute(String name);
     String getComputedStyleProperty(final String name);
     String getComputedStyleAll();
     String getHtmlTagName();

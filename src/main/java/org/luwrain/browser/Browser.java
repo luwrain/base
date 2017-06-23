@@ -29,9 +29,9 @@ import java.util.concurrent.Callable;
  * view of the loaded page in any form. However, the client application
  * can request showing traditional graphical view of the loaded page.
  * The content of the loaded page is represented by a set of elements
- * which can be enumerated with {@link ElementIterator} class.
+ * which can be enumerated with {@link BrowserIterator} class.
  *
- * @see ElementIterator Events
+ * @see BrowserIterator Events
  */
 public interface Browser
 {
