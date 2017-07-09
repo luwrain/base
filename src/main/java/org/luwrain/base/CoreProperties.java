@@ -17,10 +17,10 @@
 
 package org.luwrain.base;
 
-import java.nio.file.*;
+import java.io.*;
 
 public interface CoreProperties
 {
     String getProperty(String propName);
-    Path getPathProperty(String propName);
+    File getFileProperty(String propName);
 }
