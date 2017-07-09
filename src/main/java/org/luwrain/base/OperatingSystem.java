@@ -23,7 +23,7 @@ import org.luwrain.core.*;
 
 public interface OperatingSystem
 {
-    boolean init(String dataDir);
+    org.luwrain.core.InitResult init(CoreProperties props);
     String getProperty(String propName);
     Hardware getHardware();
     Braille getBraille();

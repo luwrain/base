@@ -48,7 +48,7 @@ public final class InitResult
 	this.arg = arg;
     }
 
-    public InitResult(Exception e)
+    public InitResult(Throwable e)
     {
 	NullCheck.notNull(e, "e");
 	this.type = Type.EXCEPTION;
@@ -65,10 +65,10 @@ public final class InitResult
 	return arg;
     }
 
-    public Exception getException()
+    public Throwable getException()
     {
-	if (arg != null && arg instanceof Exception)
-	    return (Exception)arg;
+	if (arg != null && arg instanceof Throwable)
+	    return (Throwable)arg;
 	return null;
     }
 
@@ -79,13 +79,18 @@ public final class InitResult
 	return null;
     }
 
+    public boolean isOk()
+    {
+	return type == Type.OK;
+    }
+
     @Override public String toString()
     {
 	if (arg == null)
 	    return "[" + type.toString() + "]";
-	if (arg instanceof Exception)
+	if (arg instanceof Throwable)
 	{
-	    final Exception e = (Exception)arg;
+	    final Throwable e = (Throwable)arg;
 	    return "[" + type.toString() + "] " + e.getClass().getName() + ":" + e.getMessage();
 	}
 	return "[" + type.toString() + "] " + arg.toString();
