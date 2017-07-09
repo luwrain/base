@@ -1,64 +1,93 @@
+/*
+   Copyright 2012-2017 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+
+   This file is part of LUWRAIN.
+
+   LUWRAIN is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either
+   version 3 of the License, or (at your option) any later version.
+
+   LUWRAIN is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+*/
 
 package org.luwrain.core;
 
-public class InitResult 
+public final class InitResult 
 {
-    public enum Type {SUCCESS, FAILURE};
+    public enum Type {
+	OK,
+	FAILURE,
+	EXCEPTION,
+	NO_STRINGS_OBJ};
 
-    private Type type = Type.SUCCESS;
-    private String message = "";
-    private Exception exception = null;
+    private final Type type;
+    private final Object arg;
 
     public InitResult()
     {
-	type = Type.SUCCESS;
+	this.type = Type.OK;
+	this.arg = null;
     }
 
     public InitResult(Type type)
     {
 	NullCheck.notNull(type, "type");
 	this.type = type;
+	this.arg = null;
     }
 
-    public InitResult(Type type, String message)
+    public InitResult(Type type, Object arg)
     {
 	NullCheck.notNull(type, "type");
-	NullCheck.notNull(message, "message");
+	NullCheck.notNull(arg, "arg");
 	this.type = type;
-	this.message = message;
+	this.arg = arg;
     }
 
-    public InitResult(Exception exception)
+    public InitResult(Exception e)
     {
-	NullCheck.notNull(exception, "exception");
-	this.type = Type.FAILURE;
-	this.message = exception.getMessage();
-	this.exception = exception;
+	NullCheck.notNull(e, "e");
+	this.type = Type.EXCEPTION;
+	this.arg = e;
     }
 
-    public InitResult(String message, Exception exception)
+    public Type getType()
     {
-	NullCheck.notNull(message, "message");
-	NullCheck.notNull(exception, "exception");
-	this.type = Type.FAILURE;
-	this.message = message;
-	this.exception = exception;
+	return type;
     }
 
-    public InitResult(Type type, String message,
-Exception exception)
+    public Object getArg()
     {
-	NullCheck.notNull(type, "type");
-	NullCheck.notNull(message, "message");
-	NullCheck.notNull(exception, "exception");
-	this.type = type;
-	this.message = message;
-	this.exception = exception;
+	return arg;
     }
 
-    public Type type() {return type;}
-    public String message() {return message;}
-    public Exception exception() {return exception;}
-    public boolean success() {return type == Type.SUCCESS;}
-    public boolean failure() {return type == Type.FAILURE;}
+    public Exception getException()
+    {
+	if (arg != null && arg instanceof Exception)
+	    return (Exception)arg;
+	return null;
+    }
+
+    public String getMessage()
+    {
+	if (arg != null && arg instanceof String)
+	    return (String)arg;
+	return null;
+    }
+
+    @Override public String toString()
+    {
+	if (arg == null)
+	    return "[" + type.toString() + "]";
+	if (arg instanceof Exception)
+	{
+	    final Exception e = (Exception)arg;
+	    return "[" + type.toString() + "] " + e.getClass().getName() + ":" + e.getMessage();
+	}
+	return "[" + type.toString() + "] " + arg.toString();
+    }
 }
