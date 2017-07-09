@@ -25,5 +25,4 @@ javadoc -classpath "$(jars "$SRC_DIR"/lib-stage4)" \
 $(find "$SRC_DIR"/luwrain/src/main/java/ -iname '*.java') \
 $(find "$SRC_DIR"/base/src/main/java/ -iname '*.java') > /dev/null \
 $(find "$SRC_DIR"/pim/src/main/java/ -iname '*.java') > /dev/null \
-$(find "$SRC_DIR"/app-browser/src/main/java/ -iname '*.java') > /dev/null \
 $(find "$SRC_DIR"/doctree/src/main/java/ -iname '*.java') > /dev/null 
