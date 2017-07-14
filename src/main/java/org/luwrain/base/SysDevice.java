@@ -17,17 +17,19 @@
 
 package org.luwrain.base;
 
-public class SysDevice
+public interface SysDevice
 {
-    public final static int UNKNOWN = 0;
-    public final static int PCI = 1;
-    public final static int YUSB = 2;
+    public enum Type {
+	UNKNOWN,
+	PCI,
+	USB,
+    };
 
-    public int type = UNKNOWN;
-    public String id = "";
-    public String cls = "";
-    public String vendor = "";
-    public String model = "";
-    public String driver = "";
-    public String module = "";
+    Type getDevType();
+    String getDevId();
+    String getDevClass();
+    String getDevVendor();
+    String getDevModel();
+    String getDevDriver();
+    String getDevModule();
 }

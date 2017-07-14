@@ -35,4 +35,30 @@ public class FileUtils
 	} while(length >= 0);
 	return res.toByteArray();
     }
+
+    static public String readTextFileSingleString(File file, String charset) throws IOException
+    {
+	NullCheck.notNull(file, "file");
+	NullCheck.notEmpty(charset, "charset");
+	final InputStream is = new FileInputStream(file);
+	final byte[] bytes;
+	try {
+	    bytes = readAllBytes(is);
+	}
+	finally {
+	    is.close();
+	}
+	return new String(bytes, charset);
+    }
+
+    //lineSeparator may be null, means use default 
+    static public String[] readTextFileMultipleStrings(File file, String charset, String lineSeparator) throws IOException
+    {
+	NullCheck.notNull(file, "file");
+	NullCheck.notEmpty(charset, "charset");
+	final String text = readTextFileSingleString(file, charset);
+	if (text.isEmpty())
+	    return new String[0];
+	return text.split(lineSeparator != null?lineSeparator:System.getProperty("line.separator"));
+    }
 }
