@@ -29,6 +29,6 @@ ISO_APPS='notepad news fetch commander twitter reader message mail contacts brow
 ISO_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
 
 TAKE_SCRIPTS='network linux app-reader'
-TAKE_PROPERTIES='luwrain education'
+TAKE_PROPERTIES='luwrain'
 SDK_JARS='base pim browser network linux windows'
 SRC_DEST_DIR=/tmp/luwrain-src
