@@ -20,14 +20,16 @@ import org.luwrain.core.*;
 
 public final class Playlist
 {
-    private final String[] urls;
     private final String title;
+    private final String[] urls;
+    private final Object extData;
 
     public Playlist(String[] urls)
     {
 	NullCheck.notNullItems(urls, "urls");
 	this.title = "";
 	this.urls = urls;
+	this.extData = null;
     }
 
     public Playlist(String title, String[] urls)
@@ -36,6 +38,7 @@ public final class Playlist
 	NullCheck.notNullItems(urls, "urls");
 	this.title = title;
 	this.urls = urls;
+	this.extData = null;
     }
 
     public Playlist(String url)
@@ -43,6 +46,7 @@ public final class Playlist
 	NullCheck.notNull(url, "url");
 	this.title = "";
 	this.urls = new String[]{url};
+	this.extData = null;
     }
 
     public Playlist(String title, String url)
@@ -51,7 +55,18 @@ public final class Playlist
 	NullCheck.notNull(url, "url");
 	this.title = title;
 	this.urls = new String[]{url};
+	this.extData = null;
     }
+
+    public Playlist(String title, String[] urls, Object extData)
+    {
+	NullCheck.notNull(title, "title");
+	NullCheck.notNullItems(urls, "urls");
+	this.title = title;
+	this.urls = urls;
+	this.extData = extData;
+    }
+
 
     public String getPlaylistTitle()
     {

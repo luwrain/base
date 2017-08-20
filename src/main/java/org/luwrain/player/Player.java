@@ -40,6 +40,7 @@ public interface Player
     void jump(long offsetMsec);
     void nextTrack();
     void prevTrack();
+    boolean hasPlaylist();
     Playlist getCurrentPlaylist();
     int getCurrentTrackNum();
     void addListener(Listener listener);
