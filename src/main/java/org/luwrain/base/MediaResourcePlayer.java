@@ -48,8 +48,8 @@ public interface MediaResourcePlayer
 
     public interface Listener
     {
-	void onPlayerTime(long msec);
-	void onPlayerFinish();
+	void onPlayerTime(MediaResourcePlayer player, long msec);
+	void onPlayerFinish(MediaResourcePlayer player);
     }
 
     Result play(URL url, long playFromMsec, Set<Flags> flags);
