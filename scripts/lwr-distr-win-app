@@ -23,3 +23,10 @@ cp -r "$SRC_DIR/apptemplate-win-32/." .
 for i in data lib jar i18n registry sqlite; do
     cp -r "$PKG_DIR/32/$i" ./app
 done
+
+cp -r "$SRC_DIR/txt/win-app/. " .
+
+cat <<EOF > ReleaseInfo.txt
+LUWRAIN $VERSION ($(date -I))
+32-bit release for Microsoft Windows
+EOF
