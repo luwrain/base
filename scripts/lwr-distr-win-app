@@ -24,7 +24,7 @@ for i in data lib jar i18n registry sqlite; do
     cp -r "$PKG_DIR/32/$i" ./app
 done
 
-cp -r "$SRC_DIR/base/txt/win-app/. " .
+cp -r "$SRC_DIR/base/txt/win-app/." .
 
 cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
