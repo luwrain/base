@@ -36,6 +36,18 @@ public class FileUtils
 	return res.toByteArray();
     }
 
+    static public void writeAllBytes(OutputStream os, byte[] bytes) throws IOException
+    {
+	NullCheck.notNull(os, "os");
+	NullCheck.notNull(bytes, "bytes");
+	int pos = 0;
+	do {
+	    final int remaining = bytes.length - pos;
+	    os.write(bytes, pos, remaining > 2048?2048:remaining);
+	    pos += remaining;
+	} while(pos < bytes.length);
+    }
+
     static public String readTextFileSingleString(File file, String charset) throws IOException
     {
 	NullCheck.notNull(file, "file");
@@ -51,6 +63,21 @@ public class FileUtils
 	return new String(bytes, charset);
     }
 
+    static public void writeTextFileSingleString(File file, String text, String charset) throws IOException
+    {
+	NullCheck.notNull(file, "file");
+	NullCheck.notNull(text, "text");
+	NullCheck.notEmpty(charset, "charset");
+	final OutputStream os = new FileOutputStream(file);
+	try {
+	    writeAllBytes(os, text.getBytes(charset));
+	}
+	finally {
+	    os.flush();
+	    os.close();
+	}
+    }
+
     //lineSeparator may be null, means use default 
     static public String[] readTextFileMultipleStrings(File file, String charset, String lineSeparator) throws IOException
     {
@@ -60,5 +87,21 @@ public class FileUtils
 	if (text.isEmpty())
 	    return new String[0];
 	return text.split(lineSeparator != null?lineSeparator:System.getProperty("line.separator"));
+    }
+
+    //lineSeparator may be null, means use default 
+    static public void writeTextFileMultipleStrings(File file, String[] text, String charset, String lineSeparator) throws IOException
+    {
+	NullCheck.notNull(file, "file");
+	NullCheck.notNull(text, "text");
+	NullCheck.notEmpty(charset, "charset");
+	final StringBuilder b = new StringBuilder();
+	if (text.length > 0)
+	{
+	    b.append(text[0]);
+	    for(int i = 1;i < text.length;++i)
+		b.append((lineSeparator != null?lineSeparator:System.getProperty("line.separator")) + text[i]);
+	}
+	writeTextFileSingleString(file, new String(b), charset);
     }
 }
