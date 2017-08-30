@@ -86,7 +86,7 @@ public class FileUtils
 	final String text = readTextFileSingleString(file, charset);
 	if (text.isEmpty())
 	    return new String[0];
-	return text.split(lineSeparator != null?lineSeparator:System.getProperty("line.separator"));
+	return text.split(lineSeparator != null?lineSeparator:System.getProperty("line.separator"), -1);
     }
 
     //lineSeparator may be null, means use default 
