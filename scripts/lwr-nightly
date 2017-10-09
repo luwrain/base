@@ -63,5 +63,17 @@ done
 RELEASE_DIR=~/nightly-`date -I`
 mkdir -p "$RELEASE_DIR"
 mv *.txt *.gz *.zip "$RELEASE_DIR"
+if [ -r /tmp/lwr-report/junit-noframes.html ]; then
+    cp /tmp/lwr-report/junit-noframes.html "$RELEASE_DIR/junit-report.html"
+fi
+
+cat <<EOF > "$RELEASE_DIR/version.php"
+<?php
+function lwr_nightly_latest_date()
+{
+return "$(date -I)";
+}
+?>
+EOF
 
 echo 'OK!'
