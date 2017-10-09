@@ -5,26 +5,26 @@ cd "$SRC_DIR"
 
 for i in base luwrain; do
     cd "$i"
-    ant
+    ant -emacs
     cd ..
 done
 
 for i in $COMPONENTS; do
     cd "$i"
-    ant
+    ant -emacs
     cd ..
 done
 
 for i in $APPS; do
     cd app-$i
-    ant
+    ant -emacs
     cd ..
 done
 
 cd extensions
 for i in $EXTENSIONS; do
     cd $i
-    ant
+    ant -emacs
     cd ..
 done
 cd ..
@@ -32,7 +32,7 @@ cd ..
 cd i18n
 for i in $LANGS; do
     cd $i
-    ant
+    ant -emacs
     cd ..
 done
 cd ..

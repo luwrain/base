@@ -2,7 +2,7 @@
 VERSION=1.1.0
 GITS='base browser extensions i18n interaction-javafx linux luwrain network pim registry windows'
 PROPERTIES_FILE=release.properties
-JUNIT_COMPONENTS='browser'
+JUNIT_COMPONENTS='luwrain browser'
 
 # Used for compilation, everything must be listed regardless the target platform
 DBS='news contacts mail'
