@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+. init.sh
+cd "$SRC_DIR"
+
+REPORT_DIR=/tmp/lwr-report
+rm -rf "$REPORT_DIR"
+
+for i in $JUNIT_COMPONENTS; do
+    echo "Testing $i"
+    pushd $i > /dev/null
+    ant junit &> /dev/null
+    popd > /dev/null
+done
+
+echo "Writing report to $REPORT_DIR"
+pushd luwrain > /dev/null
+ant junit-report &> /dev/null
+popd > /dev/null

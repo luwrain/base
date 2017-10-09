@@ -4,13 +4,17 @@
 cd "$SRC_DIR"
 
 for i in $GITS; do
-    pushd $i 
-    git push origin "$@"
-    popd		
+    echo "Pushing $i"
+    pushd $i  > /dev/null
+    git push origin "$@" &> /dev/null
+    popd		 > /dev/null
 done			
 
 for i in $APPS; do
-    pushd app-$i
-git push origin "$@"
-popd		
+    echo "Pushing app-$i"
+    pushd app-$i > /dev/null
+git push origin "$@" &> /dev/null
+popd		 > /dev/null
 done
+
+echo OK
