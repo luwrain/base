@@ -27,7 +27,8 @@ public class Sha1Test extends Assert
     @Test public void emptyStream() throws Exception
     {
 	final byte[] emptyBuf = new byte[0];
-	final ByteArrayInputStream s = new ByteArrayInputStream(emptyBuf);
-	final String res = Sha1.getSha1(s);
+final ByteArrayInputStream s = new ByteArrayInputStream(emptyBuf);
+final String res = Sha1.getSha1(s);
+assertTrue(res.equals("da39a3ee5e6b4b0d3255bfef95601890afd80709"));
     }
 }
