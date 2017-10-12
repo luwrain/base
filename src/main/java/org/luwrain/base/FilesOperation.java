@@ -84,6 +84,11 @@ public interface FilesOperation extends Runnable
 	    this.exception = exception;
 	}
 
+	public boolean isOk()
+	{
+	    return type == Type.OK;
+	}
+
 	public Type getType()
 	{
 	    return type;
