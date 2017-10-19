@@ -1,0 +1,90 @@
+#!/bin/bash -e
+
+. init.sh
+
+DEST_DIR="$1"
+[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
+
+rm -rf "$DEST_DIR"
+mkdir -p "$DEST_DIR"
+cd "$DEST_DIR"
+
+mkdir -p jar i18n registry/org/luwrain
+for i in data lib sqlite; do
+        cp -r "$SRC_DIR/$i" .
+done
+rm -rf data/properties data/scripts
+
+#Jars
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
+for i in $LINUX_COMPONENTS; do
+    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
+done
+for i in $LINUX_APPS; do
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+done
+for i in $LINUX_LANGS; do
+    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
+done
+for i in $LINUX_EXTENSIONS; do
+    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
+done
+
+#registry
+for i in base base.linux; do
+    if [ -d "$SRC_DIR/registry/$i" ]; then
+	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
+    fi
+done
+for i in $LINUX_LANGS; do
+    mkdir -p "i18n/$i/org/luwrain"
+    if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
+    fi
+    if [ -d "$SRC_DIR/registry/i18n.$i.linux" ]; then
+	cp -r "$SRC_DIR/registry/i18n.$i.linux/." "i18n/$i/org/luwrain"
+    fi
+done
+
+#properties
+mkdir data/properties
+for i in $LINUX_PROPERTIES; do
+    cp -r "$SRC_DIR/$i/properties/." data/properties
+done
+cat <<EOF > data/properties/release.properties
+luwrain.class.os = org.luwrain.linux.Linux
+luwrain.version = $VERSION
+luwrain.build.date = $(date -I)
+EOF
+
+#scripts
+mkdir -p data/scripts
+for i in $LINUX_SCRIPTS; do
+    cp -r "$SRC_DIR/$i/scripts/." data/scripts
+done
+chmod +x data/scripts/*
+
+#desktop
+for i in $WIN_LANGS; do
+    mkdir -p "i18n/$i/org/luwrain/desktop/unirefs"
+    cat <<EOF  > "i18n/$i/org/luwrain/desktop/unirefs/strings.txt"
+"000001" = "empty:"
+"000002" = "section:Добро пожаловать в LUWRAIN!"
+"000003" = "empty:"
+"000004" = "command:browser"
+"000005" = "command:telegram"
+"000006" = "command:twitter"
+"000007" = "command:player"
+"000008" = "command:commander"
+"000009" = "empty:"
+"000010" = "section:Подсказка"
+"000011" = "empty:"
+"000012" = "static:Нажмите Alt+Z для открытия главного меню LUWRAIN "
+"000013" = "empty:"
+"000014" = "section:О программе"
+"000015" = "empty:"
+"000016" = "static:LUWRAIN $VERSION (сборка $(date -I))"
+"000017" = "link:Наш сайт\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
+"000018" = "static:Авторы: Алексей Голошумов, Михаил Пожидаев и Елена Теплых"
+EOF
+done
