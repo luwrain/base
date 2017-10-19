@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 . init.sh
-cd "$SRC_DIR"
 
 for i in luwrain interaction-javafx; do
     ln -s "$SRC_DIR/lib-stage1" "$i"/lib

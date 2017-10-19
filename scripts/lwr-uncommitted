@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 . init.sh
-cd "$SRC_DIR"
 
 check-repo()
 {

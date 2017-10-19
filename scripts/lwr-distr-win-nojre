@@ -2,57 +2,22 @@
 
 . init.sh
 
-if [ -n "$1" ]; then 
-    DEST_DIR="$1"
-else
-    DEST_DIR=/tmp/luwrain-windows-nojre
-fi
+DEST_DIR="$1"
+[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
-if [ -d "$DEST_DIR" ]; then
-    rm -rf "$DEST_DIR"
-fi
-
+rm -rf "$DEST_DIR"
 mkdir -p $DEST_DIR
 
+cd "$SRC_DIR/base/scripts"
+./lwr-distr-win-common "$DEST_DIR"
 cd $DEST_DIR
-mkdir -p jar i18n registry/org/luwrain
-cp -r "$SRC_DIR/data" data
-rm -rf data/scripts
-cp -r "$SRC_DIR"/lib lib
-cp "$SRC_DIR/windows/luwrain.bat" .
-cp "$SRC_DIR/luwrain/LICENSE" LICENSE.en.txt
-cp -r "$SRC_DIR"/sqlite .
-
-# registry
-for i in base base.win; do
-    if [ -d "$SRC_DIR/registry/$i" ]; then
-	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
-    fi
-done
-for i in $WIN_LANGS; do
-    mkdir -p "i18n/$i/org/luwrain"
-    if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
-    fi
-    if [ -d "$SRC_DIR/registry/i18n.$i.linux" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i.linux/." "i18n/$i/org/luwrain"
-    fi
-done
-
-#Jars
-cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-for i in $WIN_COMPONENTS; do
-    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
-done
-for i in $WIN_APPS; do
-    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
-done
-for i in $WIN_LANGS; do
-    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
-done
-for i in $WIN_EXTENSIONS; do
-    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
-done
-
 cp -r "$SRC_DIR/precompiled/windows/." .
-echo "luwrain.class.os = org.luwrain.windows.Windows" >> data/properties/"$PROPERTIES_FILE"
+cp -r "$SRC_DIR/base/txt/win-nojre/." .
+cat <<EOF > ReleaseInfo.txt
+LUWRAIN $VERSION ($(date -I))
+Release for Microsoft Windows
+You need an external Java virtual machine for running LUWRAIN on your computer
+EOF
+
+#FIXME:speech settings
+#FIXME:launch script

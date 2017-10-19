@@ -1,5 +1,5 @@
 
-VERSION=1.1.0
+VERSION='(nightly)'
 GITS='base browser extensions i18n interaction-javafx linux luwrain network pim registry windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser'
@@ -16,6 +16,7 @@ WIN_LANGS='en ru'
 WIN_COMPONENTS='base pim browser interaction-javafx windows'
 WIN_APPS='notepad news fetch commander twitter reader message mail contacts browser player telegram'
 WIN_EXTENSIONS='mssapi cmdtts yatran rhvoice'
+WIN_PROPERTIES='luwrain'
 
 LINUX_ARCH='32 64'
 LINUX_LANGS='en ru'

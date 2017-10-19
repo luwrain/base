@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 . init.sh
-cd "$SRC_DIR"
 
 REPORT_DIR=/tmp/lwr-report
 rm -rf "$REPORT_DIR"

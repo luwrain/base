@@ -2,8 +2,6 @@
 
 . init.sh
 
-cd "$SRC_DIR"
-
 for i in 1 2 3 4; do 
     if [ -d "lib-stage$i" ]; then
 	find lib-stage$i -type l -delete
