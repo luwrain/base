@@ -2,13 +2,13 @@
 
 . init.sh
 
-if [ -n "$1" ]; then 
-    DEST_DIR="$1"
-else
-    DEST_DIR=/tmp/luwrain-sdk
-fi
+DEST_DIR="$1"
+[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
-mkdir -p $DEST_DIR
+rm -rf "$DEST_DIR"
+mkdir -p "$DEST_DIR"
+
+cd "$SRC_DIR/base/scripts"
 ./lwr-mk-api "$DEST_DIR/javadoc"
 cd $DEST_DIR
 

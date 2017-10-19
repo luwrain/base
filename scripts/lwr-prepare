@@ -2,24 +2,8 @@
 
 . init.sh
 
+cd "$SRC_DIR/base/scripts"
 ./lwr-update-lib-dirs
 ./lwr-mk-lib-refs
 ./lwr-sqlite
-
-for i in scripts properties; do
-    mkdir -p "$SRC_DIR/data/$i"
-done
-
-for i in $TAKE_SCRIPTS; do
-    cp -r "$SRC_DIR/$i/scripts/." "$SRC_DIR/data/scripts"
-done
-
-for i in $TAKE_PROPERTIES; do
-    cp -r "$SRC_DIR/$i/properties/." "$SRC_DIR/data/properties"
-done
-
-cat  <<EOF > "$SRC_DIR/data/properties/$PROPERTIES_FILE"
-luwrain.version = $VERSION
-EOF
-
 
