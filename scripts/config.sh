@@ -31,6 +31,8 @@ ISO_LANGS='en ru'
 ISO_COMPONENTS='base pim browser interaction-javafx network linux'
 ISO_APPS='notepad news fetch commander twitter reader message mail contacts browser player telegram'
 ISO_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
+ISO_PROPERTIES='luwrain'
+ISO_SCRIPTS='network linux app-reader'
 
 SDK_JARS='base pim browser network linux windows'
 SRC_DEST_DIR=/tmp/luwrain-src

@@ -3,24 +3,36 @@
 
 . init.sh
 
-THIS="${0##*/}"
-
 ARCH="$1"
-LANG="$2"
-DEST_DIR="$3"
-
 [ -z "$ARCH" ] && echo "$THIS:no arch given" >&2 && exit 1
+
+LANG="$2"
 [ -z "$LANG" ] && echo "$THIS:no lang given" >&2 && exit 1
+
+DEST_DIR="$3"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
-mkdir -p $DEST_DIR
 cd $DEST_DIR
 
 mkdir -p jar i18n registry/org/luwrain
-cp "$SRC_DIR/luwrain/LICENSE" LICENSE.en.txt
-
 for i in lib data sqlite; do
     cp -r "$SRC_DIR/$i" "$i"
+done
+rm -rf data/scripts data/properties
+
+#Jars
+cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
+for i in $ISO_COMPONENTS; do
+    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
+done
+for i in $ISO_APPS; do
+    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
+done
+for i in $LANG; do
+    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
+done
+for i in $ISO_EXTENSIONS; do
+    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
 
 # registry
@@ -39,20 +51,45 @@ for i in $LANG; do
     fi
 done
 
-#Jars
-cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-for i in $ISO_COMPONENTS; do
-    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
+#properties
+mkdir data/properties
+for i in $LINUXISO_PROPERTIES; do
+    cp -r "$SRC_DIR/$i/properties/." data/properties
 done
-for i in $ISO_APPS; do
-    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
-done
-for i in $LANG; do
-    cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
-done
-for i in $ISO_EXTENSIONS; do
-    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
-done
+cat <<EOF > data/properties/release.properties
+luwrain.class.os = org.luwrain.linux.Linux
+luwrain.version = $VERSION
+luwrain.build.date = $(date -I)
+EOF
 
-    cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
-    echo "luwrain.class.os = org.luwrain.linux.Linux" >> data/properties/"$PROPERTIES_FILE"
+#scripts
+mkdir -p data/scripts
+for i in $ISO_SCRIPTS; do
+    cp -r "$SRC_DIR/$i/scripts/." data/scripts
+done
+chmod +x data/scripts/*
+
+#desktop
+mkdir -p "i18n/$LANG/org/luwrain/desktop/unirefs"
+cat <<EOF  > "i18n/$LANG/org/luwrain/desktop/unirefs/strings.txt"
+"000001" = "empty:"
+"000002" = "section:Добро пожаловать в LUWRAIN!"
+"000003" = "empty:"
+"000004" = "command:browser"
+"000005" = "command:telegram"
+"000006" = "command:twitter"
+"000007" = "command:player"
+"000008" = "command:commander"
+"000009" = "empty:"
+"000010" = "section:Подсказка"
+"000011" = "empty:"
+"000012" = "static:Нажмите Alt+Z для открытия главного меню LUWRAIN "
+"000013" = "empty:"
+"000014" = "section:О программе"
+"000015" = "empty:"
+"000016" = "static:LUWRAIN $VERSION (сборка $(date -I))"
+"000017" = "link:Наш сайт\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
+"000018" = "static:Авторы: Алексей Голошумов, Михаил Пожидаев и Елена Теплых"
+EOF
+
+cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .

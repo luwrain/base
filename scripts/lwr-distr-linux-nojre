@@ -5,6 +5,9 @@
 DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
+rm -rf "$DEST_DIR"
+mkdir -p "$DEST_DIR"
+
 cd "$SRC_DIR/base/scripts"
 ./lwr-distr-linux-common "$DEST_DIR"
 

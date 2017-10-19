@@ -9,6 +9,7 @@ rm -rf "$DEST_DIR"
 mkdir -p "$DEST_DIR"
 
 for ARCH in $LINUX_ARCH; do
+    mkdir -p $DEST_DIR/$ARCH""
 
     cd "$SRC_DIR/base/scripts"
     ./lwr-distr-linux-common "$DEST_DIR/$ARCH"

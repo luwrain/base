@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 . init.sh
-cd "$SRC_DIR"
 
 if [ -n "$1" ]; then
     SRC_DEST_DIR="$1"
