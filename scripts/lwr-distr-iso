@@ -2,11 +2,8 @@
 
 . init.sh
 
-if [ -n "$1" ]; then
-    ORIG_DEST_DIR="$1"
-else
-    ORIG_DEST_DIR=/tmp/luwrain-iso
-fi
+ORIG_DEST_DIR="$1"
+[ -z "$ORIG_DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
 for LANG in $ISO_LANGS; do
     for ARCH in $ISO_ARCH; do
@@ -19,6 +16,8 @@ for LANG in $ISO_LANGS; do
 	mkdir "$OPT/greeter"
 	cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
 	mkdir -p "$OPT/luwrain"
+	pushd "$SRC_DIR/base/scripts" > /dev/null
 	./lwr-distr-iso-optluwrain $ARCH $LANG "$OPT/luwrain"
+	popd > /dev/null
     done
 done
