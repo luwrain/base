@@ -26,7 +26,7 @@ LINUX_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
 LINUX_PROPERTIES='luwrain'
 LINUX_SCRIPTS='network linux app-reader'
 
-ISO_ARCH='32 64'
+ISO_ARCH='64'
 ISO_LANGS='en ru'
 ISO_COMPONENTS='base pim browser interaction-javafx network linux'
 ISO_APPS='notepad news fetch commander twitter reader message mail contacts browser player telegram'
