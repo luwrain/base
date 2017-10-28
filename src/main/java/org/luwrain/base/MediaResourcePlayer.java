@@ -50,6 +50,7 @@ public interface MediaResourcePlayer
     {
 	void onPlayerTime(MediaResourcePlayer player, long msec);
 	void onPlayerFinish(MediaResourcePlayer player);
+	void onPlayerError(Exception e);
     }
 
     Result play(URL url, long playFromMsec, Set<Flags> flags);
