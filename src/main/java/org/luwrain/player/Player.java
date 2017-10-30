@@ -39,11 +39,11 @@ public interface Player
      * @param startingPosMsec A position in audio file in milliseconds to start playing from
      */
     Result play(Playlist playlist, int startingTrackNum, long startingPosMsec, Set<Flags> flags);
-    void stop();
-    void pauseResume();
-    void jump(long offsetMsec);
-    void nextTrack();
-    void prevTrack();
+    boolean stop();
+    boolean pauseResume();
+    boolean jump(long offsetMsec);
+    boolean nextTrack();
+    boolean prevTrack();
     State getState();
     boolean hasPlaylist();
     Playlist getPlaylist();
