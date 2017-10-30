@@ -25,7 +25,7 @@ public interface Player
 
     public enum Flags {CYCLED, RANDOM, STREAMING};
     public enum Result {OK, INVALID_PLAYLIST, UNSUPPORTED_FORMAT_STARTING_TRACK};
-    public enum State {PLAYING, PAUSED, STOPPED};
+    public enum State {LOADING, PLAYING, PAUSED, STOPPED};
 
     /**
      * Starts playing of the specified playlist. This method acts in separate
@@ -44,9 +44,10 @@ public interface Player
     void jump(long offsetMsec);
     void nextTrack();
     void prevTrack();
+    State getState();
     boolean hasPlaylist();
-    Playlist getCurrentPlaylist();
-    int getCurrentTrackNum();
+    Playlist getPlaylist();
+    int getTrackNum();
     void addListener(Listener listener);
     void removeListener(Listener listener);
 }
