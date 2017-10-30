@@ -16,61 +16,82 @@
 
 package org.luwrain.player;
 
+import java.util.*;
+
 import org.luwrain.core.*;
 
 public final class Playlist
 {
-    private final String title;
+    static final public class ExtInfo
+    {
+	private final Map<String, String> props = new HashMap<String, String>();
+
+	public ExtInfo(Map<String, String> props)
+	{
+	    NullCheck.notNull(props, "props");
+	    for(Map.Entry<String, String> e: props.entrySet())
+	    {
+		if (e.getKey() != null && e.getValue() != null)
+		    this.props.put(e.getKey(), e.getValue());
+	    }
+	}
+
+	public String getProp(String propName)
+	{
+	    NullCheck.notEmpty(propName, "propName");
+	    if (!props.containsKey(propName))
+		return "";
+	    return props.get(propName);
+	}
+    }
+
     private final String[] urls;
-    private final Object extData;
+    private final ExtInfo extInfo;
 
     public Playlist(String[] urls)
     {
 	NullCheck.notNullItems(urls, "urls");
-	this.title = "";
 	this.urls = urls;
-	this.extData = null;
+	this.extInfo = null;
     }
 
     public Playlist(String title, String[] urls)
     {
 	NullCheck.notNull(title, "title");
 	NullCheck.notNullItems(urls, "urls");
-	this.title = title;
 	this.urls = urls;
-	this.extData = null;
+	final Map<String, String> props = new HashMap<String, String>();
+	props.put("title", title);
+	this.extInfo = new ExtInfo(props);
     }
 
     public Playlist(String url)
     {
 	NullCheck.notNull(url, "url");
-	this.title = "";
 	this.urls = new String[]{url};
-	this.extData = null;
+	this.extInfo = null;
     }
 
     public Playlist(String title, String url)
     {
 	NullCheck.notNull(title, "title");
 	NullCheck.notNull(url, "url");
-	this.title = title;
 	this.urls = new String[]{url};
-	this.extData = null;
+	final Map<String, String> props = new HashMap<String, String>();
+	props.put("title", title);
+	this.extInfo = new ExtInfo(props);
     }
 
-    public Playlist(String title, String[] urls, Object extData)
+    public Playlist(String[] urls, ExtInfo extInfo)
     {
-	NullCheck.notNull(title, "title");
 	NullCheck.notNullItems(urls, "urls");
-	this.title = title;
 	this.urls = urls;
-	this.extData = extData;
+	this.extInfo = extInfo;
     }
-
 
     public String getPlaylistTitle()
     {
-	return title;
+	return extInfo != null?extInfo.getProp("title"):"";
     }
 
     public String[] getPlaylistUrls()
@@ -78,8 +99,14 @@ public final class Playlist
 	return urls;
     }
 
+    //May return null
+    public ExtInfo getExtInfo()
+    {
+	return extInfo;
+    }
+
     @Override public String toString()
     {
-	return title;
+	return getPlaylistTitle();
     }
 }
