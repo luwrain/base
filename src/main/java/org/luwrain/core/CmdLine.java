@@ -51,7 +51,7 @@ public class CmdLine
 
     public String[] getArgs(String prefix)
     {
-	final LinkedList<String> res = new LinkedList<String>();
+	final List<String> res = new LinkedList<String>();
 	NullCheck.notNull(prefix, "prefix");
 	for(String s: cmdLine)
 	{
