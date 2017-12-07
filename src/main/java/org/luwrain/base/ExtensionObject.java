@@ -1,8 +1,7 @@
 /*
    Copyright 2012-2017 Michael Pozhidaev <michael.pozhidaev@gmail.com>
-   Copyright 2015-2016 Roman Volovodov <gr.rPman@gmail.com>
 
-   This file is part of the LUWRAIN.
+   This file is part of LUWRAIN.
 
    LUWRAIN is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -17,8 +16,7 @@
 
 package org.luwrain.base;
 
-public interface MediaResourcePlayerFactory
+public interface ExtensionObject
 {
-    MediaResourcePlayer newMediaResourcePlayer(MediaResourcePlayer.Listener listener);
-    String getSupportedMimeType();//FIXME:multiple types
+    String getExtObjName();
 }

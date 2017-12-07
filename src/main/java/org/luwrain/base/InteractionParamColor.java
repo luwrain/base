@@ -20,7 +20,7 @@ package org.luwrain.base;
 /* Dumb color class for using inside InteractionParam, defined as one of predefined colors or RGB values, passed directly awt/javafx color
  * predefined and rgb colors are stored different private member, color can be only one of them 
  */
-public class InteractionParamColor
+public final class InteractionParamColor
 {
     public enum Predefined {WHITE,LIGHT_GRAY,GRAY,DARK_GRAY,BLACK,RED,PINK,ORANGE,YELLOW,GREEN,MAGENTA,CYAN,BLUE};
     Predefined predefined=null;

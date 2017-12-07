@@ -17,48 +17,33 @@
 
 package org.luwrain.base;
 
-import java.net.*;
 import java.util.*;
 
-public interface MediaResourcePlayer
+public interface CommandLineTool extends ExtensionObject
 {
-    public enum Flags {}
-
-    static public final class Result
-    {
-	public enum Type {OK};
-
-	private final Type type;
-
-	public Result()
-	{
-	    this.type = Type.OK;
-	}
-
-	public Type  getType()
-	{
-	    return type;
-	}
-
-	public boolean isOk()
-	{
-	    return type == Type.OK;
-	}
-    }
+    public enum Flags {WITH_SHORTCUT, INTERACTIVE_SHORTCUT};
+    public enum Status {RUNNING, FINISHED};
 
     public interface Listener
     {
-	void onPlayerTime(Instance player, long msec);
-	void onPlayerFinish(Instance player);
-	void onPlayerError(Exception e);
+	void onStatusChange(Instance instance);
+	void onSingleLineStateChange(Instance instance);
+	void onMultilineStateChange(Instance instance);
+	void onNativeStateChange(Instance instance);
     }
 
     public interface Instance
     {
-	Result play(URL url, long playFromMsec, Set<Flags> flags);
+	String getInstanceName();
+	Status getStatus();
+	int getExitCode();
+	boolean isFinishedSuccessfully();
+	String getSingleLineState();
+	String[] getMultilineState();
+	String[] getNativeState();
 	void stop();
     }
 
-    Instance newMediaResourcePlayer(Listener listener);
-    String getSupportedMimeType();//FIXME:multiple types
+    Instance launch(Listener listener, String[] args);
+    Set<Flags> getToolFlags();
 }

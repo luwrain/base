@@ -27,9 +27,6 @@ public interface OperatingSystem
     String getProperty(String propName);
     Hardware getHardware();
     Braille getBraille();
-    boolean shutdown();
-    boolean reboot();
-    boolean suspend(boolean hibernate);
     void openFileInDesktop(Path path);
     org.luwrain.interaction.KeyboardHandler getCustomKeyboardHandler(String subsystem);
     OsCommand runOsCommand(String cmd, String dir, OsCommand.Output output, OsCommand.Listener listener);
