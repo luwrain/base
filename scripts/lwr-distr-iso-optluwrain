@@ -14,8 +14,8 @@ DEST_DIR="$3"
 
 cd $DEST_DIR
 
-mkdir -p jar i18n registry/org/luwrain
-for i in lib data sqlite; do
+mkdir -p jar
+for i in lib data; do
     cp -r "$SRC_DIR/$i" "$i"
 done
 rm -rf data/scripts data/properties
@@ -36,20 +36,7 @@ for i in $ISO_EXTENSIONS; do
 done
 
 # registry
-for i in base base.iso; do
-    if [ -d "$SRC_DIR/registry/$i" ]; then
-	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
-    fi
-done
-for i in $LANG; do
-    mkdir -p "i18n/$i/org/luwrain"
-    if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
-    fi
-    if [ -d "$SRC_DIR/registry/i18n.$i.iso" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i.iso/." "i18n/$i/org/luwrain"
-    fi
-done
+#FIXME: to current dir
 
 #properties
 mkdir data/properties

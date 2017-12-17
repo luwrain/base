@@ -6,8 +6,8 @@ DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 cd "$DEST_DIR"
 
-mkdir -p jar i18n registry/org/luwrain
-for i in data lib sqlite; do
+mkdir -p jar
+for i in data lib; do
         cp -r "$SRC_DIR/$i" .
 done
 rm -rf data/properties data/scripts
@@ -28,20 +28,7 @@ for i in $LINUX_EXTENSIONS; do
 done
 
 #registry
-for i in base base.linux; do
-    if [ -d "$SRC_DIR/registry/$i" ]; then
-	cp -r "$SRC_DIR/registry/$i/." registry/org/luwrain
-    fi
-done
-for i in $LINUX_LANGS; do
-    mkdir -p "i18n/$i/org/luwrain"
-    if [ -d "$SRC_DIR/registry/i18n.$i" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i/." "i18n/$i/org/luwrain"
-    fi
-    if [ -d "$SRC_DIR/registry/i18n.$i.linux" ]; then
-	cp -r "$SRC_DIR/registry/i18n.$i.linux/." "i18n/$i/org/luwrain"
-    fi
-done
+#FIXME:to current directory
 
 #properties
 mkdir data/properties

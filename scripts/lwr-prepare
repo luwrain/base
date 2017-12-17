@@ -5,5 +5,3 @@
 cd "$SRC_DIR/base/scripts"
 ./lwr-update-lib-dirs
 ./lwr-mk-lib-refs
-./lwr-sqlite
-

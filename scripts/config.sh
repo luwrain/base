@@ -5,7 +5,6 @@ PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser app-player'
 
 # Used for compilation, everything must be listed regardless the target platform
-DBS='news contacts mail'
 LANGS='en ru'
 APPS='notepad news fetch commander twitter reader message mail contacts browser player telegram writer'
 EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice'
