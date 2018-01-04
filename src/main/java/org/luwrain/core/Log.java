@@ -24,20 +24,19 @@ public class Log
 
     static public class Message
     {
-	private Level level;
-	private String component;
-	private String message;
+	public final Level level;
+	public final String component;
+	public final String message;
 
 	Message(Level level, String component, String message)
 	{
+	    NullCheck.notNull(level, "level");
+	    NullCheck.notNull(component, "component");
+	    NullCheck.notNull(message, "message");
 	    this.level = level;
 	    this.component = component;
 	    this.message = message;
 	}
-
-	public Level level() {return level;}
-	public String component() {return component;}
-	public String message() {return message;}
     }
 
     public interface Listener
@@ -46,15 +45,8 @@ public class Log
     }
 
     static private final Vector<Listener> listeners = new Vector<Listener>();
-    static private final LinkedList<Message> history = new LinkedList<Message>();
+    static private boolean briefMode = false;
     static private final Object syncObj = new Object();
-
-    public Message[] getHistory()
-    {
-	synchronized (syncObj) {
-	return history.toArray(new Message[history.size()]);
-	}
-    }
 
     static public void addListener(Listener listener)
     {
@@ -80,6 +72,11 @@ public class Log
 	}
     }
 
+    static void enableBriefMode()
+    {
+	briefMode = true;
+    }
+
     static private void message(Level level,
 				String component, String message)
     {
@@ -88,12 +85,26 @@ public class Log
 	synchronized (syncObj) 
 {
 	final Message msg = new Message(level, component, message);
-	history.add(msg);
 	for(Listener l: listeners)
 	    l.onLogMessage(msg);
-	if (level != Level.DEBUG)
-	System.out.println("" + level + ":" + component + ":" + message); else
-	    System.out.println(component + ":" + message);
+	switch(level)
+	{
+	case DEBUG:
+	    if (!briefMode)
+		System.out.println(component + ":" + message);
+	    break;
+	case INFO:
+	    if (briefMode)
+	    {
+		if (component.equals("init") || component.equals("core"))
+		    		System.out.println(message); else
+		System.out.println(component + ":" + message);
+	    }else
+						System.out.println(level.toString() + ":" + component + ":" + message);
+	    break;
+	default:
+	    						System.out.println(level.toString() + ":" + component + ":" + message);
+			    			}
 }
     }
 
