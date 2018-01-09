@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+. init.sh
+
+cd extensions
+for i in $EXTENSIONS; do
+    pushd $i > /dev/null
+    "$SRC_DIR/base/scripts/lwr-ant-gen-ext" $i > build.xml
+    popd > /dev/null
+done
