@@ -7,7 +7,7 @@ JUNIT_COMPONENTS='base luwrain linux browser app-player'
 # Used for compilation, everything must be listed regardless the target platform
 LANGS='en ru'
 APPS='notepad news fetch commander twitter reader message mail contacts browser player telegram writer'
-EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice'
+EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice plmp3 plogg'
 COMPONENTS='base pim browser interaction-javafx linux windows network'
 
 WIN_ARCH=32
