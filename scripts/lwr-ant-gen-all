@@ -2,9 +2,13 @@
 
 . init.sh
 
+for i in $APPS; do
+    "$SCRIPTS_DIR/lwr-ant-gen-app" $i > app-$i/build.xml
+done
+
 cd extensions
 for i in $EXTENSIONS; do
     pushd $i > /dev/null
-    "$SRC_DIR/base/scripts/lwr-ant-gen-ext" $i > build.xml
+    "$SCRIPTS_DIR/lwr-ant-gen-ext" $i > build.xml
     popd > /dev/null
 done
