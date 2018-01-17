@@ -3,7 +3,10 @@
 . init.sh
 
 REPORT_DIR=/tmp/lwr-report
+
+echo Cleaning existing test files
 rm -rf "$REPORT_DIR"
+find "$SRC_DIR" -type f -name 'TEST-*.xml' -delete
 
 for i in $JUNIT_COMPONENTS; do
     echo "Testing $i"

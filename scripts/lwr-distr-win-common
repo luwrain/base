@@ -37,7 +37,6 @@ for i in $WIN_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." data/properties
 done
 cat <<EOF > data/properties/release.properties
-luwrain.class.os = org.luwrain.windows.Windows
 luwrain.version = $VERSION
 luwrain.build.date = $(date -I)
 EOF
@@ -67,3 +66,11 @@ FILE strings.txt
 "000018" = "static:Авторы: Алексей Голошумов, Михаил Пожидаев и Елена Теплых"
 EOF
 done
+
+# luwrain.bat
+cat <<EOF > luwrain.bat
+rem Runs LUWRAIN with the locally installed (not embedded) Java SE Runtime Environment
+rem This can be useful for debug purposes
+
+javaw -cp jar\luwrain-base.jar;jar\luwrain.jar org.luwrain.core.Init
+EOF

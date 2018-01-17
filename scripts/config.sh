@@ -2,7 +2,10 @@
 VERSION='(nightly)'
 GITS='base browser extensions i18n interaction-javafx linux luwrain network pim registry windows'
 PROPERTIES_FILE=release.properties
-JUNIT_COMPONENTS='base luwrain linux browser app-player'
+JUNIT_COMPONENTS='base luwrain linux browser pim extensions/plmp3'
+#TODO:likely needless
+SDK_JARS='base pim browser network linux windows'
+SRC_DEST_DIR=/tmp/luwrain-src
 
 # Used for compilation, everything must be listed regardless the target platform
 LANGS='en ru'
@@ -15,7 +18,7 @@ WIN_LANGS='en ru'
 WIN_COMPONENTS='base pim browser interaction-javafx windows'
 WIN_APPS='notepad news commander twitter reader mail contacts browser player telegram'
 WIN_EXTENSIONS='mssapi cmdtts yatran rhvoice'
-WIN_PROPERTIES='luwrain'
+WIN_PROPERTIES='luwrain windows'
 
 LINUX_ARCH='32 64'
 LINUX_LANGS='en ru'
@@ -32,6 +35,3 @@ ISO_APPS='notepad news commander twitter reader mail contacts browser player tel
 ISO_EXTENSIONS='voiceman emacspeak cmdtts yatran rhvoice'
 ISO_PROPERTIES='luwrain'
 ISO_SCRIPTS='network linux app-reader'
-
-SDK_JARS='base pim browser network linux windows'
-SRC_DEST_DIR=/tmp/luwrain-src

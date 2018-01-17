@@ -14,11 +14,12 @@
    General Public License for more details.
 */
 
-package org.luwrain.base;
+package org.luwrain.base.hardware;
 
-public interface Battery
+public class StorageDevice
 {
-    int getEnergyFull();
-    int getEnergyNow();
-    String getBatteryName();
+    public String devName;
+    public String model;
+    public long capacity;
+    public boolean removable;
 }

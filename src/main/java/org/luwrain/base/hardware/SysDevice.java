@@ -14,10 +14,21 @@
    General Public License for more details.
 */
 
-package org.luwrain.base;
+package org.luwrain.base.hardware;
 
-public interface AudioMixer
+public interface SysDevice
 {
-    int getMasterVolume();
-    void setMasterVolume(int value);
+    public enum Type {
+	UNKNOWN,
+	PCI,
+	USB,
+    };
+
+    Type getDevType();
+    String getDevId();
+    String getDevClass();
+    String getDevVendor();
+    String getDevModel();
+    String getDevDriver();
+    String getDevModule();
 }

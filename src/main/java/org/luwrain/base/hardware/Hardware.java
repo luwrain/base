@@ -14,21 +14,18 @@
    General Public License for more details.
 */
 
-package org.luwrain.base;
+package org.luwrain.base.hardware;
 
-public interface SysDevice
+import java.io.File;
+
+public interface Hardware
 {
-    public enum Type {
-	UNKNOWN,
-	PCI,
-	USB,
-    };
-
-    Type getDevType();
-    String getDevId();
-    String getDevClass();
-    String getDevVendor();
-    String getDevModel();
-    String getDevDriver();
-    String getDevModule();
+    SysDevice[] getSysDevices();
+    StorageDevice[] getStorageDevices();
+    int mountAllPartitions(StorageDevice device);
+    int umountAllPartitions(StorageDevice device);
+    Partition[] getMountedPartitions();
+    //    File getRoot(File relativeTo);
+    AudioMixer getAudioMixer();
+    Battery[] getBatteries();
 }

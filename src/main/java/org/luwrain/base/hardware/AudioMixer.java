@@ -14,18 +14,10 @@
    General Public License for more details.
 */
 
-package org.luwrain.base;
+package org.luwrain.base.hardware;
 
-import java.io.File;
-
-public interface Hardware
+public interface AudioMixer
 {
-    SysDevice[] getSysDevices();
-    StorageDevice[] getStorageDevices();
-    int mountAllPartitions(StorageDevice device);
-    int umountAllPartitions(StorageDevice device);
-    Partition[] getMountedPartitions();
-    //    File getRoot(File relativeTo);
-    AudioMixer getAudioMixer();
-    Battery[] getBatteries();
+    int getMasterVolume();
+    void setMasterVolume(int value);
 }

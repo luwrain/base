@@ -14,12 +14,22 @@
    General Public License for more details.
 */
 
-package org.luwrain.base;
+package org.luwrain.base.hardware;
 
-public class StorageDevice
+import java.io.File;
+
+public interface Partition
 {
-    public String devName;
-    public String model;
-    public long capacity;
-    public boolean removable;
+    public enum Type {
+	REGULAR,
+	REMOVABLE,
+	REMOTE,
+	USER_HOME,
+	ROOT,
+    };
+
+    Type getPartType();
+    public File getPartFile();
+    public String getPartName();
+    public boolean isMounted();
 }

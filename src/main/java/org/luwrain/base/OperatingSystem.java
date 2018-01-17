@@ -24,7 +24,7 @@ public interface OperatingSystem
 {
     org.luwrain.core.InitResult init(CoreProperties props);
     String getProperty(String propName);
-    Hardware getHardware();
+    org.luwrain.base.hardware.Hardware getHardware();
     Braille getBraille();
     void openFileInDesktop(Path path);
     org.luwrain.interaction.KeyboardHandler getCustomKeyboardHandler(String subsystem);
