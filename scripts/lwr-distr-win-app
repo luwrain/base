@@ -14,7 +14,7 @@ cd $DEST_DIR
 mkdir 32
 cd 32
 cp -r "$SRC_DIR/apptemplate-win-32/." .
-pushd "$SRC_DIR/base/scripts" > /dev/null
+pushd "$SCRIPTS_DIR" > /dev/null
 ./lwr-distr-win-common "$DEST_DIR/32/app"
 popd > /dev/null
 

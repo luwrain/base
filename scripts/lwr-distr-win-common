@@ -6,7 +6,7 @@ DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 cd $DEST_DIR
 
-mkdir -p jar i18n registry/org/luwrain
+mkdir -p jar
 for i in lib data; do
     cp -r "$SRC_DIR/$i" "$i"
 done
@@ -27,8 +27,9 @@ for i in $WIN_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
 
-#registry
-#FIXME: to currentdir
+pushd "$SRC_DIR/registry" > /dev/null
+./lwr-reg-compile win "$DEST_DIR/data"
+popd > /dev/null
 
 #properties
 mkdir data/properties
@@ -43,8 +44,9 @@ EOF
 
 #desktop
 for i in $WIN_LANGS; do
-    mkdir -p "i18n/$i/org/luwrain/desktop/unirefs"
-    cat <<EOF  > "i18n/$i/org/luwrain/desktop/unirefs/strings.txt"
+    cat <<EOF  >> data/registry.$i.dat
+DIR org/luwrain/desktop/unirefs
+FILE strings.txt
 "000001" = "empty:"
 "000002" = "section:Добро пожаловать в LUWRAIN!"
 "000003" = "empty:"
