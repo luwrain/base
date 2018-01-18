@@ -28,7 +28,9 @@ for i in $LINUX_EXTENSIONS; do
 done
 
 #registry
-#FIXME:to current directory
+pushd "$SRC_DIR/registry" > /dev/null
+./lwr-reg-compile linux "$DEST_DIR/data"
+popd > /dev/null
 
 #properties
 mkdir data/properties
@@ -36,7 +38,6 @@ for i in $LINUX_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." data/properties
 done
 cat <<EOF > data/properties/release.properties
-luwrain.class.os = org.luwrain.linux.Linux
 luwrain.version = $VERSION
 luwrain.build.date = $(date -I)
 EOF
@@ -50,8 +51,9 @@ chmod +x data/scripts/*
 
 #desktop
 for i in $LINUX_LANGS; do
-    mkdir -p "i18n/$i/org/luwrain/desktop/unirefs"
-    cat <<EOF  > "i18n/$i/org/luwrain/desktop/unirefs/strings.txt"
+    cat <<EOF  >> data/registry.$i.dat
+DIR org/luwrain/desktop/unirefs
+FILE strings.txt
 "000001" = "empty:"
 "000002" = "section:Добро пожаловать в LUWRAIN!"
 "000003" = "empty:"

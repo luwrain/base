@@ -11,13 +11,13 @@ mkdir -p "$DEST_DIR"
 for ARCH in $LINUX_ARCH; do
     mkdir -p $DEST_DIR/$ARCH""
 
-    cd "$SRC_DIR/base/scripts"
+    cd "$SCRIPTS_DIR"
     ./lwr-distr-linux-common "$DEST_DIR/$ARCH"
 
     cd "$DEST_DIR/$ARCH"
     cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
 
-    cp -r "$SRC_DIR/base/txt/linux-pkg/." .
+    cp -r "$SRC_DIR/base/txt/linux/." .
     cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
 $ARCH-bit release for GNU/Linux
