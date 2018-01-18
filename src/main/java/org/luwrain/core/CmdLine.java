@@ -18,9 +18,9 @@ package org.luwrain.core;
 
 import java.util.*;
 
-public class CmdLine
+public final class CmdLine
 {
-    private String[] cmdLine;
+    private final String[] cmdLine;
 
     public CmdLine(String[] cmdLine)
     {
@@ -51,8 +51,8 @@ public class CmdLine
 
     public String[] getArgs(String prefix)
     {
-	final List<String> res = new LinkedList<String>();
 	NullCheck.notNull(prefix, "prefix");
+		final List<String> res = new LinkedList();
 	for(String s: cmdLine)
 	{
 	    if (s.length() < prefix.length() || !s.startsWith(prefix))
