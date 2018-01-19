@@ -8,7 +8,7 @@ DEST_DIR="$1"
 rm -rf "$DEST_DIR"
 mkdir -p "$DEST_DIR"
 
-cd "$SRC_DIR/base/scripts"
+cd "$SCRIPTS_DIR"
 ./lwr-mk-api "$DEST_DIR/javadoc"
 cd $DEST_DIR
 
@@ -17,4 +17,3 @@ cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
 for i in $SDK_JARS; do
 cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
 done
-

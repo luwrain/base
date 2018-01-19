@@ -5,9 +5,6 @@ TEMP_DIR=$(mktemp -d)
 [ -e /tmp/nightly ] && rm -f /tmp/nightly
 ln -s $TEMP_DIR /tmp/nightly
 
-SRC_RES_DIR=luwrain-nightly-$(date -I)
-SDK_RES_DIR=luwrain-sdk-nightly-$(date -I)
-
 echo "Working in $TEMP_DIR"
 cd $TEMP_DIR
 
@@ -17,7 +14,13 @@ cd src
 git clone https://github.com/luwrain/base.git &> ../clone-base.log
 cd base/scripts
 ./lwr-checkout &> ../../../checkout.log
-./lwr-distr-src "$TEMP_DIR/$SRC_RES_DIR"
+DEST="luwrain-nightly-`date -I`"
+./lwr-distr-src "$TEMP_DIR/$DEST"
+pushd "$TEMP_DIR" > /dev/null
+echo "Processing $DEST"
+tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+sha1sum "$DEST.tar.gz" > sha1sum.txt
+popd > /dev/null
 
 cd ../..
 if [ -x ~/lwr-subst ]; then
@@ -30,12 +33,7 @@ echo 'Compiling sources'
 ./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
 
-(
 ./lwr-distr-linux "$TEMP_DIR/linux"
-./lwr-distr-win "$TEMP_DIR/win"
-#./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR" &> ../../../sdk.log
-) &> ../../../packaging.log
-
 for i in 32 64; do
     DEST=luwrain-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -47,6 +45,7 @@ for i in 32 64; do
 done
 rmdir "$TEMP_DIR/linux"
 
+./lwr-distr-win "$TEMP_DIR/win"
 for i in 32; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -58,12 +57,23 @@ zip -r "$DEST.zip" "$DEST" > /dev/null
 done
 rmdir "$TEMP_DIR/win"
 
+DEST="luwrain-sdk-nightly-`date -I`"
+./lwr-distr-sdk "$TEMP_DIR/$DEST" &> ../../../sdk.log
+pushd "$TEMP_DIR" > /dev/null
+echo "Processing $DEST"
+zip -r "$DEST.zip" "$DEST" > /dev/null
+sha1sum "$DEST.zip" >> sha1sum.txt
+popd > /dev/null
 
 cd "$TEMP_DIR"
 
-exit 0
-
 RELEASE_DIR=~/nightly-`date -I`
+
+if [ -d "$RELEASE_DIR" ]; then
+    echo "${0##*/}:$RELEASE_DIR exists, skipping its creation"
+    exit 0
+fi
+
 mkdir -p "$RELEASE_DIR"
 mv *.txt *.gz *.zip "$RELEASE_DIR"
 if [ -r /tmp/lwr-report/junit-noframes.html ]; then
