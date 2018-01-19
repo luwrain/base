@@ -5,6 +5,10 @@
 DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
+rm -rf "$DEST_DIR"
+mkdir "$DEST_DIR"
+cd "$DEST_DIR"
+
 jars()
 {
     find "$1" -iname '*.jar' | 
@@ -14,12 +18,6 @@ jars()
     echo
 }
 
-rm -rf "$DEST_DIR"
-mkdir "$DEST_DIR"
-cd "$DEST_DIR"
 
 javadoc -classpath "$(jars "$SRC_DIR"/lib-stage4)" \
-$(find "$SRC_DIR"/luwrain/src/main/java/ -iname '*.java') \
-$(find "$SRC_DIR"/base/src/main/java/ -iname '*.java') > /dev/null \
-$(find "$SRC_DIR"/pim/src/main/java/ -iname '*.java') > /dev/null \
-$(find "$SRC_DIR"/doctree/src/main/java/ -iname '*.java') > /dev/null 
+	$(find "$SRC_DIR" -iname '*.java' -exec grep -l LWR_API '{}' \;)
