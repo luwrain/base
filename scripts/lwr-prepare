@@ -2,6 +2,8 @@
 
 . init.sh
 
-cd "$SRC_DIR/base/scripts"
+cd "$SCRIPTS_DIR"
+
 ./lwr-update-lib-dirs
 ./lwr-mk-lib-refs
+./lwr-ant-gen-all

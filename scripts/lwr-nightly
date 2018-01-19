@@ -4,10 +4,8 @@ TEMP_DIR=$(mktemp -d)
 
 [ -e /tmp/nightly ] && rm -f /tmp/nightly
 ln -s $TEMP_DIR /tmp/nightly
-SRC_RES_DIR=luwrain-nightly-$(date --iso-8601)
-LINUX_RES_DIR=luwrain-linux-nightly-$(date --iso-8601)
-WINDOWS_RES_DIR=luwrain-windows-nightly-$(date --iso-8601)
-SDK_RES_DIR=luwrain-sdk-nightly-$(date --iso-8601)
+SRC_RES_DIR=luwrain-nightly-$(date -I)
+SDK_RES_DIR=luwrain-sdk-nightly-$(date -I)
 
 echo "Working in $TEMP_DIR"
 cd $TEMP_DIR
@@ -32,27 +30,30 @@ echo 'Compiling sources'
 ./lwr-build &> ../../../build.log
 
 (
-./lwr-distr-linux "$TEMP_DIR/$LINUX_RES_DIR"
-./lwr-distr-win "$TEMP_DIR/$WINDOWS_RES_DIR"
+./lwr-distr-linux "$TEMP_DIR/linux"
+./lwr-distr-win "$TEMP_DIR/win"
 #./lwr-distr-sdk "$TEMP_DIR/$SDK_RES_DIR" &> ../../../sdk.log
 ) &> ../../../packaging.log
 
-exit 0
+for i in 32 64; do
+    DEST="luwrain-linux-$ibit-nightly-`date -I`"
+    mv "$TEMP_DIR/linux/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+    sha1sum "$DEST.tar.gz" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/linux"
+
+for i in 32; do
+    mv "$TEMP_DIR/win/$i" "$TEMP_DIR/luwrain-windows-$ibit-nightly-`date -I`"
+done
+rmdir "$TEMP_DIR/win"
+
 
 cd "$TEMP_DIR"
-for i in $SRC_RES_DIR $LINUX_PKG_RES_DIR $LINUX_NOJRE_RES_DIR $ISO_RES_DIR; do
-    tar -c $i/ > $i.tar
-    echo "Compressing $i.tar"
-    gzip $i.tar &> /dev/null
-    md5sum --binary $i.tar.gz >> md5sum.txt
-    sha1sum "$i.tar.gz" >> sha1sum.txt
-done
-for i in $SDK_RES_DIR $WINDOWS_PKG_RES_DIR $WINDOWS_APP_RES_DIR $WINDOWS_NOJRE_RES_DIR; do
-    echo "Compressing $i.zip"
-    zip -r $i.zip $i &> /dev/null
-md5sum --binary $i.zip >> md5sum.txt
-sha1sum $i.zip >> sha1sum.txt
-done
+
+exit 0
 
 RELEASE_DIR=~/nightly-`date -I`
 mkdir -p "$RELEASE_DIR"
