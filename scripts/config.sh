@@ -9,7 +9,7 @@ SRC_DEST_DIR=/tmp/luwrain-src
 
 # Used for compilation, everything must be listed regardless the target platform
 LANGS='en ru'
-APPS='notepad news commander twitter reader mail contacts browser player telegram writer'
+APPS='notepad news commander twitter reader mail contacts browser player telegram'
 EXTENSIONS='voiceman emacspeak cmdtts yatran mssapi rhvoice plmp3'
 COMPONENTS='base pim browser interaction-javafx linux windows network'
 
