@@ -14,6 +14,8 @@
    General Public License for more details.
 */
 
+//LWR_API 1.0
+
 package org.luwrain.base;
 
 import java.net.*;
@@ -47,14 +49,21 @@ public interface MediaResourcePlayer extends ExtensionObject
 
     public interface Listener
     {
-	void onPlayerTime(Instance player, long msec);
-	void onPlayerFinish(Instance player);
-	void onPlayerError(Exception e);
+	void onPlayerTime(Instance instance, long msec);
+	void onPlayerFinish(Instance instance);
+	void onPlayerError(Exception e);//FIXME:instance
+    }
+
+    static public final class Params
+    {
+	public long playFromMsec = 0;
+	public int volume = 100;
+	public Set<Flags> flags = EnumSet.noneOf(Flags.class);
     }
 
     public interface Instance
     {
-	Result play(URL url, long playFromMsec, Set<Flags> flags);
+	Result play(URL url, Params params);
 	void stop();
     }
 
