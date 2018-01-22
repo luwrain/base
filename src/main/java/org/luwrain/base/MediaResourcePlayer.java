@@ -21,18 +21,26 @@ package org.luwrain.base;
 import java.net.*;
 import java.util.*;
 
+import org.luwrain.core.*;
+
 public interface MediaResourcePlayer extends ExtensionObject 
 {
     public enum Flags {}
 
     static public final class Result
     {
-	public enum Type {OK};
+	public enum Type {OK, INACCESSIBLE_SOURCE};
 
 	private final Type type;
 
 	public Result()
 	{
+	    this.type = Type.OK;
+	}
+
+		public Result(Type type)
+	{
+	    NullCheck.notNull(type, "type");
 	    this.type = Type.OK;
 	}
 
@@ -64,6 +72,7 @@ public interface MediaResourcePlayer extends ExtensionObject
     public interface Instance
     {
 	Result play(URL url, Params params);
+	void setVolume(int volume);
 	void stop();
     }
 
