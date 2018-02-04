@@ -43,8 +43,9 @@ public class FileUtils
 	int pos = 0;
 	do {
 	    final int remaining = bytes.length - pos;
-	    os.write(bytes, pos, remaining > 2048?2048:remaining);
-	    pos += remaining;
+	    final int numToWrite = remaining > 2048?2048:remaining;
+os.write(bytes, pos, numToWrite);
+	    pos += numToWrite;
 	} while(pos < bytes.length);
     }
 
