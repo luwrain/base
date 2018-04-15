@@ -27,7 +27,7 @@ public final class CmdLine
     public CmdLine(String[] cmdLine)
     {
 	NullCheck.notNullItems(cmdLine, "cmdLine");
-	this.cmdLine = cmdLine;
+	this.cmdLine = cmdLine.clone();
     }
 
     public boolean used(String option)
