@@ -2,8 +2,6 @@
 
 . init.sh
 
-THIS="${0##*/}"
-
 DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 

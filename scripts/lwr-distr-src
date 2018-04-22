@@ -2,12 +2,8 @@
 
 . init.sh
 
-if [ -n "$1" ]; then
-    SRC_DEST_DIR="$1"
-else
-    SRC_DEST_DIR=/tmp/luwrain-src
-fi
-
+SRC_DEST_DIR="$1"
+[ -z "$SRC_DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 [ -e "$SRC_DEST_DIR" ] && echo "$THIS:$SRC_DEST_DIR already exists" >&2 && exit 1
 
 mkdir -p "$SRC_DEST_DIR"
@@ -17,17 +13,16 @@ for i in AUTHORS LICENSE; do
 find "$SRC_DEST_DIR" -name $i -delete
 done
 
-for i in AUTHORS LICENSE README.md; do
+for i in AUTHORS LICENSE; do
     cp luwrain/$i "$SRC_DEST_DIR"
 done
+cp base/txt/src/* "$SRC_DEST_DIR"
 
 cd "$SRC_DEST_DIR"
 ls | while read l; do
     if [ -e "$l/.git" ]; then
 rm -rf "$l/.git"
 fi
-done 
-
-rm -rf apptemplate-win-32 precompiled
+done
 find -name .gitignore -delete
-
+rm -rf apptemplate-win-32 precompiled
