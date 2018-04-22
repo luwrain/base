@@ -6,7 +6,7 @@ for i in luwrain interaction-javafx; do
     ln -s "$SRC_DIR/lib-stage1" "$i"/lib
 done
 
-for i in browser extensions io linux pim windows; do
+for i in browser extensions io linux pim studio windows; do
     ln -s "$SRC_DIR/lib-stage2" $i/lib
 done
 
