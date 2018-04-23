@@ -1,5 +1,5 @@
 
-VERSION='(nightly)'
+VERSION='1.1.0'
 GITS='base browser extensions i18n io interaction-javafx linux luwrain pim registry studio windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser pim app-notepad'
