@@ -5,10 +5,8 @@
 
 ARCH="$1"
 [ -z "$ARCH" ] && echo "$THIS:no arch given" >&2 && exit 1
-
 LANG="$2"
 [ -z "$LANG" ] && echo "$THIS:no lang given" >&2 && exit 1
-
 DEST_DIR="$3"
 [ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
 
@@ -35,8 +33,9 @@ for i in $ISO_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
 
-# registry
-#FIXME: to current dir
+pushd "$SRC_DIR/registry" > /dev/null
+./lwr-reg-compile iso "$DEST_DIR/data"
+popd > /dev/null
 
 #properties
 mkdir data/properties
@@ -44,7 +43,8 @@ for i in $ISO_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." data/properties
 done
 cat <<EOF > data/properties/release.properties
-luwrain.class.os = org.luwrain.linux.Linux
+
+# General release information
 luwrain.version = $VERSION
 luwrain.build.date = $(date -I)
 EOF
@@ -57,16 +57,18 @@ done
 chmod +x data/scripts/*
 
 #desktop
-mkdir -p "i18n/$LANG/org/luwrain/desktop/unirefs"
-cat <<EOF  > "i18n/$LANG/org/luwrain/desktop/unirefs/strings.txt"
+for i in $ISO_LANGS; do
+    cat <<EOF  >> data/registry.$i.dat
+DIR org/luwrain/desktop/unirefs
+FILE strings.txt
 "000001" = "empty:"
 "000002" = "section:Добро пожаловать в LUWRAIN!"
 "000003" = "empty:"
 "000004" = "command:browser"
-"000005" = "command:wifi"
-"000006" = "command:player"
-"000007" = "command:commander"
-"000008" = "command:term"
+"000005" = "command:telegram"
+"000006" = "command:twitter"
+"000007" = "command:player"
+"000008" = "command:commander"
 "000009" = "empty:"
 "000010" = "section:Подсказка"
 "000011" = "empty:"
@@ -78,5 +80,6 @@ cat <<EOF  > "i18n/$LANG/org/luwrain/desktop/unirefs/strings.txt"
 "000017" = "link:Наш сайт\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
 "000018" = "static:Авторы: Алексей Голошумов, Михаил Пожидаев и Елена Теплых"
 EOF
+done
 
 cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
