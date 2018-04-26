@@ -65,7 +65,7 @@ FILE strings.txt
 "000002" = "section:Добро пожаловать в LUWRAIN!"
 "000003" = "empty:"
 "000004" = "command:browser"
-"000005" = "command:telegram"
+"000005" = "command:studio"
 "000006" = "command:twitter"
 "000007" = "command:player"
 "000008" = "command:commander"
