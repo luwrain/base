@@ -21,11 +21,12 @@ package org.luwrain.base;
 import java.util.*;
 import java.io.*;
 
-public interface CorePropertiesProvider extends ExtensionObject
+public interface PropertiesProvider extends ExtensionObject
 {
     public enum Flags {
 	PUBLIC,
 	READ_ONLY,
+	FILE,
     };
 
     public interface Listener
@@ -34,7 +35,7 @@ public interface CorePropertiesProvider extends ExtensionObject
     }
 
     String[] getPropertiesRegex();
-    Set<Flags> getPropertyFlags();
+    Set<Flags> getPropertyFlags(String propName);
     String getProperty(String propName);
     boolean setProperty(String propName, String value);
     File getFileProperty(String propName);

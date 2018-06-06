@@ -20,7 +20,7 @@ package org.luwrain.base;
 
 import java.io.*;
 
-public interface CoreProperties
+public interface PropertiesBase
 {
     String getProperty(String propName);
     File getFileProperty(String propName);
