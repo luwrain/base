@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2017 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+   Copyright 2012-2018 Michael Pozhidaev <michael.pozhidaev@gmail.com>
 
    This file is part of LUWRAIN.
 
@@ -14,6 +14,8 @@
    General Public License for more details.
 */
 
+//LWR_API 1.0
+
 package org.luwrain.util;
 
 import java.io.*;
@@ -21,7 +23,7 @@ import java.util.*;
 
 import org.luwrain.core.*;
 
-public class FileUtils
+public final class FileUtils
 {
     static public byte [] readAllBytes(InputStream is) throws IOException
     {
