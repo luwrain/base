@@ -33,7 +33,7 @@ public final class ClassUtils
  * @param ensureInstanceOf The class object of the class to check the casting is possible (can be {@code null} what means to checking is required)
  * @return The created object or {@code null}, if something goes wrong (detailed information goes only to the log)
  */
-    static Object newInstanceOf(String className, Class ensureInstanceOf)
+    static public Object newInstanceOf(String className, Class ensureInstanceOf)
     {
 	NullCheck.notEmpty(className, "className");
 	final Object obj;
