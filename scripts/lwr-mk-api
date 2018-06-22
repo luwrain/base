@@ -18,6 +18,5 @@ jars()
     echo
 }
 
-
 javadoc -classpath "$(jars "$SRC_DIR"/lib-stage4)" \
 	$(find "$SRC_DIR" -iname '*.java' -exec grep -l LWR_API '{}' \;)
