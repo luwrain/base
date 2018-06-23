@@ -20,7 +20,7 @@ for ARCH in $LINUX_ARCH; do
     cp -r "$SRC_DIR/base/txt/linux/." .
     cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-$ARCH-bit release for GNU/Linux
+The $ARCH-bit release for GNU/Linux
 EOF
 
 done
