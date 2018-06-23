@@ -31,6 +31,9 @@ pushd "$SRC_DIR/registry" > /dev/null
 ./lwr-reg-compile win "$DEST_DIR/data"
 popd > /dev/null
 
+#JavaScript
+cp -r "$SRC_DIR/extensions/js" data/js
+
 #properties
 mkdir data/properties
 for i in $WIN_PROPERTIES; do
