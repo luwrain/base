@@ -33,7 +33,7 @@ echo 'Compiling sources'
 ./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
 
-$DEST="luwrain-iso-nightly-$(date -I)"
+DEST="luwrain-iso-nightly-$(date -I)"
 ./lwr-distr-linux "$TEMP_DIR/$DEST"
     echo "Processing $DEST"
     pushd "$TEMP_DIR" > /dev/null
