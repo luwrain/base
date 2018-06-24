@@ -33,6 +33,14 @@ echo 'Compiling sources'
 ./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
 
+$DEST="luwrain-iso-nightly-$(date -I)"
+./lwr-distr-linux "$TEMP_DIR/$DEST"
+    echo "Processing $DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+    sha1sum "$DEST.tar.gz" >> sha1sum.txt
+    popd > /dev/null
+
 ./lwr-distr-linux "$TEMP_DIR/linux"
 for i in 32 64; do
     DEST=luwrain-linux-"$i"bit-nightly-"`date -I`"
