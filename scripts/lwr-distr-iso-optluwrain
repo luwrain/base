@@ -60,8 +60,7 @@ done
 chmod +x data/scripts/*
 
 #desktop
-for i in $ISO_LANGS; do
-    cat <<EOF  >> data/registry.$i.dat
+cat <<EOF  >> data/registry.ru.dat
 DIR org/luwrain/desktop/unirefs
 FILE strings.txt
 "000001" = "empty:"
@@ -83,6 +82,28 @@ FILE strings.txt
 "000017" = "link:Наш сайт\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
 "000018" = "static:Авторы: Алексей Голошумов, Михаил Пожидаев и Елена Теплых"
 EOF
-done
+
+cat <<EOF  >> data/registry.en.dat
+DIR org/luwrain/desktop/unirefs
+FILE strings.txt
+"000001" = "empty:"
+"000002" = "section:Welcome to LUWRAIN!"
+"000003" = "empty:"
+"000004" = "command:browser"
+"000005" = "command:studio"
+"000006" = "command:twitter"
+"000007" = "command:player"
+"000008" = "command:commander"
+"000009" = "empty:"
+"000010" = "section:Help"
+"000011" = "empty:"
+"000012" = "static:Press the main menu button on your keyboard to open the LUWRAIN main menu"
+"000013" = "empty:"
+"000014" = "section:About LUWRAIN"
+"000015" = "empty:"
+"000016" = "static:LUWRAIN $VERSION (build $(date -I))"
+"000017" = "link:Наш сайт\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
+"000018" = "static:Our team: Alexey Goloshumov, Michael Pozhidaev, Elena Teplykh"
+EOF
 
 cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
