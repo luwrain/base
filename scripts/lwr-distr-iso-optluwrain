@@ -95,14 +95,14 @@ FILE strings.txt
 "000007" = "command:player"
 "000008" = "command:commander"
 "000009" = "empty:"
-"000010" = "section:Help"
+"000010" = "section:Hint"
 "000011" = "empty:"
 "000012" = "static:Press the main menu button on your keyboard to open the LUWRAIN main menu"
 "000013" = "empty:"
 "000014" = "section:About LUWRAIN"
 "000015" = "empty:"
 "000016" = "static:LUWRAIN $VERSION (build $(date -I))"
-"000017" = "link:Наш сайт\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
+"000017" = "link:Out website\: luwrain.org:url:http://luwrain.org/?mode=adapted&lang=ru"
 "000018" = "static:Our team: Alexey Goloshumov, Michael Pozhidaev, Elena Teplykh"
 EOF
 
