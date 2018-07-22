@@ -1,3 +1,18 @@
+/*
+   Copyright 2012-2018 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+
+   This file is part of LUWRAIN.
+
+   LUWRAIN is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either
+   version 3 of the License, or (at your option) any later version.
+
+   LUWRAIN is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+*/
 
 package org.luwrain.util;
 
@@ -10,7 +25,7 @@ import org.luwrain.core.*;
 
 public class ConnectionsTest extends Assert
 {
-static private final String url = "http://download.luwrain.org/pdf/presentation-HongKongOSConference-en-2015-06-27.pdf";
+    static private final String url = "http://download.luwrain.org/pdf/presentation-HongKongOSConference-en-2015-06-27.pdf";
 
     @Test public void fullSize() throws Exception
     {
@@ -25,7 +40,7 @@ static private final String url = "http://download.luwrain.org/pdf/presentation-
 	is.close();
     }
 
-        @Test public void fullSha1() throws Exception
+    @Test public void fullSha1() throws Exception
     {
 	final URLConnection con = Connections.connect(new URL(url), 0);
 	final InputStream is = con.getInputStream();
@@ -34,7 +49,7 @@ static private final String url = "http://download.luwrain.org/pdf/presentation-
 	is.close();
     }
 
-        @Test public void partialSize() throws Exception
+    @Test public void partialSize() throws Exception
     {
 	final URLConnection con = Connections.connect(new URL(url), 65535);
 	final InputStream is = con.getInputStream();
@@ -47,7 +62,7 @@ static private final String url = "http://download.luwrain.org/pdf/presentation-
 	is.close();
     }
 
-            @Test public void partialSha1() throws Exception
+    @Test public void partialSha1() throws Exception
     {
 	final URLConnection con = Connections.connect(new URL(url), 65535);
 	final InputStream is = con.getInputStream();
@@ -56,4 +71,19 @@ static private final String url = "http://download.luwrain.org/pdf/presentation-
 	is.close();
     }
 
+    @Test public void redirect() throws Exception
+    {
+	final URLConnection con = Connections.connect(new URL("http://github.com"), 0);
+	final InputStream is = con.getInputStream();
+	//Checking only that the connection is established
+	is.close();
+    }
+
+    @Test public void https() throws Exception
+    {
+	final URLConnection con = Connections.connect(new URL("https://github.com"), 0);
+	final InputStream is = con.getInputStream();
+	//Checking only that the connection is established
+	is.close();
+    }
 }
