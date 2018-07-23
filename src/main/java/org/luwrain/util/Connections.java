@@ -26,6 +26,26 @@ public class Connections
     static private final int MAX_REDIRECT_COUNT = 16;
     static private final int TIMEOUT = 15000;
 
+    static public final class InvalidHttpResponseCodeException extends IOException
+    {
+	private final int code;
+	private final String url;
+	public InvalidHttpResponseCodeException(int code, String url)
+	{
+	    super("" + code + " for " + url);
+	    this.code = code;
+	    this.url = url;
+	}
+	public int getHttpCode()
+	{
+	    return this.code;
+	}
+	public String getHttpUrl()
+	{
+	    return this.url;
+	}
+    }
+
     public static URLConnection connect(URL url, long startFrom) throws IOException
     {
 	NullCheck.notNull(url, "url");
@@ -52,7 +72,7 @@ public class Connections
 	    }
 	    if ((startFrom == 0 && httpCon.getResponseCode() != HttpURLConnection.HTTP_OK) ||
 		(startFrom > 0 && httpCon.getResponseCode() != HttpURLConnection.HTTP_PARTIAL))
-		throw new IOException("Bad HTTP response code: " + httpCon.getResponseCode());
+		throw new InvalidHttpResponseCodeException(httpCon.getResponseCode(), urlToTry.toString());
 	    return httpCon;
 	}
 	throw new IOException("Too many redirects (" + MAX_REDIRECT_COUNT + ")");
