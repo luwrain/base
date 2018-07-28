@@ -27,7 +27,7 @@ LINUX_EXTENSIONS='cmdtts emacspeak plmp3 rhvoice voiceman'
 LINUX_PROPERTIES='app-player linux luwrain'
 LINUX_SCRIPTS='app-reader linux'
 
-ISO_ARCH='64 32'
+ISO_ARCH='64'
 ISO_LANGS='en ru'
 ISO_COMPONENTS='base browser interaction-javafx io linux packs pim studio'
 ISO_APPS='commander contacts mail news notepad player reader twitter'
