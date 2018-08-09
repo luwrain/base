@@ -23,6 +23,7 @@ import org.luwrain.core.*;
 
 public class Connections
 {
+    static public final String DEFAULT_USER_AGENT = "Mozilla/5.0";
     static private final int MAX_REDIRECT_COUNT = 16;
     static private final int TIMEOUT = 15000;
 
@@ -54,7 +55,7 @@ public class Connections
 	{
 	    final URLConnection con = urlToTry.openConnection();
 	    final HttpURLConnection httpCon = (HttpURLConnection)con;
-	    //httpCon.setRequestProperty("User-Agent", "LUWRAIN");
+	    httpCon.setRequestProperty("User-Agent", DEFAULT_USER_AGENT);
 	    httpCon.setConnectTimeout(TIMEOUT);
 	    httpCon.setReadTimeout(TIMEOUT);
 	    if (startFrom > 0)
