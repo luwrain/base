@@ -54,6 +54,11 @@ public class Connections
 	for(int i = 0;i < MAX_REDIRECT_COUNT;++i)
 	{
 	    final URLConnection con = urlToTry.openConnection();
+	    if (!(con instanceof HttpURLConnection))
+	    {
+		con.connect();
+		return con;
+	    }
 	    final HttpURLConnection httpCon = (HttpURLConnection)con;
 	    httpCon.setRequestProperty("User-Agent", DEFAULT_USER_AGENT);
 	    httpCon.setConnectTimeout(TIMEOUT);
