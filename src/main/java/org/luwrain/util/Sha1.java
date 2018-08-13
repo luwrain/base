@@ -52,4 +52,18 @@ public final class Sha1
 	}
 	return new String(res);
     }
+
+    static public String getSha1(String str, String charset)
+    {
+	NullCheck.notNull(str, "str");
+	NullCheck.notEmpty(charset, "charset");
+	try {
+	    final ByteArrayInputStream s = new ByteArrayInputStream(str.getBytes(charset));
+	    return getSha1(s);
+	}
+	catch(IOException | NoSuchAlgorithmException e)
+	{
+	    throw new RuntimeException(e);
+	}
+    }
 }
