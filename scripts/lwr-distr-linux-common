@@ -35,7 +35,7 @@ popd > /dev/null
 #JavaScript
 cp -r "$SRC_DIR/extensions/js" data/js
 #Text extensions
-cp -r "$SRC_DIR/extensions/text" data/js
+cp -r "$SRC_DIR/extensions/text" data/text
 
 #properties
 mkdir data/properties
