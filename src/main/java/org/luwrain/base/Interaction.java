@@ -18,8 +18,6 @@
 
 package org.luwrain.base;
 
-import org.luwrain.browser.Browser;
-
 public interface Interaction
 {
     boolean init(InteractionParams params,OperatingSystem os);
@@ -38,5 +36,6 @@ public interface Interaction
     void setHotPoint(int x, int y);
     void drawVerticalLine(int top, int bottom, int x);
     void drawHorizontalLine(int left, int right, int y);
-    Browser createBrowser();
+    org.luwrain.browser.Browser createBrowser();
+    org.luwrain.interaction.graphical.Pdf createPdfPreview(org.luwrain.interaction.graphical.Pdf.Listener listener, java.io.File file);
 }
