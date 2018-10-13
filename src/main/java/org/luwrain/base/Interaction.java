@@ -37,5 +37,5 @@ public interface Interaction
     void drawVerticalLine(int top, int bottom, int x);
     void drawHorizontalLine(int left, int right, int y);
     org.luwrain.browser.Browser createBrowser();
-    org.luwrain.interaction.graphical.Pdf createPdfPreview(org.luwrain.interaction.graphical.Pdf.Listener listener, java.io.File file);
+    org.luwrain.interaction.graphical.Pdf createPdfPreview(org.luwrain.interaction.graphical.Pdf.Listener listener, java.io.File file) throws Exception;
 }
