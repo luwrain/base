@@ -31,4 +31,10 @@ public interface Pdf
     int getPageCount();
     int getCurrentPageNum();
     boolean showPage(int index);
+    float getScale();
+    void setScale(float scale);
+    double getOffsetX();
+        double getOffsetY();
+    boolean setOffsetX(double value);
+    boolean setOffsetY(double value);
 }
