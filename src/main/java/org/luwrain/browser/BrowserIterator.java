@@ -29,6 +29,13 @@ public interface BrowserIterator
 boolean setPos(int index);
     String getText();
 
+    String getClassName();
+
+    //Forms operations
+    boolean isInput();
+    String getInputType();
+    boolean setInputText(String text);
+
     /** get list of values for HTML SELECT FIXME: it's awful */
     String[] getMultipleText();
 
