@@ -7,7 +7,7 @@ SDK_JARS='base browser io pim studio'
 SRC_DEST_DIR=/tmp/luwrain-src
 
 # Used for compilation, everything must be listed regardless the target platform
-LANGS='en ru'
+LANGS='en ro ru'
 APPS='commander contacts mail news notepad player reader twitter viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice voiceman'
 COMPONENTS='base browser interaction-javafx io linux packs pim studio windows'
