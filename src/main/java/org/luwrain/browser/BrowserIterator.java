@@ -20,6 +20,7 @@
 package org.luwrain.browser;
 
 import java.awt.Rectangle;
+import java.util.*;
 
 public interface BrowserIterator
 {
@@ -27,9 +28,18 @@ public interface BrowserIterator
     int getPos();
     /** although it is strongly discouraged to use this method.*/ 
 boolean setPos(int index);
-    String getText();
 
+        BrowserIterator getParent();
+    boolean hasParent();
+
+    //Never returns null
+        String getTagName();
     String getClassName();
+        String getText();
+    String getAttr(String name);
+    Map<String, String> getAttrs();
+        Rectangle getRect();
+    
 
     //Forms operations
     boolean isInput();
@@ -43,26 +53,23 @@ boolean setPos(int index);
 
     String getLink();
 
-    Rectangle getRect();
+
 
     boolean isEditable();
 
     void setText(String text);
-    String getAttribute(String name);
+
     String getComputedStyleProperty(final String name);
     String getComputedStyleAll();
-    String getHtmlTagName();
+
     void emulateClick();
 	void emulateSubmit();
 
-BrowserIterator getParent();
-    boolean isVisible();
-    boolean forTEXT();
+
 BrowserIterator clone();
 
 	String getAltText();
 
-    boolean hasParent();
     boolean isParent(BrowserIterator it);
 
 }
