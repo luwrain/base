@@ -37,25 +37,20 @@ import java.util.concurrent.Callable;
  */
 public interface Browser
 {
-    void close();
+        void init(BrowserEvents events);
+        void close();
+    void loadByUrl(String url);
+    void loadByText(String text);
+        Object executeScript(String script);
     BrowserIterator createIterator();
     String getTitle();
     String getUrl();
     boolean getVisibility();
-    Object executeScript(String script);
-    void init(BrowserEvents events);
-    void loadByUrl(String url);
-    void loadByText(String text);
     int numElements();
     void rescanDom();
     Object runSafely(Callable callable);
     void setVisibility(boolean enable);
     void stop();
+    boolean goHistoryPrev();
 
-    //Experimental
-    /** update watch array of node's indexes in dom list to observe page modification */
-    void setWatchNodes(Iterable<Integer> indexes);
-    /** restart update timer as fast as possble */
-    void doFastUpdate();
-    long getLastTimeChanged();
 }

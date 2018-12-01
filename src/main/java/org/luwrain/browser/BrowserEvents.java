@@ -21,7 +21,13 @@ package org.luwrain.browser;
 
 public interface BrowserEvents
 {
-    public enum State {CANCELLED, FAILED, READY, RUNNING, SCHEDULED, SUCCEEDED};
+    public enum State {
+	SCHEDULED,
+	RUNNING,
+	CANCELLED,
+	SUCCEEDED,
+	FAILED,
+    };
 
     void onChangeState(State state);
     void onProgress(Number progress);
