@@ -39,37 +39,24 @@ boolean setPos(int index);
     String getAttr(String name);
     Map<String, String> getAttrs();
         Rectangle getRect();
-    
+
 
     //Forms operations
     boolean isInput();
     String getInputType();
     boolean setInputText(String text);
-
-    /** get list of values for HTML SELECT FIXME: it's awful */
-    String[] getMultipleText();
-
-    String getComputedText();
-
-    String getLink();
-
-
-
-    boolean isEditable();
-
-    void setText(String text);
-
-    String getComputedStyleProperty(final String name);
-    String getComputedStyleAll();
-
+        void setText(String text);
+    String getComputedStyle(final String name);
+    String getAllComputedStyles();
     void emulateClick();
 	void emulateSubmit();
-
-
 BrowserIterator clone();
 
-	String getAltText();
-
-    boolean isParent(BrowserIterator it);
-
+    	String getAltText();
+    //boolean isParent(BrowserIterator it);
+        /** get list of values for HTML SELECT FIXME: it's awful */
+    //String[] getMultipleText();
+    //String getComputedText();
+    //String getLink();
+    //boolean isEditable();
 }
