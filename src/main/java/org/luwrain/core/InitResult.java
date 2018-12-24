@@ -24,7 +24,9 @@ public final class InitResult
 	OK,
 	FAILURE,
 	EXCEPTION,
-	NO_STRINGS_OBJ};
+	NO_STRINGS_OBJ,
+	NETWORK_SERVICE_INACCESSIBLE,
+    };
 
     private final Type type;
     private final Object arg;
