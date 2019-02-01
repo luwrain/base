@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2018 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+   Copyright 2012-2019 Michael Pozhidaev <michael.pozhidaev@gmail.com>
 
    This file is part of LUWRAIN.
 
@@ -25,6 +25,7 @@ import org.luwrain.core.*;
 public interface OperatingSystem
 {
     org.luwrain.core.InitResult init(PropertiesBase props);
+    OsInterface getInterface();
     Braille getBraille();
     void openFileInDesktop(Path path);
     org.luwrain.interaction.KeyboardHandler getCustomKeyboardHandler(String subsystem);

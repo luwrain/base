@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2018 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+   Copyright 2012-2019 Michael Pozhidaev <michael.pozhidaev@gmail.com>
 
    This file is part of LUWRAIN.
 
@@ -20,14 +20,12 @@ package org.luwrain.core;
 
 import java.lang.reflect.*;
 
-
-public class RegistryProxy
+public final class RegistryProxy
 {
     static public <T> T create(Registry registry, String regDir, Class cl)
     {
 	NullCheck.notNull(registry, "registry");
 	NullCheck.notNull(regDir, "regDir");
-
 	return (T) Proxy.newProxyInstance(
 					  cl.getClassLoader(),
 					  new Class[]{cl},
