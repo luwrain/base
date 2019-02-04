@@ -38,7 +38,5 @@ public interface PropertiesProvider extends ExtensionObject
     Set<Flags> getPropertyFlags(String propName);
     String getProperty(String propName);
     boolean setProperty(String propName, String value);
-    File getFileProperty(String propName);
-    boolean setFileProperty(String propName, File value);
     void setListener(Listener listener);
 }
