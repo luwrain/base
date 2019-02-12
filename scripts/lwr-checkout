@@ -1,25 +1,25 @@
 #!/bin/bash -e
-# The script to fetch Luwrain source code
+# The script to fetch the source code of LUWRAIN
 
 . init.sh
-cd "$SRC_DIR"
 
-for i in $GITS; do
-    if [ "$i" != base ]; then
-	git clone https://github.com/luwrain/$i.git
+lwr-list-repos | while read l; do
+    if [ "$l" != base ]; then
+	echo Cloning $l
+	git clone https://github.com/luwrain/$l.git 2> /dev/null
     fi
 done
 
-for i in $APPS; do
-git clone https://github.com/luwrain/app-$i.git
-done
+echo 'Downloading binary data'
+wget -q 'http://download.luwrain.org/compilation/binary.tar.gz'
+tar xf binary.tar.gz
+mv binary/lib .
+mkdir data
+mv binary/sounds data
+rm -f binary.tar.gz
 
+lwr-update-lib-dirs
+lwr-mk-lib-refs
+lwr-ant-gen-all
 
-for i in data lib precompiled apptemplate-win-32; do
-    wget http://download.luwrain.org/compilation/$i.zip
-    unzip $i.zip
-    rm -f $i.zip
-done
-
-echo 
-echo Everything is fetched successfully!
+echo 'Your sources ready!'

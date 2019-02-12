@@ -1,11 +1,6 @@
 
 THIS="${0##*/}"
 
-if ! [ -r config.sh ]; then
-echo "$THIS:no config.sh" >&2
-exit 1
-fi
-
 . config.sh
 
 PWD=$(pwd)
@@ -18,3 +13,4 @@ if ! [ -e "$SRC_DIR/base/scripts/init.sh" ]; then
 fi
 
 cd "$SRC_DIR"
+export PATH="$SCRIPTS_DIR:$PATH"
