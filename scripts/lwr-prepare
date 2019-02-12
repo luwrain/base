@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-. init.sh
-
-cd "$SCRIPTS_DIR"
-
-./lwr-update-lib-dirs
-./lwr-mk-lib-refs
-./lwr-ant-gen-all
