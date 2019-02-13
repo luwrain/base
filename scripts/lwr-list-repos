@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+. init.sh
+
+for i in $GITS; do
+    echo $i
+done			
+
+for i in $APPS; do
+    echo app-$i
+done

@@ -2,19 +2,13 @@
 
 . init.sh
 
-check-repo()
-{
-    cd "$1"
+lwr-list-repos | while read l; do
+    pushd "$l" > /dev/null
     if git status --porcelain | egrep -q '^[A ][DM]'; then
-	echo "$1 has uncommitted changes"
+	echo "$l has uncommitted changes"
     fi
-    cd ..
-}
-
-for i in $GITS; do
-    check-repo "$i"
-done
-
-for i in $APPS; do
-    check-repo "app-$i"
+        if git status --porcelain | egrep -q '^\?. '; then
+	echo "$l has unregistered files"
+    fi
+    popd > /dev/null
 done
