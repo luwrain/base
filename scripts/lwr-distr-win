@@ -9,15 +9,25 @@ rm -rf "$DEST_DIR"
 mkdir -p $DEST_DIR
 cd $DEST_DIR
 
+# Portable 32-bit
 mkdir 32
 cd 32
-cp -r "$SRC_DIR/apptemplate-win-32/." .
-pushd "$SCRIPTS_DIR" > /dev/null
-./lwr-distr-win-common "$DEST_DIR/32/app"
-popd > /dev/null
-
+cp -r "$SRC_DIR/binary/win32/." .
+lwr-distr-win-common "$DEST_DIR/32/app"
 cp -r "$SRC_DIR/base/txt/windows/." .
 cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
 The 32-bit release for Microsoft Windows
 EOF
+cd ..
+
+# Installer 32-bit
+mkdir installer32
+cd installer32
+cp -r "$SRC_DIR/binary/wininstaller/." .
+mkdir -p iss-fix/x32/Luwrain
+cp -r "$SRC_DIR/binary/win32/." ./iss-fix/x32/Luwrain/
+lwr-distr-win-common "$DEST_DIR/installer32/iss-fix/x32/Luwrain/app"
+cp -r "$SRC_DIR/windows/installer/nightly/" ./
+cd ..
+
