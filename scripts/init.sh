@@ -4,9 +4,9 @@ THIS="${0##*/}"
 . config.sh
 
 PWD=$(pwd)
-# We may already be in the sources root, it's OK.
-# Scripts directory check will test this as well
-SRC_DIR="${PWD%/base/scripts*}"
+if [ -z "$SRC_DIR" ]; then
+    export SRC_DIR="${PWD%/base/scripts*}"
+fi
 SCRIPTS_DIR="$SRC_DIR/base/scripts"
 
 if ! [ -e "$SRC_DIR/base/scripts/init.sh" ]; then

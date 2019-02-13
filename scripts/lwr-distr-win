@@ -28,6 +28,7 @@ cp -r "$SRC_DIR/binary/wininstaller/." .
 mkdir -p iss-fix/x32/Luwrain
 cp -r "$SRC_DIR/binary/win32/." ./iss-fix/x32/Luwrain/
 lwr-distr-win-common "$DEST_DIR/installer32/iss-fix/x32/Luwrain/app"
-cp -r "$SRC_DIR/windows/installer/nightly/" ./
+cp -r "$SRC_DIR/windows/installer/nightly/." ./
+cp "$SRC_DIR/windows/installer"/*.iss iss-fix
+sed -i -e s/LUWRAIN_VERSION/$VERSION/ iss-fix/*.iss
 cd ..
-
