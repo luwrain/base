@@ -42,6 +42,8 @@ cp -r "$SRC_DIR/extensions/js" data/js
 #Text extensions
 cp -r "$SRC_DIR/extensions/text" data/text
 
+cp -r "$SRC_DIR/binary/linux$ARCH/." .
+
 #properties
 mkdir data/properties
 for i in $ISO_PROPERTIES; do
@@ -51,6 +53,7 @@ cat <<EOF > data/properties/release.properties
 
 # General release information
 luwrain.version = $VERSION
+luwrain.registry.version=$REGISTRY_VERSION
 luwrain.build.date = $(date -I)
 EOF
 
@@ -110,4 +113,4 @@ FILE strings.txt
 "000018" = "static:Our team: Alexey Goloshumov, Michael Pozhidaev, Elena Teplykh"
 EOF
 
-cp -r "$SRC_DIR/precompiled/linux-x86-$ARCH/." .
+

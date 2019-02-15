@@ -1,5 +1,6 @@
 
-VERSION='1.1.2'
+VERSION=1.2.0
+REGISTRY_VERSION=1.02.debug01
 GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'

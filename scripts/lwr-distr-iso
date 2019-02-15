@@ -16,8 +16,6 @@ for LANG in $ISO_LANGS; do
 	mkdir "$OPT/greeter"
 	cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
 	mkdir -p "$OPT/luwrain"
-	pushd "$SRC_DIR/base/scripts" > /dev/null
-	./lwr-distr-iso-optluwrain $ARCH $LANG "$OPT/luwrain"
-	popd > /dev/null
+	lwr-distr-iso-optluwrain $ARCH $LANG "$OPT/luwrain"
     done
 done
