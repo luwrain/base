@@ -57,8 +57,17 @@ for i in 32; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/win/$i" "$TEMP_DIR/$DEST"
-        pushd "$TEMP_DIR" > /dev/null
-zip -r "$DEST.zip" "$DEST" > /dev/null
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+for i in 32; do
+    DEST=luwrain-windows-installer-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/win/installer$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
