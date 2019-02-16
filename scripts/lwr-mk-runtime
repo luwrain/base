@@ -44,8 +44,7 @@ done
 cd "$SRC_DIR/registry"
 ./lwr-reg-compile linux ~/luwrain/data
 cd ..
-cp -r precompiled/linux-x86-64/. ~/luwrain
-
+cp -r binary/linux64/. ~/luwrain
 
 cat <<EOF  >> ~/luwrain/data/registry.dat
 DIR org/luwrain/desktop/unirefs
