@@ -2,16 +2,17 @@
 
 . init.sh
 
+
 for i in luwrain interaction-javafx; do
-    ln -s "$SRC_DIR/lib-stage1" "$i"/lib
+    make_link "$SRC_DIR/lib-stage1" "$i"/lib
 done
 
 for i in browser extensions io linux packs pim reader player studio windows; do
-    ln -s "$SRC_DIR/lib-stage2" $i/lib
+    make_link "$SRC_DIR/lib-stage2" $i/lib
 done
 
 for i in $APPS; do
-    ln -s "$SRC_DIR/lib-stage3" app-$i/lib
+    make_link "$SRC_DIR/lib-stage3" app-$i/lib
 done
 
-ln -s "$SRC_DIR/lib-stage4" i18n/lib
+make_link "$SRC_DIR/lib-stage4" i18n/lib

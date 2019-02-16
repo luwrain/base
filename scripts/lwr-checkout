@@ -17,9 +17,6 @@ mv binary/lib .
 mkdir data
 mv binary/sounds data
 rm -f binary.tar.gz
-
-lwr-update-lib-dirs
-lwr-mk-lib-refs
 lwr-ant-gen-all
 
 echo 'Your sources ready!'

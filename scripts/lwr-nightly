@@ -30,7 +30,6 @@ fi
 cd base/scripts
 
 echo 'Compiling sources'
-./lwr-prepare  &> ../../../prepare.log
 ./lwr-build &> ../../../build.log
 
 DEST="luwrain-iso-nightly-$(date -I)"

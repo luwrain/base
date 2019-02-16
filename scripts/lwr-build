@@ -1,7 +1,8 @@
 #!/bin/bash -e
 
 . init.sh
-cd "$SRC_DIR"
+
+lwr-update-lib-dirs
 
 for i in base luwrain; do
     cd "$i"

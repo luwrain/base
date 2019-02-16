@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+. init.sh
+
+cd "$SCRIPTS_DIR"
+
+./lwr-list-repos | while read l; do
+    pushd "$SRC_DIR/$l" > /dev/null
+    echo `pwd`
+    popd > /dev/null
+done
