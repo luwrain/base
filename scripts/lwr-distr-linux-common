@@ -44,6 +44,7 @@ for i in $LINUX_PROPERTIES; do
 done
 cat <<EOF > data/properties/release.properties
 luwrain.version = $VERSION
+luwrain.registry.version = $REGISTRY_VERSION
 luwrain.build.date = $(date -I)
 EOF
 
