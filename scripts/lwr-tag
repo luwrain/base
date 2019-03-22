@@ -5,20 +5,10 @@
 TAG="$1"
 [ -z "$TAG" ] && echo "$THIS:no tag given" >&2 && exit 1
 
-for i in $GITS; do
-    echo "Tagging $i"
-    pushd $i  > /dev/null
+lwr-list-repos | while read l; do
+    echo "Tagging $l"
+    pushd $l  > /dev/null
     git tag "$TAG" > /dev/null
     git push --tags origin > /dev/null
     popd		 > /dev/null
 done			
-
-for i in $APPS; do
-    echo "Tagging app-$i"
-    pushd app-$i > /dev/null
-    git tag "$TAG" > /dev/null
-    git push --tags origin > /dev/null
-popd		 > /dev/null
-done
-
-echo OK
