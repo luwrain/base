@@ -1,6 +1,6 @@
 
-VERSION=1.2.0
-REGISTRY_VERSION=1.02.debug01
+VERSION=1.2.1
+REGISTRY_VERSION=1.02.0
 GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'
@@ -8,7 +8,7 @@ SDK_JARS='base browser io pim studio'
 SRC_DEST_DIR=/tmp/luwrain-src
 
 # Used for compilation, everything must be listed regardless the target platform
-LANGS='en ro ru'
+LANGS='en fr ro ru'
 APPS='commander contacts mail news notepad twitter viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice voiceman'
 COMPONENTS='base browser interaction-javafx io linux packs pim player reader studio windows'
