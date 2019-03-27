@@ -21,7 +21,7 @@ import java.io.*;
 
 import org.luwrain.core.*;
 
-public class Connections
+public final class Connections
 {
     static public final String DEFAULT_USER_AGENT = "Mozilla/5.0";
     static private final int MAX_REDIRECT_COUNT = 16;
@@ -47,10 +47,10 @@ public class Connections
 	}
     }
 
-    public static URLConnection connect(URL url, long startFrom) throws IOException
+    public static URLConnection connect(URI uri, long startFrom) throws IOException
     {
-	NullCheck.notNull(url, "url");
-	URL urlToTry = url;
+	NullCheck.notNull(uri, "uri");
+	URL urlToTry = uri.toURL();
 	for(int i = 0;i < MAX_REDIRECT_COUNT;++i)
 	{
 	    final URLConnection con = urlToTry.openConnection();
@@ -73,7 +73,17 @@ public class Connections
 		final String location = httpCon.getHeaderField("location");
 		if (location == null || location.isEmpty())
 		    throw new IOException("The response has the redirect code but the location is empty (" + urlToTry.toString() + ")");
-		urlToTry = new URL(location);
+		String decodedLocation = null;
+		try {
+		    //We can see a little mess around using of non-ASCII characters in HTTP headers
+		    decodedLocation = new String(location.getBytes("ISO8859-1"), "UTF-8");
+		}
+		catch(Exception e)
+		{
+		}
+		if (decodedLocation == null)
+		    decodedLocation = location;
+		urlToTry = new URL(urlToTry, decodedLocation);
 		continue; 
 	    }
 	    if ((startFrom == 0 && httpCon.getResponseCode() != HttpURLConnection.HTTP_OK) ||
