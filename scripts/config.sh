@@ -1,7 +1,7 @@
 
 VERSION=1.2.1
 REGISTRY_VERSION=1.02.1
-GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
+demo2019mayGITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'
 SDK_JARS='base browser io pim studio'
