@@ -29,16 +29,18 @@ public final class ClassUtils
      * it can be safely assigned to some class or interface.
      *
      *
+     * @param classLoader The class loader to use
  @param className The name of the class to create instance of
  * @param ensureInstanceOf The class object of the class to check the casting is possible (can be {@code null} what means to checking is required)
  * @return The created object or {@code null}, if something goes wrong (detailed information goes only to the log)
  */
-    static public Object newInstanceOf(String className, Class ensureInstanceOf)
+    static public Object newInstanceOf(ClassLoader classLoader, String className, Class ensureInstanceOf)
     {
+	NullCheck.notNull(classLoader, "classLoader");
 	NullCheck.notEmpty(className, "className");
 	final Object obj;
 	try {
-	    obj = Class.forName(className).newInstance();
+	    obj = Class.forName(className, true, classLoader).newInstance();
 	}
 	catch (Throwable e)
 	{
@@ -54,4 +56,5 @@ public final class ClassUtils
 	}
 	return obj;
     }
+
 }
