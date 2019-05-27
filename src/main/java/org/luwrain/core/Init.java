@@ -19,37 +19,39 @@ package org.luwrain.core;
 import java.util.*;
 import java.io.*;
 import java.net.*;
-//import java.lang.reflect.Field;
-//import java.nio.charset.Charset;
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 
 public final class Init
 {
     static public final String LOG_COMPONENT = "init";
         static private final File DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt");
 
+            static private final String ENV_APP_DATA = "APPDATA";
+    static private final String ENV_USER_PROFILE = "USERPROFILE";
+    static private final String DEFAULT_USER_DATA_DIR_WINDOWS = "Luwrain";
+    static private final String DEFAULT_USER_DATA_DIR_LINUX = ".luwrain";
+
     static public void main(String[] args) throws IOException
     {
-	//	org.luwrain.app.console.App.installListener();
 	if (DEBUG_FILE.exists() && !DEBUG_FILE.isDirectory())
 	{
 	    final PrintStream log = new PrintStream(new BufferedOutputStream(new FileOutputStream(DEBUG_FILE)), true);
 	    System.setOut(log);
 	    System.setErr(log);
-	} //else
-	//	    Log.enableBriefMode();
-	//	System.out.println(GREETING);
-	//	System.out.println();
-	//	setUtf8();
-
-	    final List<URL> urls = new LinkedList();
+	}
 
 
+	final File userHomeDir = new File(System.getProperty("user.home"));
+	final File userDataDir = detectUserDataDir();
+	final File extDir = new File(userDataDir, "extensions");
+		    final List<URL> urls = new LinkedList();
 	    addJarsToClassPath(new File("jar"), urls);
-	    System.out.println("" + urls.size());
-
 	    addJarsToClassPath(new File("lib"), urls);
+	    addExtensionsJarsToClassPath(extDir, urls);
 	    	    final ClassLoader classLoader = new URLClassLoader(urls.toArray(new java.net.URL[urls.size()]), ClassLoader.getSystemClassLoader());
-
+		    Thread.currentThread().setContextClassLoader(classLoader);
+		    		    setUtf8();
 	    final File dataDir = new File("data");
 	    final LaunchFactory factory;
 	    try {
@@ -62,13 +64,13 @@ public final class Init
 		System.exit(1);
 		return;
 	    }
-	    factory.newLaunch(args, dataDir).run();
+	    factory.newLaunch(args, dataDir, userDataDir, userHomeDir).run();
     }
 
-    /*
-    static private void addExtensionsJarsToClassPath(File extensionsDir)
+    static private void addExtensionsJarsToClassPath(File extensionsDir, List<URL> urls)
     {
 	NullCheck.notNull(extensionsDir, "extensionsDir");
+	NullCheck.notNull(urls, "urls");
 	final File[] subdirs = extensionsDir.listFiles();
 	if (subdirs == null)
 	    return;
@@ -80,10 +82,9 @@ public final class Init
 	    if (!jarsDir.isDirectory())
 		continue;
 	    Log.debug(LOG_COMPONENT, "registering extension jars from the directory " + jarsDir.getAbsolutePath());
-	    addJarsToClassPath(jarsDir);
+	    addJarsToClassPath(jarsDir, urls);
 	}
     }
-    */
 
     static private void addJarsToClassPath(File file, List<URL> urls)
     {
@@ -104,7 +105,6 @@ public final class Init
 	}
     }
 
-    /*
     static private void setUtf8()
     {
 	Log.debug("init", "using UTF-8, while default system charset was " + System.getProperty("file.encoding"));
@@ -119,5 +119,47 @@ public final class Init
 	    e.printStackTrace();
 	}
     }
-    */
+
+    static public File detectUserDataDir()
+    {
+	//Windows: in Application Data
+	if(System.getenv().containsKey(ENV_APP_DATA) && !System.getenv().get(ENV_APP_DATA).trim().isEmpty())
+	{
+	    final File appData = new File(System.getenv().get(ENV_APP_DATA));
+	    return new File(appData, DEFAULT_USER_DATA_DIR_WINDOWS);
+	}
+	if(System.getenv().containsKey(ENV_USER_PROFILE) && !System.getenv().get(ENV_USER_PROFILE).trim().isEmpty())
+	{
+	    final File userProfile = new File(System.getenv().get(ENV_USER_PROFILE));
+	    return new File(new File(new File(userProfile, "Local Settings"), "Application Data"), DEFAULT_USER_DATA_DIR_WINDOWS);
+	}
+	//We are likely on Linux
+	final File f = new File(System.getProperty("user.home"));
+	return new File(f, DEFAULT_USER_DATA_DIR_LINUX);
+    }
+
+    
+    static private File createTempDataDir()
+    {
+	try {
+	    final File tmpDir = File.createTempFile("lwrtmpdatadir", "");
+	    tmpDir.delete();
+	    if (!tmpDir.mkdir())
+	    {
+		Log.fatal(LOG_COMPONENT, "unable to create temporary directory " + tmpDir.getAbsolutePath());
+		System.exit(1);
+	    }
+	    return tmpDir;
+	}
+	catch(IOException e)
+	{
+	    Log.fatal(LOG_COMPONENT, "unable to create the temporary user data directory:" + e.getClass().getName() + ":" + e.getMessage());
+	    System.exit(1);
+	    return null;
+	}
+    }
+
+
+
+    
 }
