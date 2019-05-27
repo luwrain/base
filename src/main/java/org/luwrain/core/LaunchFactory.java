@@ -5,5 +5,5 @@ import java.io.*;
 
 public interface LaunchFactory
 {
-    Runnable newLaunch(String[] args, File dataDir, File userDataDir, File userHomeDir);
+    Runnable newLaunch(boolean standalone, String[] args, File dataDir, File userDataDir, File userHomeDir);
 }

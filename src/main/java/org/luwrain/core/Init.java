@@ -26,6 +26,7 @@ public final class Init
 {
     static public final String LOG_COMPONENT = "init";
     static private final File DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt");
+    static private final File STANDALONE = new File("standalone");
 
     static private final String ENV_APP_DATA = "APPDATA";
     static private final String ENV_USER_PROFILE = "USERPROFILE";
@@ -42,12 +43,21 @@ public final class Init
 	} else
 	    Log.enableBriefMode();
 	final File userHomeDir = new File(System.getProperty("user.home"));
-	final File userDataDir = detectUserDataDir();
-	final File extDir = new File(userDataDir, "extensions");
 	final List<URL> urls = new LinkedList();
 	addJarsToClassPath(new File("jar"), urls);
 	addJarsToClassPath(new File("lib"), urls);
-	addExtensionsJarsToClassPath(extDir, urls);
+	final File userDataDir;
+	final boolean standalone = STANDALONE.exists() && STANDALONE.isFile();
+	if (!standalone)
+	{
+	    userDataDir = detectUserDataDir();
+	    final File extDir = new File(userDataDir, "extensions");
+	    addExtensionsJarsToClassPath(extDir, urls);
+	} else
+	{
+	    userDataDir = createTempDataDir();
+	    Log.info(LOG_COMPONENT, "standalone mode, temporary user data dir is " + userDataDir.getAbsolutePath());
+	}
 	final ClassLoader classLoader = new URLClassLoader(urls.toArray(new java.net.URL[urls.size()]), ClassLoader.getSystemClassLoader());
 	Thread.currentThread().setContextClassLoader(classLoader);
 	setUtf8();
@@ -63,7 +73,7 @@ public final class Init
 	    System.exit(1);
 	    return;
 	}
-	factory.newLaunch(args, dataDir, userDataDir, userHomeDir).run();
+	factory.newLaunch(standalone, args, dataDir, userDataDir, userHomeDir).run();
     }
 
     static private void addExtensionsJarsToClassPath(File extensionsDir, List<URL> urls)
