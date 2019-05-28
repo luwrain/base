@@ -21,8 +21,9 @@ package org.luwrain.core.events;
 import java.util.*;
 
 import org.luwrain.core.*;
+import org.luwrain.interaction.*;
 
-public class KeyboardEvent extends Event
+public final class KeyboardEvent extends Event
 {
     public enum Modifiers {ALT, SHIFT, CONTROL};
 
@@ -36,6 +37,8 @@ public class KeyboardEvent extends Event
 	ALTERNATIVE_ARROW_DOWN, ALTERNATIVE_ARROW_UP, ALTERNATIVE_ARROW_LEFT, ALTERNATIVE_ARROW_RIGHT,
 	ALTERNATIVE_HOME, ALTERNATIVE_END, ALTERNATIVE_PAGE_UP, ALTERNATIVE_PAGE_DOWN, ALTERNATIVE_DELETE,
     };
+
+    static private KeyboardLayout keyboardLayout = new org.luwrain.interaction.layouts.RuDefault();
 
     protected boolean isSpecial = false;
     protected Special special = null;
@@ -142,7 +145,7 @@ public class KeyboardEvent extends Event
     {
 	return (isSpecial == event.isSpecial &&
 		(!isSpecial || special == event.special) &&
-		(isSpecial || EqualKeys.equalKeys(nonSpecialChar, event.nonSpecialChar)) &&
+		(isSpecial || keyboardLayout.onSameButton(nonSpecialChar, event.nonSpecialChar)) &&
 		shiftPressed == event.shiftPressed &&
 		controlPressed == event.controlPressed &&
 		altPressed == event.altPressed);
@@ -289,5 +292,17 @@ public class KeyboardEvent extends Event
 	default:
 	    return null;
 	}
+    }
+
+    static public KeyboardLayout getKeyboardLayout()
+    {
+	return keyboardLayout;
+    }
+
+    static public void setKeyboardLayout(KeyboardLayout layout)
+    {
+	if (layout == null)
+	    throw new NullPointerException("layout may not be null");
+	keyboardLayout = layout;
     }
 }
