@@ -18,5 +18,6 @@ package org.luwrain.interaction;
 
 public interface KeyboardLayout
 {
+    char getAsciiOfButton(char ch);
     boolean onSameButton(char c1, char c2);
 }

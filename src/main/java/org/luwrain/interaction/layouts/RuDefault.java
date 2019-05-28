@@ -56,6 +56,17 @@ public final class RuDefault implements KeyboardLayout
 	".ю"
     };
 
+    @Override public char getAsciiOfButton(char ch)
+    {
+	for(String s: clusters)
+	{
+	    for(int i = 0;i < s.length();i++)
+		if (s.charAt(i) == ch)
+		    return s.charAt(0);
+	}
+	return '\0';
+    }
+
     @Override public boolean onSameButton(char c1, char c2)
     {
 	final char lc1 = Character.toLowerCase(c1);
