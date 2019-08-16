@@ -27,12 +27,12 @@ ln -s "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar/luwrain-ext-$i.jar
 done
 
 cd data
-mkdir properties scripts js
+mkdir properties scripts
 ln -s "$SRC_DIR/data/sounds" sounds
+ln -s "$SRC_DIR/extensions/js" js
 for i in $LINUX_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." properties
 done
-
 for i in $LINUX_SCRIPTS; do
     for l in "$SRC_DIR/$i/scripts"/*; do
 	ln -s "$l" scripts
