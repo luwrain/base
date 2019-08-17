@@ -2,14 +2,8 @@
 
 . init.sh
 
-for i in $GITS; do
-pushd $i 
+lwr-list-repos | while read l; do
+    pushd $l 
     git			pull
     popd		
 done			
-
-for i in $APPS; do
-pushd app-$i
-git pull	
-popd		
-done
