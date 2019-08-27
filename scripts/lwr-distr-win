@@ -13,11 +13,11 @@ cd $DEST_DIR
 mkdir 32
 cd 32
 cp -r "$SRC_DIR/binary/win32/." .
-lwr-distr-win-common "$DEST_DIR/32/app"
+lwr-basedirs-win "$DEST_DIR/32/app"
 cp -r "$SRC_DIR/base/txt/windows/." .
 cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-The 32-bit release for Microsoft Windows
+32-bit release for Microsoft Windows
 EOF
 cd ..
 
@@ -27,7 +27,7 @@ cd installer32
 cp -r "$SRC_DIR/binary/wininstaller/." .
 mkdir -p iss-fix/x32/Luwrain
 cp -r "$SRC_DIR/binary/win32/." ./iss-fix/x32/Luwrain/
-lwr-distr-win-common "$DEST_DIR/installer32/iss-fix/x32/Luwrain/app"
+lwr-basedirs-win "$DEST_DIR/installer32/iss-fix/x32/Luwrain/app"
 cp -r "$SRC_DIR/windows/installer/nightly/." ./
 cp "$SRC_DIR/windows/installer"/*.iss iss-fix
 sed -i -e s/LUWRAIN_VERSION/$VERSION/ iss-fix/*.iss

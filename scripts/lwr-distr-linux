@@ -9,13 +9,13 @@ rm -rf "$DEST_DIR"
 mkdir -p "$DEST_DIR"
 
 for ARCH in $LINUX_ARCH; do
-    mkdir -p $DEST_DIR/$ARCH""
-    lwr-distr-linux-common "$DEST_DIR/$ARCH"
+    mkdir -p "$DEST_DIR/$ARCH/app"
+        lwr-basedirs-linux "$DEST_DIR/$ARCH/app"
     cd "$DEST_DIR/$ARCH"
     cp -r "$SRC_DIR/binary/linux$ARCH/." .
     cp -r "$SRC_DIR/base/txt/linux/." .
     cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-The $ARCH-bit release for GNU/Linux
+$ARCH-bit release for GNU/Linux
 EOF
 done
