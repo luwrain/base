@@ -10,8 +10,14 @@ lwr-list-repos | while read l; do
     fi
 done
 
-echo 'Downloading binary data'
-wget -q 'http://download.luwrain.org/compilation/binary.tar.gz'
+if ! [ -e /tmp/binary.tar.gz ]; then
+    echo 'Downloading binary data'
+    wget -q 'http://download.luwrain.org/compilation/binary.tar.gz'
+else
+    cat /tmp/binary.tar.gz > binary.tar.gz
+    done
+
+    
 tar xf binary.tar.gz
 mv binary/lib .
 mkdir data
