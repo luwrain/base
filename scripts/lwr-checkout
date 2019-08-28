@@ -15,7 +15,7 @@ if ! [ -e /tmp/binary.tar.gz ]; then
     wget -q 'http://download.luwrain.org/compilation/binary.tar.gz'
 else
     cat /tmp/binary.tar.gz > binary.tar.gz
-    done
+fi
 
     
 tar xf binary.tar.gz
