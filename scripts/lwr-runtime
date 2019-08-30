@@ -45,9 +45,3 @@ cd "$SRC_DIR/registry"
 ./lwr-reg-compile linux ~/luwrain/data
 cd ..
 cp -r binary/linux64/. ~/luwrain
-
-cat <<EOF  >> ~/luwrain/data/registry.dat
-DIR org/luwrain/desktop/unirefs
-FILE strings.txt
-"000001" = "section:Welcome to LUWRAIN"
-EOF
