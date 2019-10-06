@@ -26,6 +26,11 @@ done
 for i in $WIN_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
+if [ -d ~/.luwrain/dev/jars/ ]; then
+    for i in ~/.luwrain/dev/jars/*; do
+	cat $i > jar/"$(basename "$i")"
+    done
+fi
 
 pushd "$SRC_DIR/registry" > /dev/null
 ./lwr-reg-compile win "$DEST_DIR/data"
