@@ -30,8 +30,8 @@ done
 for i in $LINUX_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
-if [ -d ~/.luwrain/dev/jars/ ]; then
-    for i in ~/.luwrain/dev/jars/*; do
+if [ -d ~/.luwrain/dev/jar/ ]; then
+    for i in ~/.luwrain/dev/jar/*; do
 	cat $i > jar/"$(basename "$i")"
     done
 fi
@@ -43,6 +43,11 @@ popd > /dev/null
 
 #JavaScript
 cp -r "$SRC_DIR/extensions/js" data/js
+if [ -d ~/.luwrain/dev/js/ ]; then
+    for i in ~/.luwrain/dev/js/*; do
+	cat $i > data/js/"$(basename "$i")"
+    done
+fi
 #Text extensions
 cp -r "$SRC_DIR/extensions/text" data/text
 

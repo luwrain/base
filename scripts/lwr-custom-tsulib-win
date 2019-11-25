@@ -1,0 +1,54 @@
+#!/bin/bash -e
+
+. init.sh
+
+DIST_DIR="$1"
+DEST_DIR="$2"
+
+[ -z "$DIST_DIR" ] && echo "$THIS: no source dir given" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "$THIS: no dest dir given" >&2 && exit 1
+
+mkdir -p "$DEST_DIR"
+cp -r "$DIST_DIR/." "$DEST_DIR"
+cd "$DEST_DIR"
+mkdir tmp
+pushd tmp > /dev/null
+git clone https://github.com/luwrain/registry.git/
+mkdir registry.win
+pushd registry > /dev/null
+git branch tsulib origin/tsulib
+git checkout tsulib
+./lwr-reg-compile win ../registry.win
+popd > /dev/null
+rm -rf registry
+popd > /dev/null
+
+for i in 32; do
+    pushd $i > /dev/null
+    mv Luwrain.exe tsulib.exe
+    mv Luwrain.ico tsulib.ico
+    rm -f *.txt
+    popd > /dev/null
+    pushd $i/app > /dev/null
+    mv Luwrain.cfg tsulib.cfg
+    touch standalone
+    pushd jar > /dev/null
+    for i in books publisher studio player app-news app-contacts app-commander app-twitter app-vk; do
+	rm -f luwrain-$i.jar
+    done
+    popd > /dev/null
+    pushd data > /dev/null
+    rm -f registry*
+    cp -r "$DEST_DIR/tmp/registry.win/." .
+    pushd sounds/schemes/pragmatic > /dev/null
+    rm -f startup.wav
+    wget -q http://download.luwrain.org/partners/tsu/tsulib/startup.wav
+    popd > /dev/null
+    pushd js > /dev/null
+    rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
+    popd > /dev/null
+    popd > /dev/null
+    popd > /dev/null
+done
+rm -rf tmp
+echo OK
