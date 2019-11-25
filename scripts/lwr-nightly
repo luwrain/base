@@ -62,7 +62,7 @@ for i in 32 64; do
     sha1sum "$DEST.tar.gz" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/linux"
+rmdir "$TEMP_DIR/tsulib-linux"
 
 ./lwr-distr-win "$TEMP_DIR/win"
 for i in 32; do
