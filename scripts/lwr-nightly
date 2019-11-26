@@ -94,6 +94,7 @@ for i in 32; do
     zip -r "$DEST.zip" "$DEST" > /dev/null
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
+    done
     rmdir "$TEMP_DIR/tsulib-win"
 
 DEST="luwrain-sdk-nightly-`date -I`"
