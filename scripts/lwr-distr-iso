@@ -14,7 +14,7 @@ for LANG in $ISO_LANGS; do
 cat <<EOF > "$DEST_DIR/bin/luwrain"
 #!/bin/bash -e
 
-exec /opt/luwrain/luwrain "$@"
+exec /opt/luwrain/luwrain "\$@"
 EOF
 	chmod 755 "$DEST_DIR/bin/luwrain"
 	OPT="$DEST_DIR/opt"
