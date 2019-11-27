@@ -11,11 +11,16 @@ for LANG in $ISO_LANGS; do
 	for i in profile etc opt bin; do
 	    mkdir -p "$DEST_DIR/$i"
 	done
-	cp "$SRC_DIR/linux/luwrain.sh" "$DEST_DIR/bin/luwrain"
+cat <<EOF > "$DEST_DIR/bin/luwrain"
+#!/bin/bash -e
+
+exec /opt/luwrain/luwrain "$@"
+EOF
+	chmod 755 "$DEST_DIR/bin/luwrain"
 	OPT="$DEST_DIR/opt"
 	mkdir "$OPT/greeter"
 	cp -r "$SRC_DIR/linux/greeter/langs/$LANG/." "$OPT/greeter"
 	mkdir -p "$OPT/luwrain"
-	lwr-distr-iso-optluwrain $ARCH $LANG "$OPT/luwrain"
+	lwr-basedirs-iso $ARCH $LANG "$OPT/luwrain"
     done
 done
