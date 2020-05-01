@@ -28,7 +28,7 @@ for i in $LINUX_ARCH; do
     mv luwrain tsulib
     rm -f *.txt *speechd*
     popd > /dev/null
-    pushd $i/app > /dev/null
+    pushd $i/lib/app > /dev/null
     mv luwrain.cfg tsulib.cfg
     touch standalone
     pushd jar > /dev/null
