@@ -3,14 +3,14 @@
 . init.sh
 
 DEST_DIR="$1"
-[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "$THIS: no destination directory" >&2 && exit 1
 
 rm -rf "$DEST_DIR"
 mkdir -p "$DEST_DIR"
 
 for ARCH in $LINUX_ARCH; do
-    mkdir -p "$DEST_DIR/$ARCH/app"
-        lwr-basedirs-linux "$DEST_DIR/$ARCH/app"
+    mkdir -p "$DEST_DIR/$ARCH/lib/app"
+        lwr-basedirs-linux "$DEST_DIR/$ARCH/lib/app"
     cd "$DEST_DIR/$ARCH"
     cp -r "$SRC_DIR/binary/linux$ARCH/." .
     cp -r "$SRC_DIR/base/txt/linux/." .

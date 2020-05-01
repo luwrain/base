@@ -20,7 +20,7 @@ WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
 WIN_EXTENSIONS='mssapi plmp3 rhvoice'
 WIN_PROPERTIES='luwrain player reader windows'
 
-LINUX_ARCH='32 64'
+LINUX_ARCH='64'
 LINUX_LANGS='en ro ru'
 LINUX_COMPONENTS='base browser interaction-javafx io linux packs pim player reader studio'
 LINUX_APPS='commander contacts mail news notepad telegram twitter viewer vk'
