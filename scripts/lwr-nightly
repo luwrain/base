@@ -53,7 +53,7 @@ for i in 64; do
 done
 rmdir "$TEMP_DIR/linux"
 
-for i in 32 64; do
+for i in 64; do
     DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
