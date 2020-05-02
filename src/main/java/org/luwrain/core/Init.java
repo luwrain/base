@@ -60,7 +60,7 @@ public final class Init
 	}
 	final ClassLoader classLoader = new URLClassLoader(urls.toArray(new java.net.URL[urls.size()]), ClassLoader.getSystemClassLoader());
 	Thread.currentThread().setContextClassLoader(classLoader);
-	setUtf8();
+	//setUtf8();
 	final File dataDir = new File("data");
 	final LaunchFactory factory;
 	try {
