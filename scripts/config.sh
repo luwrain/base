@@ -1,5 +1,5 @@
 
-VERSION=2.0.0
+VERSION=1.9.00
 REGISTRY_VERSION=1.3.00
 GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
 PROPERTIES_FILE=release.properties
