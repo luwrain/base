@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-TEMP_DIR=$(mktemp -d)
+TEMP_DIR=$(mktemp -d /tmp/.nightly-XXXXXX)
 
 [ -e /tmp/nightly ] && rm -f /tmp/nightly
 ln -s $TEMP_DIR /tmp/nightly
