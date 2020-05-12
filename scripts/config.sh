@@ -13,7 +13,7 @@ APPS='commander contacts mail news notepad telegram twitter viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
 COMPONENTS='base browser interaction-javafx io linux packs pim player reader studio windows'
 
-WIN_ARCH=32
+WIN_ARCH=64
 WIN_LANGS='en ro ru'
 WIN_COMPONENTS='base browser interaction-javafx io packs pim player reader studio windows'
 WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
