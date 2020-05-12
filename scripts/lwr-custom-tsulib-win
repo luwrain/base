@@ -23,7 +23,7 @@ popd > /dev/null
 rm -rf registry
 popd > /dev/null
 
-for i in 32; do
+for i in $WIN_ARCH; do
     pushd $i > /dev/null
     mv Luwrain.exe tsulib.exe
     mv Luwrain.ico tsulib.ico
