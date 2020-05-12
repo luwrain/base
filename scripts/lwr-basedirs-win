@@ -59,8 +59,7 @@ EOF
 
 # luwrain.bat
 cat <<EOF > luwrain.bat
-rem Runs LUWRAIN with the locally installed (not embedded) Java SE Runtime Environment
-rem This can be useful for debug purposes
+rem Runs LUWRAIN with the locally installed (not embedded) JRE
 
-javaw -cp jar\luwrain-base.jar;jar\luwrain.jar org.luwrain.core.Init
+javaw -cp jar\luwrain-base.jar
 EOF
