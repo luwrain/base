@@ -41,7 +41,7 @@ echo 'Compiling sources'
 #popd > /dev/null
 
 ./lwr-distr-linux "$TEMP_DIR/linux"
-./lwr-custom-tsulib-linux "$TEMP_DIR/linux" "$TEMP_DIR/tsulib-linux" &>> ../../../log.txt
+#./lwr-custom-tsulib-linux "$TEMP_DIR/linux" "$TEMP_DIR/tsulib-linux" &>> ../../../log.txt
 for i in 64; do
     DEST=luwrain-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -53,19 +53,19 @@ for i in 64; do
 done
 rmdir "$TEMP_DIR/linux"
 
-for i in 64; do
-    DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
-    echo "Processing $DEST"
-    mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
-    pushd "$TEMP_DIR" > /dev/null
-    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
-    sha1sum "$DEST.tar.gz" >> sha1sum.txt
-    popd > /dev/null
-done
-rmdir "$TEMP_DIR/tsulib-linux"
+#for i in 64; do
+#    DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
+#    echo "Processing $DEST"
+#    mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
+#    pushd "$TEMP_DIR" > /dev/null
+#    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+#    sha1sum "$DEST.tar.gz" >> sha1sum.txt
+#    popd > /dev/null
+#done
+#rmdir "$TEMP_DIR/tsulib-linux"
 
 ./lwr-distr-win "$TEMP_DIR/win"
-./lwr-custom-tsulib-win "$TEMP_DIR/win" "$TEMP_DIR/tsulib-win" &>> ../../../log.txt
+#./lwr-custom-tsulib-win "$TEMP_DIR/win" "$TEMP_DIR/tsulib-win" &>> ../../../log.txt
 for i in 64; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -86,25 +86,25 @@ for i in 64; do
 done
 rmdir "$TEMP_DIR/win"
 
-for i in 64; do
-    DEST=tsulib-windows-"$i"bit-nightly-"`date -I`"
-    echo "Processing $DEST"
-    mv "$TEMP_DIR/tsulib-win/$i" "$TEMP_DIR/$DEST"
-    pushd "$TEMP_DIR" > /dev/null
-    zip -r "$DEST.zip" "$DEST" > /dev/null
-    sha1sum "$DEST.zip" >> sha1sum.txt
-    popd > /dev/null
-done
-for i in 64; do
-    DEST=tsulib-windows-installer-"$i"bit-nightly-"`date -I`"
-    echo "Processing $DEST"
-    mv "$TEMP_DIR/tsulib-win/installer$i" "$TEMP_DIR/$DEST"
-    pushd "$TEMP_DIR" > /dev/null
-    zip -r "$DEST.zip" "$DEST" > /dev/null
-    sha1sum "$DEST.zip" >> sha1sum.txt
-    popd > /dev/null
-done
-    rmdir "$TEMP_DIR/tsulib-win"
+#for i in 64; do
+#    DEST=tsulib-windows-"$i"bit-nightly-"`date -I`"
+#    echo "Processing $DEST"
+#    mv "$TEMP_DIR/tsulib-win/$i" "$TEMP_DIR/$DEST"
+#    pushd "$TEMP_DIR" > /dev/null
+#    zip -r "$DEST.zip" "$DEST" > /dev/null
+#    sha1sum "$DEST.zip" >> sha1sum.txt
+#    popd > /dev/null
+#done
+#for i in 64; do
+#    DEST=tsulib-windows-installer-"$i"bit-nightly-"`date -I`"
+#    echo "Processing $DEST"
+#    mv "$TEMP_DIR/tsulib-win/installer$i" "$TEMP_DIR/$DEST"
+#    pushd "$TEMP_DIR" > /dev/null
+#    zip -r "$DEST.zip" "$DEST" > /dev/null
+#    sha1sum "$DEST.zip" >> sha1sum.txt
+#    popd > /dev/null
+#done
+#    rmdir "$TEMP_DIR/tsulib-win"
 
 DEST="luwrain-sdk-nightly-`date -I`"
 ./lwr-distr-sdk "$TEMP_DIR/$DEST" &> ../../../sdk.log
