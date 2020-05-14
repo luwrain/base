@@ -97,6 +97,7 @@ public final class Init
 
     static private void addJarsToClassPath(File file, List<URL> urls)
     {
+	System.out.println("adding " + file.getAbsolutePath());
 	try {
 	    final File[] files = file.listFiles();
 	    if (files == null)
