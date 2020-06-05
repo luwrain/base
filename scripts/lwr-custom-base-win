@@ -1,0 +1,48 @@
+#!/bin/bash -e
+
+. init.sh
+
+DEST_DIR="$1"
+CUSTOM_NAME="$2"
+[ -z "$DEST_DIR" ] && echo "$THIS: No dest directory" >&2 && exit 1
+[ -z "$CUSTOM_NAME" ] && echo "$THIS: No custom name" >&2 && exit 1
+
+cd "$DEST_DIR"
+
+mkdir tmp
+pushd tmp > /dev/null
+git clone https://github.com/luwrain/registry.git/
+mkdir registry.win
+pushd registry > /dev/null
+git branch $CUSTOM_NAME origin/$CUSTOM_NAME
+git checkout $CUSTOM_NAME
+./lwr-reg-compile win ../registry.win
+popd > /dev/null
+rm -rf registry
+popd > /dev/null
+
+for i in $WIN_ARCH; do
+    pushd $i > /dev/null
+    mv luwrain.exe $CUSTOM_NAME.exe
+    mv luwrain.ico $CUSTOM_NAME.ico
+    rm -f *.txt
+    popd > /dev/null
+    pushd $i/app > /dev/null
+    mv luwrain.cfg $CUSTOM_NAME.cfg
+    popd > /dev/null
+    pushd $i > /dev/null
+    rm -f *.bat
+        pushd rhvoice/data/languages > /dev/null
+    rm -rf Brazilian-Portuguese Esperanto Georgian Kyrgyz Tatar Ukrainian
+    popd > /dev/null
+    pushd rhvoice/data/voices > /dev/null
+    rm -rf alan aleksandr anatol anna azamat bdl clb irina Leticia-F123 natalia natia nazgul slt spomenka talgat
+    popd > /dev/null
+    touch standalone
+    pushd data > /dev/null
+    rm -f registry*
+    cp -r "$DEST_DIR/tmp/registry.win/." .
+    popd > /dev/null
+    popd > /dev/null
+done
+rm -rf tmp

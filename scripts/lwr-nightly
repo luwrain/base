@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+. config.sh
+
 TEMP_DIR=$(mktemp -d /tmp/.nightly-XXXXXX)
 
 [ -e /tmp/nightly ] && rm -f /tmp/nightly
@@ -32,14 +34,6 @@ cd base/scripts
 echo 'Compiling sources'
 ./lwr-build &> ../../../log.txt
 
-#DEST="luwrain-iso-nightly-$(date -I)"
-#./lwr-distr-iso "$TEMP_DIR/$DEST"
-#echo "Processing $DEST"
-#pushd "$TEMP_DIR" > /dev/null
-#tar -c "$DEST/" | gzip > "$DEST.tar.gz"
-#sha1sum "$DEST.tar.gz" >> sha1sum.txt
-#popd > /dev/null
-
 ./lwr-distr-linux "$TEMP_DIR/linux"
 #./lwr-custom-tsulib-linux "$TEMP_DIR/linux" "$TEMP_DIR/tsulib-linux" &>> ../../../log.txt
 for i in 64; do
@@ -66,7 +60,8 @@ rmdir "$TEMP_DIR/linux"
 
 ./lwr-distr-win "$TEMP_DIR/win"
 #./lwr-custom-tsulib-win "$TEMP_DIR/win" "$TEMP_DIR/tsulib-win" &>> ../../../log.txt
-for i in 64; do
+./lwr-custom-reader-win "$TEMP_DIR/win" "$TEMP_DIR/reader-win" &>> ../../../log.txt
+for i in $WIN_ARCH; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/win/$i" "$TEMP_DIR/$DEST"
@@ -75,7 +70,7 @@ for i in 64; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-for i in 64; do
+for i in $WIN_ARCH; do
     DEST=luwrain-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/win/installer$i" "$TEMP_DIR/$DEST"
@@ -86,6 +81,7 @@ for i in 64; do
 done
 rmdir "$TEMP_DIR/win"
 
+#tsulib windows
 #for i in 64; do
 #    DEST=tsulib-windows-"$i"bit-nightly-"`date -I`"
 #    echo "Processing $DEST"
@@ -105,6 +101,28 @@ rmdir "$TEMP_DIR/win"
 #    popd > /dev/null
 #done
 #    rmdir "$TEMP_DIR/tsulib-win"
+
+#reader windows
+for i in $WIN_ARCH; do
+    DEST=reader-windows-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/reader-win/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+for i in $WIN_ARCH; do
+    DEST=reader-windows-installer-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/reader-win/installer$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+    rmdir "$TEMP_DIR/reader-win"
+
 
 DEST="luwrain-sdk-nightly-`date -I`"
 ./lwr-distr-sdk "$TEMP_DIR/$DEST" &> ../../../sdk.log
