@@ -27,7 +27,7 @@ EOF
     cd installer$ARCH
     cp -r "$SRC_DIR/binary/wininstaller/." .
     mkdir -p iss-fix/x$ARCH/Luwrain
-    cp -r "$SRC_DIR/binary/win32/." ./iss-fix/x$ARCH/Luwrain/
+    cp -r "$SRC_DIR/binary/win$ARCH/." ./iss-fix/x$ARCH/Luwrain/
     lwr-basedirs-win "$DEST_DIR/installer$ARCH/iss-fix/x$ARCH/Luwrain"
     cp -r "$SRC_DIR/windows/installer/nightly/." ./
     cp "$SRC_DIR/windows/installer"/*.iss iss-fix
