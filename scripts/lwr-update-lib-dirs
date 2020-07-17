@@ -41,10 +41,7 @@ cd ..
 
 # Repositories links
 
-for i in luwrain; do
-    make_link "$SRC_DIR/lib-stage1" "$i"/lib
-done
-for i in browser extensions interaction-javafx io linux packs pim reader player studio windows; do
+for i in extensions packs windows; do
     make_link "$SRC_DIR/lib-stage2" $i/lib
 done
 for i in $APPS; do
