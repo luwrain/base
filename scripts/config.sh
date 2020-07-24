@@ -11,7 +11,7 @@ SRC_DEST_DIR=/tmp/luwrain-src
 LANGS='en fr ro ru'
 APPS='commander contacts mail news notepad telegram twitter viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
-COMPONENTS='base browser interaction-javafx io linux packs pim player reader studio windows'
+COMPONENTS='base io browser linux packs pim player reader studio windows interaction-javafx'
 
 WIN_ARCH=64
 WIN_LANGS='en ro ru'
