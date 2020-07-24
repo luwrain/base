@@ -3,12 +3,19 @@
 . init.sh
 
 for i in $APPS; do
-    "$SCRIPTS_DIR/lwr-ant-gen-app" $i > app-$i/build.xml
+    lwr-ant-gen-app $i > app-$i/build.xml
 done
 
 cd extensions
 for i in $EXTENSIONS; do
     pushd $i > /dev/null
-    "$SCRIPTS_DIR/lwr-ant-gen-ext" $i > build.xml
+    lwr-ant-gen-ext $i > build.xml
+    popd > /dev/null
+done
+
+cd ../i18n
+for i in $LANGS; do
+    pushd $i > /dev/null
+    lwr-ant-gen-lang $i > build.xml
     popd > /dev/null
 done

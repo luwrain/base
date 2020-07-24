@@ -2,8 +2,6 @@
 
 . init.sh
 
-lwr-update-lib-dirs
-
 for i in base luwrain; do
     cd "$i"
     ant -emacs

@@ -2,22 +2,28 @@
 
 . init.sh
 
-[ -z "$1" ] && echo "$THIS:no app name given" >&2 && exit 1
-APP_NAME="$1"
+[ -z "$1" ] && echo "$THIS:no language name given" >&2 && exit 1
+LANG_NAME="$1"
 
 cat <<EOF
-<project name="luwrain-app-$APP_NAME" default="jar" basedir=".">
+<project name="luwrain-lang-$LANG_NAME" default="jar" basedir=".">
   <path id="classpath">
     <pathelement location="."/>
-    <fileset dir="../lib"><include name="**/*.jar"/></fileset>
-    <fileset dir="../luwrain/jar"><include name="**/*.jar"/></fileset>
+    <fileset dir="../../lib"><include name="**/*.jar"/></fileset>
+    <fileset dir="../../luwrain/jar"><include name="**/*.jar"/></fileset>
 EOF
 
 for i in $COMPONENTS; do
     cat <<EOF
-    <fileset dir="../$i/jar"><include name="**/*.jar"/></fileset>
+    <fileset dir="../../$i/jar"><include name="**/*.jar"/></fileset>
 EOF
-    done
+done
+
+for i in $APPS; do
+    cat <<EOF
+    <fileset dir="../../app-$i/jar"><include name="**/*.jar"/></fileset>
+EOF
+done
 
 cat <<EOF
   </path>
@@ -39,14 +45,17 @@ cat <<EOF
   </target>
   <target name="jar" depends="compile">
     <mkdir dir="jar"/>
-    <jar jarfile="jar/luwrain-app-$APP_NAME.jar">
+    <jar jarfile="jar/luwrain-lang-$LANG_NAME.jar">
       <manifest>
         <section name="org/luwrain">
-          <attribute name="Extensions" value="org.luwrain.app.$APP_NAME.Extension"/>
+          <attribute name="Extensions" value="org.luwrain.i18n.$LANG_NAME.Extension"/>
         </section>
       </manifest>
       <fileset dir="./build/main">
         <include name="**/*.class"/>
+      </fileset>
+      <fileset dir="./src/main/resources">
+        <include name="**/*"/>
       </fileset>
     </jar>
   </target>
@@ -61,7 +70,7 @@ cat <<EOF
     </javac>
   </target>
   <target name="jar-test" depends="compile-test">
-    <jar jarfile="jar/luwrain-app-$APP_NAME-test.jar">
+    <jar jarfile="jar/luwrain-lang-$LANG_NAME-test.jar">
       <fileset dir="./build/test">
         <include name="**/*.class"/>
       </fileset>
