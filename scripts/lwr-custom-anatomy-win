@@ -15,12 +15,15 @@ lwr-custom-base-win "$DEST_DIR" anatomy
 cd "$DEST_DIR"
 for i in $WIN_ARCH; do
     pushd $i/jar > /dev/null
-    for k in books publisher studio player pim app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
+    for k in books publisher studio player pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
 	rm -f luwrain-$k.jar
     done
     popd > /dev/null
     pushd $i/lib > /dev/null
-    rm -f javamail*.jar javaxmail*.jar junit*.jar twitter*.jar vk-sdk*.jar
+    rm -f javax.mail*.jar junit*.jar twitter*.jar vk-sdk*.jar
+    popd > /dev/null
+    pushd $i/data/properties > /dev/null
+    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'org.luwrain.app.anatomy.App'/ luwrain.properties
     popd > /dev/null
     pushd $i/data/js > /dev/null
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
