@@ -10,7 +10,7 @@ DEST_DIR="$2"
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
 
-lwr-custom-base-win "$DEST_DIR" anatomy
+lwr-custom-base-win "$DEST_DIR" tsulib
 
 cd "$DEST_DIR"
 for i in $WIN_ARCH; do
