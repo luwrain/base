@@ -15,8 +15,8 @@ lwr-custom-base-win "$DEST_DIR" anatomy
 cd "$DEST_DIR"
 for i in $WIN_ARCH; do
     pushd $i/jar > /dev/null
-    for i in books publisher studio player app-news app-contacts app-commander app-twitter app-vk app-telegram ; do
-	rm -f luwrain-$i.jar
+    for k in books publisher studio player app-news app-contacts app-commander app-twitter app-vk app-telegram ; do
+	rm -f luwrain-$k.jar
     done
     rm -f luwrain-edu-*
     popd > /dev/null
