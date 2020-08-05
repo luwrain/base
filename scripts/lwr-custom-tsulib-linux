@@ -48,10 +48,6 @@ for i in $LINUX_ARCH; do
     popd > /dev/null
     popd > /dev/null
     popd > /dev/null
-
-    pushd $i/data/properties > /dev/null
-    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.tsu.lib.luwrain.App'/ luwrain.properties
-    popd > /dev/null
 done
 rm -rf tmp
 echo OK
