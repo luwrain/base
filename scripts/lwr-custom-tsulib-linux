@@ -10,42 +10,22 @@ DEST_DIR="$2"
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
+lwr-custom-base-linux "$DEST_DIR" tsulib
 cd "$DEST_DIR"
-mkdir tmp
-pushd tmp > /dev/null
-git clone https://github.com/luwrain/registry.git/
-mkdir registry.linux
-pushd registry > /dev/null
-git branch tsulib origin/tsulib
-git checkout tsulib
-./lwr-reg-compile linux ../registry.linux
-popd > /dev/null
-rm -rf registry
-popd > /dev/null
 
 for i in $LINUX_ARCH; do
-    pushd $i > /dev/null
-    mv luwrain tsulib
-    rm -f *.txt *speechd*
-    popd > /dev/null
     pushd $i/lib/app > /dev/null
-    mv luwrain.cfg tsulib.cfg
-    touch standalone
     pushd jar > /dev/null
-    for i in books publisher studio player app-news app-contacts app-commander app-twitter app-vk; do
-	rm -f luwrain-$i.jar
+    for k in books publisher studio player app-news app-contacts app-commander app-twitter app-vk; do
+	rm -f luwrain-$k.jar
     done
     popd > /dev/null
-    pushd data > /dev/null
-    rm -f registry*
-    cp -r "$DEST_DIR/tmp/registry.linux/." .
-    pushd sounds/schemes/pragmatic > /dev/null
+    pushd data/sounds/schemes/pragmatic > /dev/null
     rm -f startup.wav
     wget -q http://download.luwrain.org/partners/tsu/tsulib/startup.wav
     popd > /dev/null
-    pushd js > /dev/null
+    pushd data/js > /dev/null
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
-    popd > /dev/null
     popd > /dev/null
     popd > /dev/null
 done
