@@ -36,10 +36,10 @@ EOF
     chmod 755 "$CUSTOM_NAME"
     rm -f *.txt *speechd*
     popd > /dev/null
-pushd $I/lib > /dev/null
-mv luwrain "$CUSTOM_NAME"
-mv luwrain.png "$CUSTOM_NAME".png
-popd > /dev/null
+    pushd $i/lib > /dev/null
+    mv luwrain "$CUSTOM_NAME"
+    mv luwrain.png "$CUSTOM_NAME".png
+    popd > /dev/null
     pushd $i/lib/app > /dev/null
     mv luwrain.cfg "$CUSTOM_NAME".cfg
     touch standalone
