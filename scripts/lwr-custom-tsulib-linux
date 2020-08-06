@@ -28,6 +28,9 @@ for i in $LINUX_ARCH; do
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
     popd > /dev/null
     popd > /dev/null
+        pushd $i/lib/app/data/properties > /dev/null
+    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.tsu.lib.luwrain.App'/ luwrain.properties
+    popd > /dev/null
 done
 rm -rf tmp
 echo OK

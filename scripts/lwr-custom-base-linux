@@ -24,7 +24,7 @@ popd > /dev/null
 for i in $LINUX_ARCH; do
     pushd $i > /dev/null
     rm -f luwrain
-cat <<EOF > "$CUSTOM_NAME
+cat <<EOF > "$CUSTOM_NAME"
 #!/bin/bash -e
 
 # To suppress warnings about unavailable accessibility services
@@ -38,7 +38,7 @@ EOF
     popd > /dev/null
 pushd $I/lib > /dev/null
 mv luwrain "$CUSTOM_NAME"
-mv luwrain.png "$CUSTOM_NAME"
+mv luwrain.png "$CUSTOM_NAME".png
 popd > /dev/null
     pushd $i/lib/app > /dev/null
     mv luwrain.cfg "$CUSTOM_NAME".cfg
