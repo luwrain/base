@@ -4,59 +4,30 @@
 
 DIST_DIR="$1"
 DEST_DIR="$2"
-
 [ -z "$DIST_DIR" ] && echo "$THIS: no source dir given" >&2 && exit 1
 [ -z "$DEST_DIR" ] && echo "$THIS: no dest dir given" >&2 && exit 1
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
+lwr-custom-base-win "$DEST_DIR" reader
 cd "$DEST_DIR"
-mkdir tmp
-pushd tmp > /dev/null
-git clone https://github.com/luwrain/registry.git/
-mkdir registry.win
-pushd registry > /dev/null
-git branch reader origin/reader
-git checkout reader
-./lwr-reg-compile win ../registry.win
-popd > /dev/null
-rm -rf registry
-popd > /dev/null
 
 for i in $WIN_ARCH; do
-    pushd $i > /dev/null
-    mv luwrain.exe reader.exe
-    mv luwrain.ico reader.ico
-    rm -f *.txt
-    popd > /dev/null
-    pushd $i/app > /dev/null
-    mv luwrain.cfg reader.cfg
-    popd > /dev/null
-    pushd $i > /dev/null
-    rm -f *.bat
-        pushd rhvoice/data/languages > /dev/null
-    rm -rf Brazilian-Portuguese Esperanto Georgian Kyrgyz Tatar Ukrainian
-    popd > /dev/null
-    pushd rhvoice/data/voices > /dev/null
-    rm -rf alan aleksandr anatol anna azamat bdl clb irina Leticia-F123 natalia natia nazgul slt spomenka talgat
-    popd > /dev/null
-    touch standalone
-    pushd jar > /dev/null
-    for i in books publisher studio player pim app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
-	rm -f luwrain-$i.jar
+    pushd $i/jar > /dev/null
+    for k in books publisher studio player pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
+	rm -f luwrain-$k.jar
     done
     popd > /dev/null
-    pushd lib > /dev/null
-    rm -f javamail*.jar javaxmail*.jar junit*.jar twitter*.jar vk-sdk*.jar
+    pushd $i/lib > /dev/null
+    rm -f javax.mail*.jar junit*.jar twitter*.jar vk-sdk*.jar
     popd > /dev/null
-    pushd data > /dev/null
-    rm -f registry*
-    cp -r "$DEST_DIR/tmp/registry.win/." .
-    pushd js > /dev/null
+#    pushd $i/data/properties > /dev/null
+#    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'org.luwrain.app.anatomy.App'/ luwrain.properties
+#    popd > /dev/null
+    pushd $i/data/js > /dev/null
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
     popd > /dev/null
-    popd > /dev/null
-    popd > /dev/null
+    lwr-custom-base-win-installer reader $i $i installer$i
 done
-rm -rf tmp
 echo OK
+

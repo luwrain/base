@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+. init.sh
+
+FLAVOR="$1"
+ARCH="$2"
+DIST_DIR="$3"
+DEST_DIR="$4"
+[ -z "$FLAVOR" ] && echo "$THIS: no flavor" >&2 && exit 1
+[ -z "$ARCH" ] && echo "$THIS: no arch" >&2 && exit 1
+[ -z "$DIST_DIR" ] && echo "$THIS: no source dir" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "$THIS: no dest dir" >&2 && exit 1
+
+    mkdir -p "$DEST_DIR"
+    cd "$DEST_DIR"
+
+# Copying Inno Setup binary files
+    cp -r "$SRC_DIR/binary/wininstaller/." .
+
+# Copying the source distribution
+cp -r "$DIST_DIR" iss-fix/x$ARCH/Luwrain
+
+# Copying the scripts and configs for installer building
+    cp -r "$SRC_DIR/windows/installer/$FLAVOR/." ./
+    sed -i -e s/LUWRAIN_VERSION/$VERSION/ iss-fix/*.iss
