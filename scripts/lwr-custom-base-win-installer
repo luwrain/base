@@ -18,7 +18,7 @@ cd "$DEST_DIR"
 cp -r "$SRC_DIR/binary/wininstaller/." .
 
 # Copying the source distribution
-mkdir -piss-fix/x$ARCH
+mkdir -p iss-fix/x$ARCH
 cp -r "$DIST_DIR" iss-fix/x$ARCH/Luwrain
 
 # Copying the scripts and configs for installer building
