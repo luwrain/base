@@ -27,7 +27,7 @@ for i in $WIN_ARCH; do
     pushd $i/data/js > /dev/null
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
     popd > /dev/null
-    lwr-custom-base-win-installer reader $i $i installer$i
+    lwr-custom-base-win-installer reader $i $DEST_DIR/$i $DEST_DIR/installer$i
 done
 echo OK
 

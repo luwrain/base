@@ -4,7 +4,7 @@
 
 FLAVOR="$1"
 ARCH="$2"
-DIST_DIR="$(realpath "$3")"
+DIST_DIR="$3"
 DEST_DIR="$4"
 [ -z "$FLAVOR" ] && echo "$THIS: no flavor" >&2 && exit 1
 [ -z "$ARCH" ] && echo "$THIS: no arch" >&2 && exit 1
