@@ -19,6 +19,8 @@ cp -r "$SRC_DIR/binary/wininstaller/." .
 
 # Copying the source distribution
 mkdir -p iss-fix/x$ARCH
+iconv -t cp1251 -o iss-fix/x$ARCH/Luwrain.iss iss-fix/Luwrain.x$ARCH.iss
+rm -f iss-fix/Luwrain.x$ARCH.iss
 cp -r "$DIST_DIR" iss-fix/x$ARCH/Luwrain
 
 # Copying the scripts and configs for installer building
