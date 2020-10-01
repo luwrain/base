@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+. init.sh
+
 DIST_DIR="$1"
 DEST_DIR="$2"
 [ -z "$DIST_DIR" ] && echo "$THIS: no source dir given" >&2 && exit 1
