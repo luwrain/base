@@ -20,7 +20,7 @@ for i in $WIN_ARCH; do
     done
     popd > /dev/null
     pushd $i/lib > /dev/null
-    rm -f *.jar junit*.jar twitter*.jar vk-sdk*.jar
+    rm -f junit*.jar twitter*.jar vk-sdk*.jar
     popd > /dev/null
     pushd $i/data/properties > /dev/null
 #    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.tsu.lib.luwrain.App'/ luwrain.properties
