@@ -35,7 +35,7 @@ echo 'Compiling sources'
 ./lwr-build &> ../../../log.txt
 
 ./lwr-distr-linux "$TEMP_DIR/linux"
-#./lwr-custom-tsulib-linux "$TEMP_DIR/linux" "$TEMP_DIR/tsulib-linux" &>> ../../../log.txt
+./lwr-custom-tsulib-linux "$TEMP_DIR/linux" "$TEMP_DIR/tsulib-linux" &>> ../../../log.txt
 for i in 64; do
     DEST=luwrain-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -47,16 +47,16 @@ for i in 64; do
 done
 rmdir "$TEMP_DIR/linux"
 
-#for i in $LINUX_ARCH; do
-#    DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
-#    echo "Processing $DEST"
-#    mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
-#    pushd "$TEMP_DIR" > /dev/null
-#    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
-#    sha1sum "$DEST.tar.gz" >> sha1sum.txt
-#    popd > /dev/null
-#done
-#rmdir "$TEMP_DIR/tsulib-linux"
+for i in $LINUX_ARCH; do
+    DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+    sha1sum "$DEST.tar.gz" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/tsulib-linux"
 
 ./lwr-distr-win "$TEMP_DIR/win"
 ./lwr-custom-tsulib-win "$TEMP_DIR/win" "$TEMP_DIR/tsulib-win" &>> ../../../log.txt

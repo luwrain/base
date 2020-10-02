@@ -14,23 +14,19 @@ lwr-custom-base-linux "$DEST_DIR" tsulib
 cd "$DEST_DIR"
 
 for i in $LINUX_ARCH; do
-    pushd $i/lib/app > /dev/null
-    pushd jar > /dev/null
-    for k in books publisher studio player app-news app-contacts app-commander app-twitter app-vk; do
+        pushd $i/lib/app/jar > /dev/null
+    for k in books studio edu-algo app-news app-contacts app-commander app-telegram app-twitter app-vk; do
 	rm -f luwrain-$k.jar
     done
     popd > /dev/null
-    pushd data/sounds/schemes/pragmatic > /dev/null
-    rm -f startup.wav
-    wget -q http://download.luwrain.org/partners/tsu/tsulib/startup.wav
+    pushd $i/lib/app/lib > /dev/null
+    rm -f *.jar junit*.jar twitter*.jar vk-sdk*.jar
     popd > /dev/null
-    pushd data/js > /dev/null
-    rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
-    popd > /dev/null
-    popd > /dev/null
-        pushd $i/lib/app/data/properties > /dev/null
+    pushd $i/lib/app/data/properties > /dev/null
     sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.tsu.lib.luwrain.App'/ luwrain.properties
     popd > /dev/null
+    pushd $i/lib/app/data/js > /dev/null
+    rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
+    popd > /dev/null
 done
-rm -rf tmp
 echo OK
