@@ -35,6 +35,6 @@ pushd $ARCH/data/js > /dev/null
 rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
 popd > /dev/null
 
-lwr-custom-base.win.legacy "$DEST_DIR"
+lwr-custom-base-win.legacy "$DEST_DIR"
 lwr-custom-base-win-installer dm 64 $DEST_DIR/64 $DEST_DIR/installer64
 lwr-custom-base-win-installer dm 32 $DEST_DIR/32 $DEST_DIR/installer32
