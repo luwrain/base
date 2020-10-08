@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+. init.sh
+
+[ -z "$1" ] && echo "$THIS: No dir to work given" >&2 && exit 1
+FLAVOR="$2"
+
+cd "$1"
+
+cp -r "$SRC_DIR/binary/legacy-win32" 32
+for i in jar lib data rhvoice standalone; do
+cp -r "64/$i" 32/app/
+done
+
+if [ -n "$FLAVOR" ]; then
+    pushd 32 > /dev/null
+    mv luwrain.exe "$FLAVOR.exe"
+    mv luwrain.ico "$FLAVOR.ico"
+fi

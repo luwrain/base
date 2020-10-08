@@ -9,26 +9,32 @@ DEST_DIR="$2"
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
+rm -rf "$DEST_DIR"/installer*
+
 lwr-custom-base-win "$DEST_DIR" dm
 cd "$DEST_DIR"
-rm -rf installer*
 
-for i in $WIN_ARCH; do
-    pushd $i/jar > /dev/null
-    for k in books studio pim packs edu-algo app-news app-mail app-contacts app-commander app-telegram app-twitter app-vk; do
-	rm -f luwrain-$k.jar
-    done
-    rm -f *tsulib*.jar
-    popd > /dev/null
-    pushd $i/lib > /dev/null
-    rm -f junit*.jar twitter*.jar vk-sdk*.jar
-    popd > /dev/null
-    pushd $i/data/properties > /dev/null
-    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.directmedia.app.App'/ luwrain.properties
-    popd > /dev/null
-    pushd $i/data/js > /dev/null
-    rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
-    popd > /dev/null
-    lwr-custom-base-win-installer dm $i $DEST_DIR/$i $DEST_DIR/installer$i
+ARCH=64
+
+pushd $ARCH/jar > /dev/null
+for k in books studio pim packs edu-algo app-news app-mail app-contacts app-commander app-telegram app-twitter app-vk; do
+    rm -f luwrain-$k.jar
 done
-echo OK
+rm -f *tsulib*.jar
+popd > /dev/null
+
+pushd $ARCH/lib > /dev/null
+rm -f junit*.jar twitter*.jar vk-sdk*.jar sqlite*.jar
+popd > /dev/null
+
+pushd $ARCH/data/properties > /dev/null
+sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.directmedia.app.App'/ luwrain.properties
+popd > /dev/null
+
+pushd $ARCH/data/js > /dev/null
+rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
+popd > /dev/null
+
+lwr-custom-base.win.legacy "$DEST_DIR"
+lwr-custom-base-win-installer dm 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-custom-base-win-installer dm 32 $DEST_DIR/32 $DEST_DIR/installer32
