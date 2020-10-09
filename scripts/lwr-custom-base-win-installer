@@ -24,5 +24,7 @@ cp -r "$DIST_DIR" iss-fix/x$ARCH/Luwrain
 # Copying the scripts and configs for installer building
 cp -r "$SRC_DIR/windows/installer/$FLAVOR/." ./
 sed -i -e s/LUWRAIN_VERSION/$VERSION/ iss-fix/*.iss
+cp "$SRC_DIR/installer/run.bat" .
+sed -i -e s/LUWRAIN_INSTALLER_ARCH/$VERSION/ run.bat
 iconv -t cp1251 -o iss-fix/x$ARCH/Luwrain.iss iss-fix/Luwrain.iss
 rm -f iss-fix/Luwrain.iss
