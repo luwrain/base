@@ -25,6 +25,6 @@ cp -r "$DIST_DIR" iss-fix/x$ARCH/Luwrain
 cp -r "$SRC_DIR/windows/installer/$FLAVOR/." ./
 sed -i -e s/LUWRAIN_VERSION/$VERSION/ iss-fix/*.iss
 cp "$SRC_DIR/windows/installer/run.bat" .
-sed -i -e s/LUWRAIN_INSTALLER_ARCH/$VERSION/ run.bat
+sed -i -e s/LUWRAIN_INSTALLER_ARCH/$ARCH/ run.bat
 iconv -t cp1251 -o iss-fix/x$ARCH/Luwrain.iss iss-fix/Luwrain.iss
 rm -f iss-fix/Luwrain.iss
