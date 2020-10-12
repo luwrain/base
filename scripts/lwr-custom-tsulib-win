@@ -23,11 +23,14 @@ for i in $WIN_ARCH; do
     rm -f junit*.jar twitter*.jar vk-sdk*.jar
     popd > /dev/null
     pushd $i/data/properties > /dev/null
-#    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.tsu.lib.luwrain.App'/ luwrain.properties
+    sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.tsu.lib.luwrain.App'/ luwrain.properties
     popd > /dev/null
     pushd $i/data/js > /dev/null
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
     popd > /dev/null
     lwr-custom-base-win-installer tsulib $i $DEST_DIR/$i $DEST_DIR/installer$i
 done
-echo OK
+
+lwr-custom-base-win-legacy "$DEST_DIR" tsulib
+lwr-custom-base-win-installer tsulib 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-custom-base-win-installer tsulib 32 $DEST_DIR/32 $DEST_DIR/installer32

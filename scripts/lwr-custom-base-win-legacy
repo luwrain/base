@@ -16,4 +16,8 @@ if [ -n "$FLAVOR" ]; then
     pushd 32 > /dev/null
     mv luwrain.exe "$FLAVOR.exe"
     mv luwrain.ico "$FLAVOR.ico"
+    pushd app > /dev/null
+    mv luwrain.cfg $FLAVOR.cfg
+    popd > /dev/null
+    popd > /dev/null
 fi
