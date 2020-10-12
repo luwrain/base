@@ -98,7 +98,7 @@ done
 rmdir "$TEMP_DIR/win"
 
 #tsulib windows
-for i in $WIN_ARCH; do
+for i in 32 64; do
     DEST=tsulib-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/tsulib-win/$i" "$TEMP_DIR/$DEST"
@@ -107,7 +107,7 @@ for i in $WIN_ARCH; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-for i in $WIN_ARCH; do
+for i in 32 64; do
     DEST=tsulib-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/tsulib-win/installer$i" "$TEMP_DIR/$DEST"
