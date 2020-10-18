@@ -3,7 +3,7 @@
 . init.sh
 
 TAG="$1"
-[ -z "$TAG" ] && echo "$THIS:no tag given" >&2 && exit 1
+[ -z "$TAG" ] && echo "$THIS: No tag" >&2 && exit 1
 
 lwr-list-repos | while read l; do
     echo "Tagging $l"

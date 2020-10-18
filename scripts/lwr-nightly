@@ -183,14 +183,6 @@ done
 
 
 
-DEST="luwrain-sdk-nightly-`date -I`"
-./lwr-distr-sdk "$TEMP_DIR/$DEST" &> ../../../sdk.log
-pushd "$TEMP_DIR" > /dev/null
-echo "Processing $DEST"
-zip -r "$DEST.zip" "$DEST" > /dev/null
-sha1sum "$DEST.zip" >> sha1sum.txt
-popd > /dev/null
-
 cd "$TEMP_DIR"
 
 RELEASE_DIR=~/nightly-`date -I`

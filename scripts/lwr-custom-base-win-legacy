@@ -8,9 +8,12 @@ FLAVOR="$2"
 cd "$1"
 
 cp -r "$SRC_DIR/binary/legacy-win32" 32
-for i in jar lib data rhvoice standalone; do
-cp -r "64/$i" 32/app/
+for i in jar lib data rhvoice ; do
+    cp -r "64/$i" 32/app/
 done
+if [ -e 64/standalone ]; then
+    echo >> 32/app/standalone
+fi
 
 if [ -n "$FLAVOR" ]; then
     pushd 32 > /dev/null
