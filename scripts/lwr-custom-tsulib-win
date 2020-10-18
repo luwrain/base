@@ -11,7 +11,6 @@ mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
 lwr-custom-base-win "$DEST_DIR" tsulib
 cd "$DEST_DIR"
-rm -rf installer*
 
 for i in $WIN_ARCH; do
     pushd $i/jar > /dev/null

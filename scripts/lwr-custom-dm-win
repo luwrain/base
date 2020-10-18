@@ -9,8 +9,6 @@ DEST_DIR="$2"
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
-rm -rf "$DEST_DIR"/installer*
-
 lwr-custom-base-win "$DEST_DIR" dm
 cd "$DEST_DIR"
 

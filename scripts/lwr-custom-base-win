@@ -8,6 +8,7 @@ CUSTOM_NAME="$2"
 [ -z "$CUSTOM_NAME" ] && echo "$THIS: No custom name" >&2 && exit 1
 
 cd "$DEST_DIR"
+rm -rf 32 installer*
 
 mkdir tmp
 pushd tmp > /dev/null
@@ -21,7 +22,7 @@ popd > /dev/null
 rm -rf registry
 popd > /dev/null
 
-for i in $WIN_ARCH; do
+for i in 64; do
     pushd $i > /dev/null
     mv luwrain.exe $CUSTOM_NAME.exe
     mv luwrain.ico $CUSTOM_NAME.ico
