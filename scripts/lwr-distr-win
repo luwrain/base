@@ -23,6 +23,10 @@ EOF
 cd ..
 
 lwr-custom-base-win-legacy $DEST_DIR
+cat <<EOF > 32/ReleaseInfo.txt
+LUWRAIN $VERSION ($(date -I))
+32-bit release for Microsoft Windows
+EOF
 
 # Installer
 mkdir installer$ARCH
