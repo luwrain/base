@@ -22,7 +22,7 @@ $ARCH-bit release for Microsoft Windows
 EOF
 cd ..
 
-lwr-custom-win-legacy $DEST_DIR
+lwr-custom-base-win-legacy $DEST_DIR
 
 # Installer
 mkdir installer$ARCH

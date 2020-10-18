@@ -77,7 +77,7 @@ rmdir "$TEMP_DIR/dm-linux"
 ./lwr-custom-reader-win "$TEMP_DIR/win" "$TEMP_DIR/reader-win" &>> ../../../log.txt
 ./lwr-custom-anatomy-win "$TEMP_DIR/win" "$TEMP_DIR/anatomy-win" &>> ../../../log.txt
 
-for i in $WIN_ARCH; do
+for i in 32 64; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/win/$i" "$TEMP_DIR/$DEST"
@@ -86,7 +86,7 @@ for i in $WIN_ARCH; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-for i in $WIN_ARCH; do
+for i in 64; do
     DEST=luwrain-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/win/installer$i" "$TEMP_DIR/$DEST"
