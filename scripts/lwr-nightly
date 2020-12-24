@@ -74,7 +74,7 @@ rmdir "$TEMP_DIR/dm-linux"
 ./lwr-distr-win "$TEMP_DIR/win"
 ./lwr-custom-tsulib-win "$TEMP_DIR/win" "$TEMP_DIR/tsulib-win" &>> ../../../log.txt
 ./lwr-custom-dm-win "$TEMP_DIR/win" "$TEMP_DIR/dm-win" &>> ../../../log.txt
-./lwr-custom-reader-win "$TEMP_DIR/win" "$TEMP_DIR/reader-win" &>> ../../../log.txt
+./lwr-custom-publisher-win "$TEMP_DIR/win" "$TEMP_DIR/publisher-win" &>> ../../../log.txt
 ./lwr-custom-anatomy-win "$TEMP_DIR/win" "$TEMP_DIR/anatomy-win" &>> ../../../log.txt
 
 for i in 32 64; do
@@ -139,26 +139,26 @@ for i in 32 64; do
 done
 rmdir "$TEMP_DIR/dm-win"
 
-#reader windows
+# publisher windows
 for i in $WIN_ARCH; do
-    DEST=reader-windows-"$i"bit-nightly-"`date -I`"
+    DEST=publisher-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
-    mv "$TEMP_DIR/reader-win/$i" "$TEMP_DIR/$DEST"
+    mv "$TEMP_DIR/publisher-win/$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     zip -r "$DEST.zip" "$DEST" > /dev/null
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
 for i in $WIN_ARCH; do
-    DEST=reader-windows-installer-"$i"bit-nightly-"`date -I`"
+    DEST=publisher-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
-    mv "$TEMP_DIR/reader-win/installer$i" "$TEMP_DIR/$DEST"
+    mv "$TEMP_DIR/publisher-win/installer$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     zip -r "$DEST.zip" "$DEST" > /dev/null
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/reader-win"
+rmdir "$TEMP_DIR/publisher-win"
 
 #anatomy windows
 for i in $WIN_ARCH; do

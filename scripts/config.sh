@@ -1,6 +1,6 @@
 
-VERSION=1.9.00
-REGISTRY_VERSION=1.9.00
+VERSION=1.9.01
+REGISTRY_VERSION=1.9.01
 GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'
