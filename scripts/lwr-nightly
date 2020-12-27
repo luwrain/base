@@ -140,7 +140,7 @@ done
 rmdir "$TEMP_DIR/dm-win"
 
 # publisher windows
-for i in $WIN_ARCH; do
+for i in 32 64; do
     DEST=publisher-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/publisher-win/$i" "$TEMP_DIR/$DEST"
@@ -149,7 +149,7 @@ for i in $WIN_ARCH; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-for i in $WIN_ARCH; do
+for i in 32 64; do
     DEST=publisher-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/publisher-win/installer$i" "$TEMP_DIR/$DEST"
@@ -161,7 +161,7 @@ done
 rmdir "$TEMP_DIR/publisher-win"
 
 #anatomy windows
-for i in $WIN_ARCH; do
+for i in 64; do
     DEST=anatomy-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/anatomy-win/$i" "$TEMP_DIR/$DEST"
@@ -170,7 +170,7 @@ for i in $WIN_ARCH; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-for i in $WIN_ARCH; do
+for i in 64; do
     DEST=anatomy-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/anatomy-win/installer$i" "$TEMP_DIR/$DEST"
