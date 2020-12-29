@@ -15,8 +15,8 @@ pushd tmp > /dev/null
 git clone https://github.com/luwrain/registry.git/ &> /dev/null
 mkdir registry.win
 pushd registry > /dev/null
-git branch $CUSTOM_NAME origin/$CUSTOM_NAME
-git checkout $CUSTOM_NAME
+git branch $CUSTOM_NAME origin/$CUSTOM_NAME &> /dev/null
+git checkout $CUSTOM_NAME &> /dev/null
 ./lwr-reg-compile win ../registry.win
 popd > /dev/null
 rm -rf registry
