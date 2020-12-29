@@ -33,5 +33,3 @@ for i in $LINUX_ARCH; do
     popd > /dev/null
 
 done
-
-echo OK

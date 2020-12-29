@@ -29,4 +29,3 @@ for i in $LINUX_ARCH; do
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
     popd > /dev/null
 done
-echo OK

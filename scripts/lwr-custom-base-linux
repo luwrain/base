@@ -11,7 +11,7 @@ cd "$DEST_DIR"
 
 mkdir tmp
 pushd tmp > /dev/null
-git clone https://github.com/luwrain/registry.git/ > /dev/null
+git clone https://github.com/luwrain/registry.git/ &> /dev/null
 mkdir registry.linux
 pushd registry > /dev/null
 git branch $CUSTOM_NAME origin/$CUSTOM_NAME
@@ -56,5 +56,3 @@ EOF
     popd > /dev/null
 done
 rm -rf tmp
-echo OK
-

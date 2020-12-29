@@ -35,6 +35,3 @@ lwr-custom-base-win-legacy $DEST_DIR publisher
 for i in 64 32; do
     lwr-custom-base-win-installer publisher $i $DEST_DIR/$i $DEST_DIR/installer$i
 done
-
-echo OK
-

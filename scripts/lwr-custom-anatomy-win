@@ -31,5 +31,3 @@ rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
 popd > /dev/null
 
 lwr-custom-base-win-installer anatomy 64 $DEST_DIR/64 $DEST_DIR/installer64
-
-echo OK
