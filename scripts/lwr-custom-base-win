@@ -1,4 +1,4 @@
-#!/bin/bash -evx
+#!/bin/bash -e
 
 . init.sh
 
@@ -12,7 +12,7 @@ rm -rf 32 installer*
 
 mkdir tmp
 pushd tmp > /dev/null
-git clone https://github.com/luwrain/registry.git/
+git clone https://github.com/luwrain/registry.git/ > /dev/null
 mkdir registry.win
 pushd registry > /dev/null
 git branch $CUSTOM_NAME origin/$CUSTOM_NAME

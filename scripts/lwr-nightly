@@ -80,7 +80,7 @@ for i in $LINUX_ARCH; do
     sha1sum "$DEST.tar.gz" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/dm-linux"
+rmdir "$TEMP_DIR/publisher-linux"
 
 # DM linux
 for i in $LINUX_ARCH; do
