@@ -31,13 +31,35 @@ if [ -x ~/lwr-subst ]; then
 fi
 cd base/scripts
 
-echo 'Compiling sources'
+echo Compiling sources
 ./lwr-build &> ../../../log.txt
 
-./lwr-distr-linux "$TEMP_DIR/linux"
-./lwr-custom-tsulib-linux "$TEMP_DIR/linux" "$TEMP_DIR/tsulib-linux" &>> ../../../log.txt
-./lwr-custom-dm-linux "$TEMP_DIR/linux" "$TEMP_DIR/dm-linux" &>> ../../../log.txt
-for i in 64; do
+echo Building distributions
+(
+    echo Main distribution
+    ./lwr-distr-linux $TEMP_DIR/linux
+    ./lwr-distr-win $TEMP_DIR/win
+
+    echo Publisher
+    ./lwr-custom-publisher-linux $TEMP_DIR/linux $TEMP_DIR/publisher-linux
+    ./lwr-custom-publisher-win $TEMP_DIR/win $TEMP_DIR/publisher-win
+
+    echo Anatomy
+    ./lwr-custom-anatomy-win $TEMP_DIR/win $TEMP_DIR/anatomy-win
+
+    echo DM
+    ./lwr-custom-dm-linux $TEMP_DIR/linux $TEMP_DIR/dm-linux
+    ./lwr-custom-dm-win $TEMP_DIR/win $TEMP_DIR/dm-win
+
+    echo TsuLib
+    ./lwr-custom-tsulib-linux $TEMP_DIR/linux $TEMP_DIR/tsulib-linux
+    ./lwr-custom-tsulib-win $TEMP_DIR/win $TEMP_DIR/tsulib-win
+)&>> ../../../log.txt
+
+echo Packing files
+
+# General linux
+for i in $LINUX_ARCH; do
     DEST=luwrain-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/linux/$i" "$TEMP_DIR/$DEST"
@@ -48,18 +70,19 @@ for i in 64; do
 done
 rmdir "$TEMP_DIR/linux"
 
-# tsulib linux
+# Publisher linux
 for i in $LINUX_ARCH; do
-    DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
+    DEST=publisher-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
-    mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
+    mv "$TEMP_DIR/publisher-linux/$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     tar -c "$DEST/" | gzip > "$DEST.tar.gz"
     sha1sum "$DEST.tar.gz" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/tsulib-linux"
+rmdir "$TEMP_DIR/dm-linux"
 
+# DM linux
 for i in $LINUX_ARCH; do
     DEST=dm-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -71,11 +94,19 @@ for i in $LINUX_ARCH; do
 done
 rmdir "$TEMP_DIR/dm-linux"
 
-./lwr-distr-win "$TEMP_DIR/win"
-./lwr-custom-tsulib-win "$TEMP_DIR/win" "$TEMP_DIR/tsulib-win" &>> ../../../log.txt
-./lwr-custom-dm-win "$TEMP_DIR/win" "$TEMP_DIR/dm-win" &>> ../../../log.txt
-./lwr-custom-publisher-win "$TEMP_DIR/win" "$TEMP_DIR/publisher-win" &>> ../../../log.txt
-./lwr-custom-anatomy-win "$TEMP_DIR/win" "$TEMP_DIR/anatomy-win" &>> ../../../log.txt
+# TsuLib linux
+for i in $LINUX_ARCH; do
+    DEST=tsulib-linux-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/tsulib-linux/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+    sha1sum "$DEST.tar.gz" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/tsulib-linux"
+
+
 
 for i in 32 64; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
