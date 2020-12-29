@@ -35,7 +35,7 @@ echo Compiling sources
 ./lwr-build &> ../../../log.txt
 
 echo Building distributions
-(
+#(
     echo Main distribution
     ./lwr-distr-linux $TEMP_DIR/linux
     ./lwr-distr-win $TEMP_DIR/win
@@ -54,7 +54,7 @@ echo Building distributions
     echo TsuLib
     ./lwr-custom-tsulib-linux $TEMP_DIR/linux $TEMP_DIR/tsulib-linux
     ./lwr-custom-tsulib-win $TEMP_DIR/win $TEMP_DIR/tsulib-win
-)&>> ../../../log.txt
+#)&>> ../../../log.txt
 
 echo Packing files
 
