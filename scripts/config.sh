@@ -1,3 +1,5 @@
+# Copyright 2012-2021 Michael Pozhidaev <msp@luwrain.org>
+# The LUWRAIN Project, GPL v.3
 
 VERSION=1.9.01
 REGISTRY_VERSION=1.9.01

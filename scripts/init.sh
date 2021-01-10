@@ -1,3 +1,5 @@
+# Copyright 2012-2021 Michael Pozhidaev <msp@luwrain.org>
+# The LUWRAIN Project, GPL v.3
 
 THIS="${0##*/}"
 
