@@ -10,32 +10,22 @@ mkdir -p $DEST_DIR
 cd $DEST_DIR
 
 ARCH=64
-# Portable
-mkdir $ARCH
-cd $ARCH
-cp -r "$SRC_DIR/binary/win$ARCH/." .
-lwr-basedirs-win "$DEST_DIR/$ARCH"
+mkdir 64
+cd 64
+cp -r $SRC_DIR/binary/win$ARCH/. .
+lwr-basedirs-win $DEST_DIR/64
 cp -r "$SRC_DIR/base/txt/windows/." .
 cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-$ARCH-bit release for Microsoft Windows
+x64 release for Microsoft Windows (64-bit)
 EOF
 cd ..
 
 lwr-custom-base-win-legacy $DEST_DIR
 cat <<EOF > 32/ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-32-bit release for Microsoft Windows
+x86 release for Microsoft Windows (32-bit)
 EOF
 
-# Installer
-mkdir installer$ARCH
-cd installer$ARCH
-cp -r "$SRC_DIR/binary/wininstaller/." .
-mkdir -p iss-fix/x$ARCH/Luwrain
-cp -r "$SRC_DIR/binary/win$ARCH/." ./iss-fix/x$ARCH/Luwrain/
-lwr-basedirs-win "$DEST_DIR/installer$ARCH/iss-fix/x$ARCH/Luwrain"
-cp -r "$SRC_DIR/windows/installer/nightly/." ./
-cp "$SRC_DIR/windows/installer"/*.iss iss-fix
-sed -i -e s/LUWRAIN_VERSION/$VERSION/ iss-fix/*.iss
-cd ..
+lwr-custom-base-win-installer luwrain 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-custom-base-win-installer luwrain 32 $DEST_DIR/32 $DEST_DIR/installer32
