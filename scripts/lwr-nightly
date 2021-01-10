@@ -17,7 +17,7 @@ git clone https://github.com/luwrain/base.git &> ../clone-base.log
 cd base/scripts
 ./lwr-checkout &> ../../../checkout.log
 DEST="luwrain-nightly-`date -I`"
-./lwr-distr-src "$TEMP_DIR/$DEST"
+./lwr-dist-src $TEMP_DIR/$DEST
 pushd "$TEMP_DIR" > /dev/null
 echo "Processing $DEST"
 tar -c "$DEST/" | gzip > "$DEST.tar.gz"
@@ -37,8 +37,8 @@ echo Compiling sources
 echo Building distributions
 #(
     echo Main distribution
-    ./lwr-distr-linux $TEMP_DIR/linux
-    ./lwr-distr-win $TEMP_DIR/win
+    ./lwr-dist-linux $TEMP_DIR/linux
+    ./lwr-dist-win $TEMP_DIR/win
 
     echo Publisher
     ./lwr-custom-publisher-linux $TEMP_DIR/linux $TEMP_DIR/publisher-linux
@@ -106,8 +106,6 @@ for i in $LINUX_ARCH; do
 done
 rmdir "$TEMP_DIR/tsulib-linux"
 
-
-
 for i in 32 64; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -117,7 +115,7 @@ for i in 32 64; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-for i in 64; do
+for i in 32 64; do
     DEST=luwrain-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
     mv "$TEMP_DIR/win/installer$i" "$TEMP_DIR/$DEST"
@@ -126,7 +124,7 @@ for i in 64; do
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/win"
+rmdir $TEMP_DIR/win
 
 #tsulib windows
 for i in 32 64; do
