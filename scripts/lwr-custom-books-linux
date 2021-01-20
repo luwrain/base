@@ -11,11 +11,10 @@ DEST_DIR="$2"
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
-lwr-custom-base-linux "$DEST_DIR" publisher
+lwr-custom-base-linux $DEST_DIR books
 cd "$DEST_DIR"
 
 for i in $LINUX_ARCH; do
-    
         pushd $i/lib/app/jar > /dev/null
     for k in books studio edu-algo app-news app-contacts app-commander app-telegram app-twitter app-vk; do
 	rm -f luwrain-$k.jar
@@ -33,5 +32,4 @@ for i in $LINUX_ARCH; do
     pushd $i/lib/app/data/properties > /dev/null
     sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'org.luwrain.app.publisher.App'/ luwrain.properties
     popd > /dev/null
-
 done

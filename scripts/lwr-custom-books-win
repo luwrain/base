@@ -11,11 +11,11 @@ DEST_DIR="$2"
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
-lwr-custom-base-win "$DEST_DIR" publisher
+lwr-custom-base-win $DEST_DIR books
 cd "$DEST_DIR"
 
 pushd 64/jar > /dev/null
-for k in books publisher studio player pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
+for k in studio player pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
     rm -f luwrain-$k.jar
 done
 popd > /dev/null
@@ -32,8 +32,8 @@ pushd 64/data/js > /dev/null
 rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
 popd > /dev/null
 
-lwr-custom-base-win-legacy $DEST_DIR publisher
+lwr-custom-base-win-legacy $DEST_DIR books
 
 for i in 64 32; do
-    lwr-custom-base-win-installer publisher $i $DEST_DIR/$i $DEST_DIR/installer$i
+    lwr-custom-base-win-installer books $i $DEST_DIR/$i $DEST_DIR/installer$i
 done

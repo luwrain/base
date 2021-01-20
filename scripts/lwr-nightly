@@ -36,27 +36,24 @@ cd base/scripts
 echo Compiling sources
 ./lwr-build &> ../../../log.txt
 
-echo Building distributions
-#(
-    echo Main distribution
-    ./lwr-dist-linux $TEMP_DIR/linux
-    ./lwr-dist-win $TEMP_DIR/win
+echo Building the main distribution
+./lwr-dist-linux $TEMP_DIR/linux
+./lwr-dist-win $TEMP_DIR/win
 
-    echo Publisher
-    ./lwr-custom-publisher-linux $TEMP_DIR/linux $TEMP_DIR/publisher-linux
-    ./lwr-custom-publisher-win $TEMP_DIR/win $TEMP_DIR/publisher-win
+echo Building books
+./lwr-custom-books-linux $TEMP_DIR/linux $TEMP_DIR/books-linux
+./lwr-custom-books-win $TEMP_DIR/win $TEMP_DIR/books-win
 
-    echo Anatomy
-    ./lwr-custom-anatomy-win $TEMP_DIR/win $TEMP_DIR/anatomy-win
+echo Building anatomy
+./lwr-custom-anatomy-win $TEMP_DIR/win $TEMP_DIR/anatomy-win
 
-    echo DM
-    ./lwr-custom-dm-linux $TEMP_DIR/linux $TEMP_DIR/dm-linux
-    ./lwr-custom-dm-win $TEMP_DIR/win $TEMP_DIR/dm-win
+echo Building DM
+./lwr-custom-dm-linux $TEMP_DIR/linux $TEMP_DIR/dm-linux
+./lwr-custom-dm-win $TEMP_DIR/win $TEMP_DIR/dm-win
 
-    echo TsuLib
-    ./lwr-custom-tsulib-linux $TEMP_DIR/linux $TEMP_DIR/tsulib-linux
-    ./lwr-custom-tsulib-win $TEMP_DIR/win $TEMP_DIR/tsulib-win
-#)&>> ../../../log.txt
+echo Building TsuLib
+./lwr-custom-tsulib-linux $TEMP_DIR/linux $TEMP_DIR/tsulib-linux
+./lwr-custom-tsulib-win $TEMP_DIR/win $TEMP_DIR/tsulib-win
 
 echo Packing files
 
@@ -72,17 +69,17 @@ for i in $LINUX_ARCH; do
 done
 rmdir "$TEMP_DIR/linux"
 
-# Publisher linux
+# Books linux
 for i in $LINUX_ARCH; do
-    DEST=publisher-linux-"$i"bit-nightly-"`date -I`"
+    DEST=books-linux-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
-    mv "$TEMP_DIR/publisher-linux/$i" "$TEMP_DIR/$DEST"
+    mv "$TEMP_DIR/books-linux/$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     tar -c "$DEST/" | gzip > "$DEST.tar.gz"
     sha1sum "$DEST.tar.gz" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/publisher-linux"
+rmdir "$TEMP_DIR/books-linux"
 
 # DM linux
 for i in $LINUX_ARCH; do
@@ -170,26 +167,26 @@ for i in 32 64; do
 done
 rmdir "$TEMP_DIR/dm-win"
 
-# publisher windows
+# Books windows
 for i in 32 64; do
-    DEST=publisher-windows-"$i"bit-nightly-"`date -I`"
+    DEST=books-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
-    mv "$TEMP_DIR/publisher-win/$i" "$TEMP_DIR/$DEST"
+    mv "$TEMP_DIR/books-win/$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     zip -r "$DEST.zip" "$DEST" > /dev/null
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
 for i in 32 64; do
-    DEST=publisher-windows-installer-"$i"bit-nightly-"`date -I`"
+    DEST=books-windows-installer-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
-    mv "$TEMP_DIR/publisher-win/installer$i" "$TEMP_DIR/$DEST"
+    mv "$TEMP_DIR/books-win/installer$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     zip -r "$DEST.zip" "$DEST" > /dev/null
     sha1sum "$DEST.zip" >> sha1sum.txt
     popd > /dev/null
 done
-rmdir "$TEMP_DIR/publisher-win"
+rmdir "$TEMP_DIR/books-win"
 
 #anatomy windows
 for i in 64; do
