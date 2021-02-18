@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -evx
 # Copyright 2012-2021 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
@@ -12,16 +12,18 @@ DEST_DIR="$2"
 
 mkdir -p "$DEST_DIR"
 cp -r "$DIST_DIR/." "$DEST_DIR"
-lwr-custom-base-linux "$DEST_DIR" education
-cd "$DEST_DIR"
+lwr-custom-base-linux $DEST_DIR education
+cd $DEST_DIR
 
 for i in $LINUX_ARCH; do
+
     pushd $i/lib/app/jar > /dev/null
-	for k in browser publisher studio pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk app-notepad app-viewer; do
+	for k in browser publisher studio pim; do
 	    rm -f luwrain-$k.jar
 	done
-	rm -f *dm*.jar *tsulib*.jar *-edu*.jar
+	rm luwrain-app* -f *dm*.jar *tsulib*.jar *-edu*.jar
 	popd > /dev/null
+
 	pushd $i/lib/app/lib > /dev/null
 	rm -f junit*.jar twitter*.jar vk-sdk*.jar
 	popd > /dev/null
