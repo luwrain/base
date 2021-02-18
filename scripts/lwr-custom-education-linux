@@ -16,16 +16,16 @@ lwr-custom-base-linux "$DEST_DIR" education
 cd "$DEST_DIR"
 
 for i in $LINUX_ARCH; do
-        pushd $i/lib/app/jar > /dev/null
-    for k in books studio pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk; do
-	rm -f luwrain-$k.jar
-    done
-    rm -f *tsulib*.jar *-edu*.jar
-    popd > /dev/null
-    pushd $i/lib/app/lib > /dev/null
-    rm -f junit*.jar twitter*.jar vk-sdk*.jar
-    popd > /dev/null
-    pushd $i/lib/app/data/js > /dev/null
-    rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
-    popd > /dev/null
+    pushd $i/lib/app/jar > /dev/null
+	for k in browser publisher studio pim edu-algo app-news app-contacts app-commander app-mail app-telegram app-twitter app-vk app-notepad app-viewer; do
+	    rm -f luwrain-$k.jar
+	done
+	rm -f *dm*.jar *tsulib*.jar *-edu*.jar
+	popd > /dev/null
+	pushd $i/lib/app/lib > /dev/null
+	rm -f junit*.jar twitter*.jar vk-sdk*.jar
+	popd > /dev/null
+	pushd $i/lib/app/data/js > /dev/null
+	rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
+	popd > /dev/null
 done
