@@ -28,4 +28,6 @@ pushd 64/data/js > /dev/null
 rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
 popd > /dev/null
 
+lwr-custom-base-win-legacy $DEST_DIR education
 lwr-custom-base-win-installer education 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-custom-base-win-installer education 32 $DEST_DIR/32 $DEST_DIR/installer32
