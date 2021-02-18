@@ -44,6 +44,10 @@ echo Building books
 ./lwr-custom-books-linux $TEMP_DIR/linux $TEMP_DIR/books-linux
 ./lwr-custom-books-win $TEMP_DIR/win $TEMP_DIR/books-win
 
+echo Building education
+./lwr-custom-education-linux $TEMP_DIR/linux $TEMP_DIR/books-linux
+./lwr-custom-education-win $TEMP_DIR/win $TEMP_DIR/books-win
+
 echo Building anatomy
 ./lwr-custom-anatomy-win $TEMP_DIR/win $TEMP_DIR/anatomy-win
 
@@ -80,6 +84,18 @@ for i in $LINUX_ARCH; do
     popd > /dev/null
 done
 rmdir "$TEMP_DIR/books-linux"
+
+# Education linux
+for i in $LINUX_ARCH; do
+    DEST=education-linux-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/education-linux/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    tar -c "$DEST/" | gzip > "$DEST.tar.gz"
+    sha1sum "$DEST.tar.gz" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/education-linux"
 
 # DM linux
 for i in $LINUX_ARCH; do
@@ -125,6 +141,50 @@ for i in 32 64; do
 done
 rmdir $TEMP_DIR/win
 
+# Books windows
+for i in 32 64; do
+    DEST=books-windows-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/books-win/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+for i in 32 64; do
+    DEST=books-windows-installer-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/books-win/installer$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/books-win"
+
+# Education windows
+for i in 32 64; do
+    DEST=education-windows-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/education-win/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+for i in 32 64; do
+    DEST=education-windows-installer-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/education-win/installer$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/education-win"
+
+
+
 #tsulib windows
 for i in 32 64; do
     DEST=tsulib-windows-"$i"bit-nightly-"`date -I`"
@@ -167,26 +227,6 @@ for i in 32 64; do
 done
 rmdir "$TEMP_DIR/dm-win"
 
-# Books windows
-for i in 32 64; do
-    DEST=books-windows-"$i"bit-nightly-"`date -I`"
-    echo "Processing $DEST"
-    mv "$TEMP_DIR/books-win/$i" "$TEMP_DIR/$DEST"
-    pushd "$TEMP_DIR" > /dev/null
-    zip -r "$DEST.zip" "$DEST" > /dev/null
-    sha1sum "$DEST.zip" >> sha1sum.txt
-    popd > /dev/null
-done
-for i in 32 64; do
-    DEST=books-windows-installer-"$i"bit-nightly-"`date -I`"
-    echo "Processing $DEST"
-    mv "$TEMP_DIR/books-win/installer$i" "$TEMP_DIR/$DEST"
-    pushd "$TEMP_DIR" > /dev/null
-    zip -r "$DEST.zip" "$DEST" > /dev/null
-    sha1sum "$DEST.zip" >> sha1sum.txt
-    popd > /dev/null
-done
-rmdir "$TEMP_DIR/books-win"
 
 #anatomy windows
 for i in 64; do
