@@ -45,8 +45,8 @@ echo Building books
 ./lwr-custom-books-win $TEMP_DIR/win $TEMP_DIR/books-win
 
 echo Building education
-./lwr-custom-education-linux $TEMP_DIR/linux $TEMP_DIR/books-linux
-./lwr-custom-education-win $TEMP_DIR/win $TEMP_DIR/books-win
+./lwr-custom-education-linux $TEMP_DIR/linux $TEMP_DIR/education-linux
+./lwr-custom-education-win $TEMP_DIR/win $TEMP_DIR/education-win
 
 echo Building anatomy
 ./lwr-custom-anatomy-win $TEMP_DIR/win $TEMP_DIR/anatomy-win
