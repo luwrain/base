@@ -26,7 +26,7 @@ rm -f javax.mail*.jar junit*.jar twitter*.jar vk-sdk*.jar
 popd > /dev/null
 
 pushd 64/data/js > /dev/null
-rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
+rm rm commander*.js -f studio-*.js reader-ms*.js clock*.js linux*.js  math*.js message*.js music*.js notepad*.js pim*.js pm*.js tsulib*.js util-keyboard*.js web-cbrf*.js web-ddg*.js wi-disks*.js mail.js
 popd > /dev/null
 
 lwr-custom-base-win-legacy $DEST_DIR education

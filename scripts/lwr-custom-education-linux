@@ -32,5 +32,5 @@ for i in $LINUX_ARCH; do
 	pushd $i/lib/app/data/js > /dev/null
 	rm commander*.js -f studio-*.js reader-ms*.js clock*.js linux*.js  math*.js message*.js music*.js notepad*.js pim*.js pm*.js tsulib*.js util-keyboard*.js web-cbrf*.js web-ddg*.js wi-disks*.js mail.js
 	popd > /dev/null
-	
+
 done
