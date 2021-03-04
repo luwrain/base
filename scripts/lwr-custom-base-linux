@@ -33,13 +33,15 @@ cat <<EOF > "$CUSTOM_NAME"
 export NO_AT_BRIDGE=1
 
 cd lib/app
-exec ../"$CUSTOM_NAME" "$@"
+exec "../$CUSTOM_NAME" "$@"
 EOF
     chmod 755 "$CUSTOM_NAME"
-    rm -f *.txt *speechd*
+    rm -f *.txt
+    mv luwrain-speechd $CUSTOM_NAME-speechd
+    mv luwrain-speechd-ru $CUSTOM_NAME-speechd-ru
     popd > /dev/null
     pushd $i/lib > /dev/null
-    mv luwrain "$CUSTOM_NAME"
+    mv luwrain $CUSTOM_NAME
     mv luwrain.png "$CUSTOM_NAME".png
     popd > /dev/null
     pushd $i/lib/app > /dev/null
