@@ -35,5 +35,5 @@ popd > /dev/null
 lwr-custom-base-win-legacy $DEST_DIR books
 
 for i in 64 32; do
-    lwr-custom-base-win-installer books $i $DEST_DIR/$i $DEST_DIR/installer$i
+    lwr-win-installer books $i $DEST_DIR/$i $DEST_DIR/installer$i
 done

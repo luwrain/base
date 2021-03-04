@@ -29,9 +29,8 @@ for i in $WIN_ARCH; do
     pushd $i/data/js > /dev/null
     rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
     popd > /dev/null
-    lwr-custom-base-win-installer tsulib $i $DEST_DIR/$i $DEST_DIR/installer$i
 done
 
-lwr-custom-base-win-legacy "$DEST_DIR" tsulib
-lwr-custom-base-win-installer tsulib 64 $DEST_DIR/64 $DEST_DIR/installer64
-lwr-custom-base-win-installer tsulib 32 $DEST_DIR/32 $DEST_DIR/installer32
+lwr-custom-base-win-legacy $DEST_DIR tsulib
+lwr-win-installer tsulib 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-win-installer tsulib 32 $DEST_DIR/32 $DEST_DIR/installer32

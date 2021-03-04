@@ -30,5 +30,5 @@ rm rm commander*.js -f studio-*.js reader-ms*.js clock*.js linux*.js  math*.js m
 popd > /dev/null
 
 lwr-custom-base-win-legacy $DEST_DIR education
-lwr-custom-base-win-installer education 64 $DEST_DIR/64 $DEST_DIR/installer64
-lwr-custom-base-win-installer education 32 $DEST_DIR/32 $DEST_DIR/installer32
+lwr-win-installer education 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-win-installer education 32 $DEST_DIR/32 $DEST_DIR/installer32

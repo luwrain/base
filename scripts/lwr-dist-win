@@ -29,5 +29,5 @@ LUWRAIN $VERSION ($(date -I))
 x86 release for Microsoft Windows (32-bit)
 EOF
 
-lwr-custom-base-win-installer luwrain 64 $DEST_DIR/64 $DEST_DIR/installer64
-lwr-custom-base-win-installer luwrain 32 $DEST_DIR/32 $DEST_DIR/installer32
+lwr-win-installer luwrain 64 $DEST_DIR/64 $DEST_DIR/installer64
+lwr-win-installer luwrain 32 $DEST_DIR/32 $DEST_DIR/installer32
