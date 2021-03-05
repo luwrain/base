@@ -35,4 +35,7 @@ for i in $LINUX_ARCH; do
     sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'org.luwrain.app.reader.App'/ luwrain.properties
     popd > /dev/null
 
+    pushd $i > /dev/null
+    cp $SRC_DIR/base/AUTHORS $SRC_DIR/base/LICENSE ./
+    popd > /dev/null
 done
