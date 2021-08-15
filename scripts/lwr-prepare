@@ -4,26 +4,15 @@
 
 . init.sh
 
-lwr-list-repos | while read l; do
-    if [ "$l" != base ]; then
-	echo Cloning $l
-	git clone https://github.com/luwrain/$l.git 2> /dev/null
-    fi
-done
-
 if ! [ -e /tmp/binary.tar.gz ]; then
-    echo 'Downloading binary data'
     wget -q 'http://download.luwrain.org/compilation/binary.tar.gz'
 else
     cat /tmp/binary.tar.gz > binary.tar.gz
 fi
 
-    
 tar xf binary.tar.gz
 mv binary/lib .
 mkdir data
 mv binary/sounds data
 rm -f binary.tar.gz
 lwr-ant-gen-all
-
-echo 'Your sources ready!'

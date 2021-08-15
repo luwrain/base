@@ -13,11 +13,11 @@ echo "Working in $TEMP_DIR"
 cd $TEMP_DIR
 
 echo 'Downloading files'
-mkdir src
-cd src
-git clone https://github.com/luwrain/base.git &> ../clone-base.log
-cd base/scripts
-./lwr-checkout &> ../../../checkout.log
+git clone https://github.com/luwrain/parent/ --recursive &> log-fetch
+mv parent src
+cd src/base/scripts
+./lwr-prepare &>> ../../../log-fetch
+
 DEST="luwrain-nightly-`date -I`"
 ./lwr-dist-src $TEMP_DIR/$DEST
 pushd "$TEMP_DIR" > /dev/null
@@ -25,13 +25,6 @@ echo "Processing $DEST"
 tar -c "$DEST/" | gzip > "$DEST.tar.gz"
 sha1sum "$DEST.tar.gz" > sha1sum.txt
 popd > /dev/null
-
-cd ../..
-if [ -x ~/lwr-subst ]; then
-    echo "Performing substitution"
-    ~/lwr-subst
-fi
-cd base/scripts
 
 echo Compiling sources
 ./lwr-build &> ../../../log.txt
