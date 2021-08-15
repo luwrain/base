@@ -90,14 +90,12 @@ public final class Init
 	    final File jarsDir = new File(s, "jar");
 	    if (!jarsDir.isDirectory())
 		continue;
-	    Log.debug(LOG_COMPONENT, "registering extension jars from the directory " + jarsDir.getAbsolutePath());
 	    addJarsToClassPath(jarsDir, urls);
 	}
     }
 
     static private void addJarsToClassPath(File file, List<URL> urls)
     {
-	System.out.println("adding " + file.getAbsolutePath());
 	try {
 	    final File[] files = file.listFiles();
 	    if (files == null)
@@ -116,7 +114,6 @@ public final class Init
 
     static private void setUtf8()
     {
-	Log.debug("init", "using UTF-8, while default system charset was " + System.getProperty("file.encoding"));
 	System.setProperty("file.encoding","UTF-8");
 	Field charset;
 	try {

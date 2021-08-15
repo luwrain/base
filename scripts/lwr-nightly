@@ -6,10 +6,16 @@
 
 TEMP_DIR=$(mktemp -d /tmp/.nightly-XXXXXX)
 
-[ -e /tmp/nightly ] && rm -f /tmp/nightly
+if [ "$1" == '--tmpfs' ]; then
+    echo "Creating tmpfs at $TEMP_DIR"
+    sudo mount -t tmpfs -o size=20g tmpfs "$TEMP_DIR"
+else
+    echo "Working in $TEMP_DIR"
+fi
+
+rm -f /tmp/nightly
 ln -s $TEMP_DIR /tmp/nightly
 
-echo "Working in $TEMP_DIR"
 cd $TEMP_DIR
 
 echo 'Downloading files'
@@ -258,6 +264,7 @@ mv *.txt *.gz *.zip "$RELEASE_DIR"
 if [ -r /tmp/lwr-report/junit-noframes.html ]; then
     cp /tmp/lwr-report/junit-noframes.html "$RELEASE_DIR/junit-report.html"
 fi
+rm -f "$RELEASE_DIR/log.txt"
 
 cat <<EOF > "$RELEASE_DIR/version.php"
 <?php
