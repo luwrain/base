@@ -43,7 +43,7 @@ public final class Init
 	} else
 	    Log.enableBriefMode();
 	final File userHomeDir = new File(System.getProperty("user.home"));
-	final List<URL> urls = new LinkedList();
+	final List<URL> urls = new ArrayList<>();
 	addJarsToClassPath(new File("jar"), urls);
 	addJarsToClassPath(new File("lib"), urls);
 	final File userDataDir;
