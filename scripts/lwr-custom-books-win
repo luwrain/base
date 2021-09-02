@@ -35,7 +35,7 @@ popd > /dev/null
 
 pushd 64/data/sounds/schemes/pragmatic > /dev/null
 rm -f startup.wav
-wget -q http://download.luwrain.org/compilation/startup-books.wav
+wget -q http://download.luwrain.org/media/startup/books.wav
 mv startup-books.wav startup.wav
 popd > /dev/null
 
