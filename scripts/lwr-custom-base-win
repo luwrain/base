@@ -50,12 +50,10 @@ touch standalone
 pushd data > /dev/null
 rm -f registry*
 cp -r "$DEST_DIR/tmp/registry.win/." .
-popd > /dev/null
-
 pushd js > /dev/null
 rm -f disabled-* *clock*.js studio-*.js
 popd > /dev/null
-
+popd > /dev/null
 popd > /dev/null
 
 rm -rf tmp
