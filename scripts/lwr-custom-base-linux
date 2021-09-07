@@ -59,7 +59,7 @@ EOF
     rm -rf Brazilian-Portuguese Esperanto Georgian Kyrgyz Tatar Ukrainian
     popd > /dev/null
     pushd rhvoice/data/voices > /dev/null
-    rm -rf alan aleksandr anatol anna azamat bdl clb irina Leticia-F123 natalia natia nazgul slt spomenka talgat
+    rm -rf alan elena anatol anna azamat bdl clb irina Leticia-F123 natalia natia nazgul slt spomenka talgat
     popd > /dev/null
     popd > /dev/null
 done
