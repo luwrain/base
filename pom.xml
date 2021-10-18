@@ -7,8 +7,9 @@
     <version>1.9.02</version>
   </parent>
   <artifactId>luwrain-base</artifactId>
-  <name>A launcher for the LUWRAIN platform</name>
-  <url>https://github.com/luwrain/base/</url>
+  <name>LUWRAIN base</name>
+  <description>A launcher for the LUWRAIN platform</description>
+  <url>https://luwrain.org/?lang=en</url>
   <packaging>jar</packaging>
   <build>
     <plugins>
@@ -24,20 +25,6 @@
             </manifest>
           </archive>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/lib</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
