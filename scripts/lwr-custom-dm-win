@@ -16,6 +16,8 @@ cd "$DEST_DIR"
 
 ARCH=64
 
+cp "$SRC_DIR/windows/installer/dm/main.ico" dm.ico
+
 pushd $ARCH/jar > /dev/null
 for k in books studio pim packs edu-algo app-news app-mail app-contacts app-commander app-telegram app-twitter app-vk; do
     rm -f luwrain-$k.jar
