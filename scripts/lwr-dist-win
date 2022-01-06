@@ -14,19 +14,19 @@ cd $DEST_DIR
 ARCH=64
 mkdir 64
 cd 64
-cp -r $SRC_DIR/binary/win$ARCH/. .
+cp -r $SRC_DIR/binary/win64/. .
 lwr-basedirs-win $DEST_DIR/64
 cp -r "$SRC_DIR/base/txt/windows/." .
 cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-x64 release for Microsoft Windows (64-bit)
+64-bit release for Microsoft Windows
 EOF
 cd ..
 
 lwr-custom-base-win-legacy $DEST_DIR
 cat <<EOF > 32/ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-x86 release for Microsoft Windows (32-bit)
+32-bit release for Microsoft Windows
 EOF
 
 lwr-win-installer luwrain 64 $DEST_DIR/64 $DEST_DIR/installer64

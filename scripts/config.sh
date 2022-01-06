@@ -1,8 +1,8 @@
 # Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-VERSION=1.9.2
-REGISTRY_VERSION=1.9.2
+VERSION=1.9.3
+REGISTRY_VERSION=1.9.3
 GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
 PROPERTIES_FILE=release.properties
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'

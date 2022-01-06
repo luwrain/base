@@ -14,6 +14,7 @@ mkdir -p "$DEST_DIR"
 lwr-basedirs-linux "$DEST_DIR"
 cp -r "$SRC_DIR/binary/linux64/lib/app/rhvoice" "$DEST_DIR"
 cd "$DEST_DIR/"
+rm -f jar/*jni*.jar
 rm -rf data/registry*
 pushd "$SRC_DIR/registry" > /dev/null
 ./lwr-reg-compile iso "$DEST_DIR/data"
