@@ -10,12 +10,22 @@ DEST_DIR="$1"
 rm -rf "$DEST_DIR"
 mkdir -p "$DEST_DIR"
 
-for ARCH in $LINUX_ARCH; do
-    mkdir -p "$DEST_DIR/$ARCH/"
-        lwr-basedirs-linux "$DEST_DIR/$ARCH/"
-    cd "$DEST_DIR/$ARCH"
-    cat <<EOF > ReleaseInfo.txt
+mkdir -p "$DEST_DIR"
+lwr-basedirs-linux "$DEST_DIR"
+cp -r "$SRC_DIR/binary/linux64/lib/app/rhvoice" "$DEST_DIR"
+cd "$DEST_DIR/"
+rm -rf data/registry*
+pushd "$SRC_DIR/registry" > /dev/null
+./lwr-reg-compile iso "$DEST_DIR/data"
+popd > /dev/null
+pushd rhvoice/data > /dev/null
+pushd voices > /dev/null
+rm -rf $(ls | grep -v aleksandr)
+popd > /dev/null
+pushd languages > /dev/null
+rm -rf $(ls | grep -v Russian  | grep -v English)
+popd > /dev/null
+popd > /dev/null
+cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-$ARCH-bit release for GNU/Linux
 EOF
-done
