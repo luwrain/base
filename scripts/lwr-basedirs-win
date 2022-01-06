@@ -12,9 +12,10 @@ mkdir -p jar
 for i in lib data; do
     cp -r "$SRC_DIR/$i" "$i"
 done
+mv lib/luwrain-*.jar jar
 rm -rf data/properties data/scripts
 
-#jars
+#Jars
 cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
 for i in $WIN_COMPONENTS; do
     cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
@@ -28,12 +29,8 @@ done
 for i in $WIN_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
-if [ -d ~/.luwrain/dev/jar/ ]; then
-    for i in ~/.luwrain/dev/jar/*; do
-	cat $i > jar/"$(basename "$i")"
-    done
-fi
 
+#Registry
 pushd "$SRC_DIR/registry" > /dev/null
 ./lwr-reg-compile win "$DEST_DIR/data"
 popd > /dev/null
@@ -41,7 +38,7 @@ popd > /dev/null
 #JavaScript
 cp -r "$SRC_DIR/extensions/js" data/js
 
-#properties
+#Properties
 mkdir data/properties
 for i in $WIN_PROPERTIES; do
     cp -r "$SRC_DIR/$i/properties/." data/properties
@@ -52,7 +49,7 @@ luwrain.registry.version = $REGISTRY_VERSION
 luwrain.build.date = $(date -I)
 EOF
 
-# luwrain.bat
+#luwrain.bat
 cat <<EOF > luwrain.bat
 rem Runs LUWRAIN with the locally installed (not embedded) JRE
 
