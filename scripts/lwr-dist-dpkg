@@ -1,0 +1,10 @@
+#!/bin/bash -e
+# Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+# The LUWRAIN Project, GPL v.3
+
+DIR="$(pwd)"
+DEST_DIR="$DIR/debian/luwrain/usr/share/luwrain"
+
+cd base/scripts
+mkdir -p "$DEST_DIR"
+./lwr-basedirs-linux "$DEST_DIR"
