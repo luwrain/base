@@ -134,6 +134,7 @@ rmdir "$TEMP_DIR/dm-linux"
 #done
 #rmdir "$TEMP_DIR/tsulib-linux"
 
+# General Windows
 for i in 32 64; do
     DEST=luwrain-windows-"$i"bit-nightly-"`date -I`"
     echo "Processing $DEST"
@@ -174,6 +175,28 @@ rmdir $TEMP_DIR/win
 #    popd > /dev/null
 #done
 #rmdir "$TEMP_DIR/books-win"
+
+# DL Windows
+for i in 32 64; do
+    DEST=dl-windows-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/dl-win/$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+for i in 32 64; do
+    DEST=dl-windows-installer-"$i"bit-nightly-"`date -I`"
+    echo "Processing $DEST"
+    mv "$TEMP_DIR/dl-win/installer$i" "$TEMP_DIR/$DEST"
+    pushd "$TEMP_DIR" > /dev/null
+    zip -r "$DEST.zip" "$DEST" > /dev/null
+    sha1sum "$DEST.zip" >> sha1sum.txt
+    popd > /dev/null
+done
+rmdir "$TEMP_DIR/dl-win"
+
 
 # Education windows
 for i in 32 64; do

@@ -18,8 +18,8 @@ ARCH=64
 cat "$SRC_DIR/windows/installer/dl/main.ico" > $ARCH/dl.ico
 
 pushd $ARCH/jar > /dev/null
-for k in books studio pim packs edu-algo app-news app-mail app-contacts app-commander app-telegram app-twitter app-vk; do
-    rm -f luwrain-$k.jar
+for k in studio pim packs edu-algo app-news app-mail app-contacts app-commander app-telegram app-twitter app-vk; do
+    rm -f luwrain-$k.jar *books*.jar *edu*.jar
 done
 rm -f *tsulib*.jar
 popd > /dev/null
