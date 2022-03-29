@@ -14,9 +14,15 @@ fi
 tar xf binary.tar.gz
 mv binary/lib .
 if ! java -version 2>&1 | egrep -q 'version "1.8.'; then
-    for i in /usr/share/openjfx/lib/*.jar; do
-	ln -s $i lib/$(basename $i)
-    done
+    if [ -d /opt/javafx/lib/ ]; then
+	for i in /opt/javafx/lib/*.jar; do
+	    ln -s $i lib/$(basename $i)
+	done
+    elif if [ -d /usr/share/openjfx/lib/ ]; then
+	    for i in /usr/share/openjfx/lib/*.jar; do
+		ln -s $i lib/$(basename $i)
+	    done
+    fi
 fi
 mkdir data
 mv binary/sounds data
