@@ -29,7 +29,7 @@ rm -f junit*.jar twitter*.jar vk-sdk*.jar sqlite*.jar
 popd > /dev/null
 
 pushd $ARCH/data/properties > /dev/null
-sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'ru.dl.app.App'/ luwrain.properties
+sed -i -e s/'org.luwrain.core.shell.desktop.Desktop'/'org.luwrain.app.dl.App'/ luwrain.properties
 popd > /dev/null
 
 pushd $ARCH/data/js > /dev/null
