@@ -36,6 +36,13 @@ pushd $ARCH/data/js > /dev/null
 rm -f studio-*.js reader-ms*.js edu-*.js clock*.js
 popd > /dev/null
 
+pushd $ARCH/data > /dev/null
+wget -q https://download.luwrain.org/compilation/daisy.tar.gz
+tar xf daisy.tar.gz
+rm -f daisy.tar.gz
+popd > /dev/null
+
+
 pushd $ARCH/data/sounds/schemes/pragmatic > /dev/null
 #rm -f startup.wav
 #wget -q http://download.luwrain.org/media/startup/dm.wav
