@@ -9,7 +9,7 @@
   <artifactId>luwrain-base</artifactId>
   <name>LUWRAIN base</name>
   <description>A launcher for the LUWRAIN platform</description>
-  <url>https://luwrain.org/?lang=en</url>
+  <url>https://github.com/luwrain/base/</url>
   <packaging>jar</packaging>
   <build>
     <plugins>
