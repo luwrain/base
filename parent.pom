@@ -27,6 +27,7 @@
     <pdfbox.version>2.0.20</pdfbox.version>
     <graalvm.version>20.1.0</graalvm.version>
     <antlr.version>4.8</antlr.version>
+    <activation.version>1.1.1</activation.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,6 +47,11 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-vfs2</artifactId>
       <version>${vfs.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.luwrain</groupId>
+      <artifactId>luwrain-books-api</artifactId>
+      <version>0.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
@@ -76,6 +82,11 @@
       <groupId>javax.mail</groupId>
       <artifactId>javax.mail-api</artifactId>
       <version>1.6.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>${activation.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dizitart</groupId>
