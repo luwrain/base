@@ -11,17 +11,24 @@
     <module>base</module>
     <module>luwrain</module>
     <module>io</module>
-    <module>pim</module>
+    <module>studio</module>
     <module>reader</module>
+    <module>pim</module>
+    <module>interaction-javafx</module>
+    <module>browser</module>
+    <module>linux</module>
   </modules>
   <properties>
     <inlandes.version>0.3.0</inlandes.version>
     <bookdoc.version>0.2.0</bookdoc.version>
+    <jna.version>5.11.0</jna.version>
+    <pty4j.version>0.12.7</pty4j.version>
     <vfs.version>2.6.0</vfs.version>
     <jsoup.version>1.13.1</jsoup.version>
     <lombok.version>1.18.0</lombok.version>
     <nitrite.version>3.4.2</nitrite.version>
     <gson.version>2.8.5</gson.version>
+    <javafx.version>11</javafx.version>
     <log4j.version>2.17.2</log4j.version>
     <languagetool.version>5.5</languagetool.version>
     <pdfbox.version>2.0.20</pdfbox.version>
@@ -44,6 +51,11 @@
       <version>${bookdoc.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.luwrain</groupId>
+      <artifactId>luwrain-grammar</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-vfs2</artifactId>
       <version>${vfs.version}</version>
@@ -63,6 +75,31 @@
       <artifactId>gson</artifactId>
       <version>${gson.version}</version>
     </dependency>
+
+
+      <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>${jna.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.pty4j</groupId>
+      <artifactId>pty4j</artifactId>
+      <version>${pty4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-web</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+
+
     <dependency>
       <groupId>org.languagetool</groupId>
       <artifactId>languagetool-core</artifactId>
@@ -132,6 +169,13 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>jcenter</id>
+      <name>jcenter</name>
+      <url>https://jcenter.bintray.com</url>
+    </repository>
+  </repositories>
   <build>
     <plugins>
       <plugin>
