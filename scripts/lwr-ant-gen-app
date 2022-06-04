@@ -11,15 +11,15 @@ cat <<EOF
 <project name="luwrain-app-$APP_NAME" default="jar" basedir=".">
   <path id="classpath">
     <pathelement location="."/>
-    <fileset dir="../lib"><include name="**/*.jar"/></fileset>
-    <fileset dir="../luwrain/jar"><include name="**/*.jar"/></fileset>
+    <fileset dir="../release/lib"><include name="**/*.jar"/></fileset>
+    <fileset dir="../release/jar"><include name="**/*.jar"/></fileset>
 EOF
 
-for i in $COMPONENTS; do
-    cat <<EOF
-    <fileset dir="../$i/jar"><include name="**/*.jar"/></fileset>
-EOF
-    done
+#for i in $COMPONENTS; do
+#    cat <<EOF
+#    <fileset dir="../$i/jar"><include name="**/*.jar"/></fileset>
+#EOF
+#    done
 
 cat <<EOF
   </path>

@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+. init.sh
+
+MODULES="base luwrain io reader pim studio interaction-javafx browser linux"
+
+for i in $MODULES; do
+    rm -rf $i/target
+done
+rm -rf target release
+
+mvn install
+mkdir release
+cp -r base/target/lib release
+mkdir release/jar
+for i in $MODULES; do
+    cp $i/target/*.jar release/jar
+done
+
+pushd release > /dev/null
+mkdir sources javadoc
+mv jar/*sources*.jar sources
+mv jar/*javadoc*.jar javadoc
+mv lib/luwrain*.jar jar
+popd > /dev/null
+
+if [ -d binary/ext ]; then
+    cp -r binary/ext/. release/lib
+fi
+
+
