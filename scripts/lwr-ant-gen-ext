@@ -13,9 +13,6 @@ cat <<EOF
     <pathelement location="."/>
     <fileset dir="../../release/lib"><include name="**/*.jar"/></fileset>
     <fileset dir="../../release/jar"><include name="**/*.jar"/></fileset>
-EOF
-
-cat <<EOF
   </path>
   <path id="mainjar">
     <pathelement location="."/>
