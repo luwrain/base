@@ -6,18 +6,6 @@
 
 lwr-build-mvn
 
-for i in base luwrain; do
-    cd "$i"
-    ant -emacs
-    cd ..
-done
-
-for i in $COMPONENTS; do
-    cd "$i"
-    ant -emacs
-    cd ..
-done
-
 for i in $APPS; do
     cd app-$i
     ant -emacs

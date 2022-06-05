@@ -5,21 +5,16 @@
 . init.sh
 
 DEST_DIR="$1"
-[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
+mkdir -p "$DEST_DIR"
+
+cp -r release/jar release/lib "$DEST_DIR"
+mkdir -p "$DEST_DIR/data"
+cp -r data/sounds "$DEST_DIR/data"
+cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
 
-mkdir -p jar
-for i in data lib; do
-        cp -r "$SRC_DIR/$i" .
-done
-mv lib/luwrain*.jar jar
-rm -rf data/properties data/scripts
-
 #Jars
-cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-for i in $LINUX_COMPONENTS; do
-    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
-done
 for i in $LINUX_APPS; do
     cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
 done
@@ -29,17 +24,11 @@ done
 for i in $LINUX_EXTENSIONS; do
     cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
 done
-for i in $LINUX_EXTENSIONS; do
-    cp "$SRC_DIR"/extensions/$i/jar/luwrain-ext-$i.jar jar
-done
 
 #Registry
 pushd "$SRC_DIR/registry" > /dev/null
 ./lwr-reg-compile linux "$DEST_DIR/data"
 popd > /dev/null
-
-#JavaScript
-cp -r "$SRC_DIR/extensions/js" data/js
 
 #Properties
 mkdir data/properties
