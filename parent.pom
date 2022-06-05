@@ -13,6 +13,7 @@
     <module>io</module>
     <module>studio</module>
     <module>reader</module>
+    <module>player</module>
     <module>pim</module>
     <module>interaction-javafx</module>
     <module>browser</module>
@@ -61,6 +62,11 @@
       <version>${vfs.version}</version>
     </dependency>
     <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+      <version>3.8.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.luwrain</groupId>
       <artifactId>luwrain-books-api</artifactId>
       <version>0.2.0</version>
@@ -88,12 +94,25 @@
       <artifactId>jlayer</artifactId>
       <version>1.0.1</version>
     </dependency>
-
-
+    <dependency>
+      <groupId>com.mpatric</groupId>
+      <artifactId>mp3agic</artifactId>
+      <version>0.9.1</version>
+    </dependency>
     <dependency>
       <groupId>org.jetbrains.pty4j</groupId>
       <artifactId>pty4j</artifactId>
       <version>${pty4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.13</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+      <version>4.5.13</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>

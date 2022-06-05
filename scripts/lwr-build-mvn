@@ -2,7 +2,7 @@
 
 . init.sh
 
-MODULES="base luwrain io reader pim studio interaction-javafx browser linux"
+MODULES="base luwrain io reader pim studio interaction-javafx browser linux player"
 
 for i in $MODULES; do
     rm -rf $i/target

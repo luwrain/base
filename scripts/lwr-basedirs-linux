@@ -8,7 +8,8 @@ DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
 mkdir -p "$DEST_DIR"
 
-cp -r release/jar release/lib "$DEST_DIR"
+cp -r release/jar "$DEST_DIR"
+cp release/lib/*.jar "$DEST_DIR/jar"
 mkdir -p "$DEST_DIR/data"
 cp -r data/sounds "$DEST_DIR/data"
 cp -r extensions/js "$DEST_DIR/data/js"
