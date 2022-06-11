@@ -10,8 +10,10 @@ done
 rm -rf target release
 
 mvn install
-mkdir release
-cp -r base/target/lib release
+mkdir -p release/lib
+for i in base/target/lib/*.jar; do
+    cat $i > release/lib/"$(basename "$i")"
+done
 mkdir release/jar
 for i in $MODULES; do
     cp $i/target/*.jar release/jar

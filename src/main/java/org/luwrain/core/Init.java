@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2021 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -25,13 +25,15 @@ import java.nio.charset.Charset;
 public final class Init
 {
     static public final String LOG_COMPONENT = "init";
-    static private final File DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt");
-    static private final File STANDALONE = new File("standalone");
+    static private final File
+	DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt"),
+	STANDALONE = new File("standalone");
 
-    static private final String ENV_APP_DATA = "APPDATA";
-    static private final String ENV_USER_PROFILE = "USERPROFILE";
-    static private final String DEFAULT_USER_DATA_DIR_WINDOWS = "Luwrain";
-    static private final String DEFAULT_USER_DATA_DIR_LINUX = ".luwrain";
+    static private final String
+	ENV_APP_DATA = "APPDATA",
+	ENV_USER_PROFILE = "USERPROFILE",
+	DEFAULT_USER_DATA_DIR_WINDOWS = "Luwrain",
+	DEFAULT_USER_DATA_DIR_LINUX = ".luwrain";
 
     static public void main(String[] args) throws IOException
     {
@@ -109,6 +111,7 @@ public final class Init
 	}
 	catch(IOException e)
 	{
+	    e.printStackTrace();
 	}
     }
 
