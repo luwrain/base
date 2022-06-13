@@ -66,7 +66,7 @@ public final class Init
 	final File dataDir = new File("data");
 	final LaunchFactory factory;
 	try {
-	    final Object obj = Class.forName("org.luwrain.core.LaunchFactoryImpl", true, classLoader).newInstance();
+	    final Object obj = Class.forName("org.luwrain.core.LaunchFactoryImpl", true, classLoader).getDeclaredConstructor().newInstance();
 	    factory = (LaunchFactory)obj;
 	}
 	catch(Throwable e)
