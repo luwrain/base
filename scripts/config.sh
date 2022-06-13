@@ -10,7 +10,7 @@ SDK_JARS='base browser io pim studio'
 SRC_DEST_DIR=/tmp/luwrain-src
 
 # Used for compilation, everything must be listed regardless the target platform
-LANGS='en fr ro ru'
+LANGS='en ru'
 APPS='commander contacts mail news notepad telegram twitter viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
 COMPONENTS='base interaction-javafx io browser linux packs pim player reader studio windows'
@@ -23,12 +23,6 @@ WIN_EXTENSIONS='mssapi plmp3 rhvoice'
 WIN_PROPERTIES='luwrain player reader windows'
 
 LINUX_ARCH='64'
-LINUX_LANGS='en ro ru'
-LINUX_COMPONENTS='base browser interaction-javafx io linux packs pim player reader studio'
-LINUX_APPS='commander contacts mail news notepad telegram twitter viewer vk'
-LINUX_EXTENSIONS='cmdtts emacspeak plmp3 rhvoice speechd voiceman'
-LINUX_PROPERTIES='linux luwrain player reader'
-LINUX_SCRIPTS='linux'
 
 ISO_ARCH='64'
 ISO_LANGS='en ro ru'
