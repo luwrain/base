@@ -18,6 +18,7 @@
     <module>interaction-javafx</module>
     <module>browser</module>
     <module>linux</module>
+    <module>windows</module>
   </modules>
   <properties>
     <inlandes.version>0.3.0</inlandes.version>

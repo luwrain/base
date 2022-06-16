@@ -11,21 +11,20 @@ if ! [ -e /tmp/binary.tar.gz ]; then
 else
     cat /tmp/binary.tar.gz > binary.tar.gz
 fi
-
-
 tar xf binary.tar.gz
 mv binary/lib .
-if ! java -version 2>&1 | egrep -q 'version "1.8.'; then
-    if [ -d /opt/javafx/lib/ ]; then
-	for i in /opt/javafx/lib/*.jar; do
-	    ln -s $i lib/$(basename $i)
-	done
-    elif [ -d /usr/share/openjfx/lib/ ]; then
-	    for i in /usr/share/openjfx/lib/*.jar; do
-		ln -s $i lib/$(basename $i)
-	    done
-    fi
-fi
+#if ! java -version 2>&1 | egrep -q 'version "1.8.'; then
+#    if [ -d /opt/javafx/lib/ ]; then
+#	for i in /opt/javafx/lib/*.jar; do
+#	    ln -s $i lib/$(basename $i)
+#	done
+#    elif [ -d /usr/share/openjfx/lib/ ]; then
+#	    for i in /usr/share/openjfx/lib/*.jar; do
+#		ln -s $i lib/$(basename $i)
+#	    done
+#    fi
+#fi
+
 mkdir data
 mv binary/sounds data
 rm -f binary.tar.gz

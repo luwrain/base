@@ -22,6 +22,7 @@ cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
 
 pushd jar > /dev/null
+rm -f luwrain-linux*.jar
 rm -f javafx-*-linux.jar
 for i in base controls graphics media web; do
     wget -q https://repo1.maven.org/maven2/org/openjfx/javafx-$i/$JAVAFX_VER/javafx-$i-$JAVAFX_VER-win.jar
