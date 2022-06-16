@@ -2,28 +2,30 @@
 # Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
+WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
+
+WIN_EXTENSIONS='mssapi plmp3 rhvoice'
+WIN_PROPERTIES='luwrain player reader windows'
+#WIN_COMPONENTS='base browser interaction-javafx io packs pim player reader studio windows'
+
 . init.sh
 
 DEST_DIR="$1"
-[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
-cd $DEST_DIR
+[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory" >&2 && exit 1
+mkdir -p "$DEST_DIR"
 
-mkdir -p jar
-for i in lib data; do
-    cp -r "$SRC_DIR/$i" "$i"
-done
-mv lib/luwrain-*.jar jar
-rm -rf data/properties data/scripts
+cp -r release/jar "$DEST_DIR"
+cp release/lib/*.jar "$DEST_DIR/jar"
+mkdir -p "$DEST_DIR/data"
+cp -r data/sounds "$DEST_DIR/data"
+cp -r extensions/js "$DEST_DIR/data/js"
+cd "$DEST_DIR"
 
 #Jars
-cp "$SRC_DIR/luwrain/jar/luwrain.jar" jar
-for i in $WIN_COMPONENTS; do
-    cp "$SRC_DIR/$i/jar/luwrain-$i.jar" jar
-done
 for i in $WIN_APPS; do
     cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
 done
-for i in $WIN_LANGS; do
+for i in $LANGS; do
     cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
 done
 for i in $WIN_EXTENSIONS; do
@@ -34,9 +36,6 @@ done
 pushd "$SRC_DIR/registry" > /dev/null
 ./lwr-reg-compile win "$DEST_DIR/data"
 popd > /dev/null
-
-#JavaScript
-cp -r "$SRC_DIR/extensions/js" data/js
 
 #Properties
 mkdir data/properties

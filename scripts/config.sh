@@ -16,12 +16,6 @@ EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
 COMPONENTS='base interaction-javafx io browser linux packs pim player reader studio windows'
 
 WIN_ARCH=64
-WIN_LANGS='en ro ru'
-WIN_COMPONENTS='base browser interaction-javafx io packs pim player reader studio windows'
-WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
-WIN_EXTENSIONS='mssapi plmp3 rhvoice'
-WIN_PROPERTIES='luwrain player reader windows'
-
 LINUX_ARCH='64'
 
 ISO_ARCH='64'
