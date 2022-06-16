@@ -6,6 +6,8 @@ WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
 WIN_EXTENSIONS='mssapi plmp3 rhvoice'
 WIN_PROPERTIES='luwrain player reader windows'
 
+JAVAFX_VER=11
+
 . init.sh
 
 DEST_DIR="$1"
@@ -18,6 +20,13 @@ mkdir -p "$DEST_DIR/data"
 cp -r data/sounds "$DEST_DIR/data"
 cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
+
+pushd jar > /dev/null
+rm -f javafx-*-linux.jar
+for i in base controls graphics media web; do
+    wget -q https://repo1.maven.org/maven2/org/openjfx/javafx-$i/$JAVAFX_VER/javafx-$i-$JAVAFX_VER-win.jar
+done
+popd > /dev/null
 
 #Jars
 for i in $WIN_APPS; do
