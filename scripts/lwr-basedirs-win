@@ -3,10 +3,8 @@
 # The LUWRAIN Project, GPL v.3
 
 WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
-
 WIN_EXTENSIONS='mssapi plmp3 rhvoice'
 WIN_PROPERTIES='luwrain player reader windows'
-#WIN_COMPONENTS='base browser interaction-javafx io packs pim player reader studio windows'
 
 . init.sh
 

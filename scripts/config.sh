@@ -3,17 +3,16 @@
 
 VERSION=1.9.3
 REGISTRY_VERSION=1.9.3
+
+LANGS='en ru'
 GITS='base browser extensions i18n io interaction-javafx linux luwrain packs pim player reader registry studio windows'
-PROPERTIES_FILE=release.properties
+
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'
-SDK_JARS='base browser io pim studio'
 SRC_DEST_DIR=/tmp/luwrain-src
 
 # Used for compilation, everything must be listed regardless the target platform
-LANGS='en ru'
 APPS='commander contacts mail news notepad telegram twitter viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
-COMPONENTS='base interaction-javafx io browser linux packs pim player reader studio windows'
 
 WIN_ARCH=64
 LINUX_ARCH='64'
