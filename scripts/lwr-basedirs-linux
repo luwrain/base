@@ -19,6 +19,11 @@ mkdir -p "$DEST_DIR/data"
 cp -r data/sounds "$DEST_DIR/data"
 cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
+pushd data > /dev/null
+wget -q https://download.luwrain.org/compilation/hunspell.tar.xz
+tar xf hunspell.tar.xz
+rm -f hunspell.tar.xz
+popd > /dev/null
 
 #Jars
 for i in $LINUX_APPS; do
