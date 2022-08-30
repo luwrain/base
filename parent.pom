@@ -10,6 +10,7 @@
   <modules>
     <module>base</module>
     <module>luwrain</module>
+    <module>grammar</module>
     <module>io</module>
     <module>studio</module>
     <module>reader</module>
@@ -52,11 +53,6 @@
       <groupId>org.luwrain</groupId>
       <artifactId>luwrain-bookdoc</artifactId>
       <version>${bookdoc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.luwrain</groupId>
-      <artifactId>luwrain-grammar</artifactId>
-      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
