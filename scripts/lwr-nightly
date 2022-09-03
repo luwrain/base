@@ -25,7 +25,6 @@ cd src/base/scripts
 DEST="luwrain-nightly-`date -I`"
 ./lwr-dist-src $TEMP_DIR/$DEST
 pushd "$TEMP_DIR" > /dev/null
-echo "Processing $DEST"
 tar -c "$DEST/" | xz > "$DEST.tar.xz"
 sha1sum "$DEST.tar.xz" > sha1.txt
 popd > /dev/null
@@ -38,7 +37,6 @@ echo Packing for Linux
 ./lwr-dist-linux $TEMP_DIR/linux
 for i in x64; do
     DEST=luwrain-linux-"$i"-nightly-"`date -I`"
-    echo "Processing $DEST"
     mv "$TEMP_DIR/linux/$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     tar -c "$DEST/" | xz > "$DEST.tar.xz"
@@ -51,7 +49,6 @@ echo Packing for Microsoft Windows
 ./lwr-dist-win $TEMP_DIR/win
 for i in x64; do
     DEST=luwrain-windows-"$i"-nightly-"`date -I`"
-    echo "Processing $DEST"
     mv "$TEMP_DIR/win/$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     zip -r "$DEST.zip" "$DEST" > /dev/null
@@ -60,7 +57,6 @@ for i in x64; do
 done
 for i in x64; do
     DEST=luwrain-windows-installer-"$i"-nightly-"`date -I`"
-    echo "Processing $DEST"
     mv "$TEMP_DIR/win/installer-$i" "$TEMP_DIR/$DEST"
     pushd "$TEMP_DIR" > /dev/null
     zip -r "$DEST.zip" "$DEST" > /dev/null
@@ -70,12 +66,16 @@ done
 rmdir $TEMP_DIR/win
 
 echo Packing the standalone version
-./lwr-dist-standalone $TEMP_DIR/standalone
+DEST=luwrain-standalone-nightly-`date -I`
+./lwr-dist-standalone "$TEMP_DIR/$DEST"
+pushd "$TEMP_DIR" > /dev/null
+tar -c $DEST/ | xz > $DEST.tar.xz
+sha1sum "$DEST.tar.xz" >> sha1.txt
+popd > /dev/null
 
 #./lwr-dist-iso $TEMP_DIR/iso
 # ISO
 #DEST=luwrain-iso-nightly-"`date -I`"
-#echo "Processing $DEST"
 #mv "$TEMP_DIR/iso" "$TEMP_DIR/$DEST"
 #pushd "$TEMP_DIR" > /dev/null
 #tar -c "$DEST/" | gzip > "$DEST.tar.gz"

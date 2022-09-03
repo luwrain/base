@@ -7,6 +7,8 @@
 [ -z "$1" ] && echo "$THIS: No destination directory" >&2 && exit 1
 DEST_DIR="$1"
 
+mkdir -p "$DEST_DIR"
+
 lwr-dist-linux "$DEST_DIR/linux"
 lwr-dist-win "$DEST_DIR/win"
 cd "$DEST_DIR"
