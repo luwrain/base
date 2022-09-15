@@ -47,7 +47,7 @@ popd > /dev/null
 
 pushd linux/x64 > /dev/null
 mv luwrain \$CUSTOM_NAME
-mv luwrain.ico \$CUSTOM_NAME
+mv luwrain.ico \$CUSTOM_NAME.ico
 sed -i -e s:' ./luwrain':" ./\$CUSTOM_NAME": luwrain-speechd*
 mv luwrain-speechd \$CUSTOM_NAME-speechd
 mv luwrain-speechd-ru \$CUSTOM_NAME-speechd-ru
