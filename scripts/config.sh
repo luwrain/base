@@ -1,8 +1,8 @@
 # Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-VERSION=1.9.3
-REGISTRY_VERSION=1.9.3
+VERSION=2.0.0
+REGISTRY_VERSION=2.0
 
 LANGS='en ru'
 APPS='commander contacts mail news notepad telegram twitter viewer vk'

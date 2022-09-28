@@ -20,7 +20,7 @@
         <configuration>
           <archive>
             <manifest>
-              <addClasspath>true</addClasspath>
+              <addClasspath>false</addClasspath>
               <mainClass>org.luwrain.core.Init</mainClass>
             </manifest>
           </archive>
