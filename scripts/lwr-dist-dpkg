@@ -14,8 +14,9 @@ cat <<EOF > "$DEST_DIR/bin/luwrain"
 # Copyright 2022 Michael Pozhidaev <msp@luwrain.org>
 
 cd /usr/share/luwrain
-exec java --module-path /usr/share/openjfx/lib --add-modules javafx.controls -jar jar/luwrain-base.jar "\$@"
+exec java --module-path /usr/share/openjfx/lib --add-modules javafx.controls,javafx.web -jar jar/luwrain-base.jar "\$@"
 EOF
+
 cat <<EOF > "$DEST_DIR/bin/lwr"
 #!/bin/bash -e
 # Runs the LUWRAIN platform blocking any output
@@ -26,3 +27,4 @@ EOF
 chmod 755 "$DEST_DIR/bin/luwrain" "$DEST_DIR/bin/lwr"
 
 ./lwr-basedirs-linux "$DEST_DIR"
+rm -f "$DEST_DIR"/jar/javafx-*.jar
