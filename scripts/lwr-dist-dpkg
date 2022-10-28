@@ -1,9 +1,11 @@
-#!/bin/bash -e
+#!/bin/bash -evx
 # Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
 DIR="$(pwd)"
 DEST_DIR="$DIR/debian/luwrain/usr/share/luwrain"
+
+. init.sh
 
 cd base/scripts
 mkdir -p "$DEST_DIR/bin"
@@ -27,4 +29,8 @@ EOF
 chmod 755 "$DEST_DIR/bin/luwrain" "$DEST_DIR/bin/lwr"
 
 ./lwr-basedirs-linux "$DEST_DIR"
-rm -f "$DEST_DIR"/jar/javafx-*.jar
+
+cd "$DEST_DIR/jar"
+rm -f javafx-*.jar
+ln -s luwrain-base-*.jar luwrain-base.jar
+
