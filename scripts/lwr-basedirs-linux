@@ -16,13 +16,14 @@ mkdir -p "$DEST_DIR"
 cp -r release/jar "$DEST_DIR"
 cp release/lib/*.jar "$DEST_DIR/jar"
 mkdir -p "$DEST_DIR/data"
-cp -r data/sounds "$DEST_DIR/data"
 cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
 pushd data > /dev/null
-wget -q https://download.luwrain.org/compilation/hunspell.tar.xz
-tar xf hunspell.tar.xz
-rm -f hunspell.tar.xz
+for i in sounds hunspell; do
+    wget -q https://download.luwrain.org/compilation/$i.tar.xz
+    tar xf $i.tar.xz
+    rm -f $i.tar.xz
+done
 popd > /dev/null
 
 #Jars
