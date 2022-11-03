@@ -5,7 +5,7 @@
 DIR="$(pwd)"
 DEST_DIR="$DIR/debian/luwrain/usr/share/luwrain"
 
-. init.sh
+. base/scripts/init.sh
 
 cd base/scripts
 mkdir -p "$DEST_DIR/bin"
