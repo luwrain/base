@@ -28,8 +28,4 @@ mv jar/*javadoc*.jar javadoc
 mv lib/luwrain*.jar jar
 popd > /dev/null
 
-if [ -d binary/ext ]; then
-    cp -r binary/ext/. release/lib
-fi
-
-
+cp -r lib/. release/lib

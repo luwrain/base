@@ -5,15 +5,6 @@
 . init.sh
 
 lwr-ant-gen-all
-
-if ! [ -e /tmp/binary.tar.gz ]; then
-    wget -q 'http://download.luwrain.org/compilation/binary.tar.gz'
-else
-    cat /tmp/binary.tar.gz > binary.tar.gz
-fi
-tar xf binary.tar.gz
-
-mv binary/lib .
-mkdir data
-mv binary/sounds data
-rm -f binary.tar.gz
+wget -q 'http://download.luwrain.org/compilation/lib.tar.xz
+tar xf lib.tar.xz
+rm -f lib.tar.gz
