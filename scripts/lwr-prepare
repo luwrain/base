@@ -5,6 +5,6 @@
 . init.sh
 
 lwr-ant-gen-all
-wget -q 'http://download.luwrain.org/compilation/lib.tar.xz
+wget -q http://download.luwrain.org/compilation/lib.tar.xz
 tar xf lib.tar.xz
 rm -f lib.tar.gz
