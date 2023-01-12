@@ -4,14 +4,12 @@ MODULES="base luwrain io reader pim studio interaction-javafx browser linux play
 
 . init.sh
 
-
-
 for i in $MODULES; do
     rm -rf $i/target
 done
 rm -rf target release
 
-mvn install
+mvn install -B -C
 mkdir -p release/lib
 for i in base/target/lib/*.jar; do
     cat $i > release/lib/"$(basename "$i")"
