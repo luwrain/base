@@ -76,15 +76,6 @@ sha1sum "$DEST.tar.xz" >> sha1.txt
 ln -s "$DEST.tar.xz" standalone.tar.xz
 popd > /dev/null
 
-#./lwr-dist-iso $TEMP_DIR/iso
-# ISO
-#DEST=luwrain-iso-nightly-"`date -I`"
-#mv "$TEMP_DIR/iso" "$TEMP_DIR/$DEST"
-#pushd "$TEMP_DIR" > /dev/null
-#tar -c "$DEST/" | gzip > "$DEST.tar.gz"
-#sha1sum "$DEST.tar.gz" >> sha1.txt
-#rm -rf "$TEMP_DIR/$DEST"
-
 cd "$TEMP_DIR"
 RELEASE_DIR=~/nightly-`date -I`
 if [ -d "$RELEASE_DIR" ]; then

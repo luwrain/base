@@ -14,12 +14,3 @@ LINUX_ARCH='64'
 
 JUNIT_COMPONENTS='base luwrain linux browser io pim app-notepad'
 SRC_DEST_DIR=/tmp/luwrain-src
-
-
-ISO_ARCH='64'
-ISO_LANGS='en ro ru'
-ISO_COMPONENTS='base browser interaction-javafx io linux pim player reader studio'
-ISO_APPS='commander contacts mail news notepad telegram twitter viewer vk'
-ISO_EXTENSIONS='cmdtts emacspeak plmp3 rhvoice speechd voiceman'
-ISO_PROPERTIES='linux luwrain player reader'
-ISO_SCRIPTS='linux'

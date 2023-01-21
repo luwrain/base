@@ -18,6 +18,12 @@ wget -q https://download.luwrain.org/compilation/$JRE.tar.xz
 tar xf $JRE.tar.xz
 mv $JRE $ARCH
 rm -f $JRE.tar.xz
+
+wget -q https://download.luwrain.org/compilation/rhvoice-data.tar.xz
+tar xf rhvoice-data.tar.xz
+cp -r rhvoice $ARCH/rhvoice
+rm -rf rhvoice*
+
 cd $ARCH
 lwr-basedirs-win $DEST_DIR/$ARCH
 cat <<EOF > ReleaseInfo.txt
