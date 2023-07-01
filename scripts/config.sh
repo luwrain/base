@@ -5,7 +5,7 @@ VERSION=2.0.0
 REGISTRY_VERSION=2.0
 
 LANGS='en ru'
-APPS='commander contacts mail news notepad telegram twitter viewer vk'
+APPS='commander contacts mail news notepad telegram viewer vk'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
 GITS='base browser extensions i18n io interaction-javafx linux luwrain pim player reader registry studio windows'
 

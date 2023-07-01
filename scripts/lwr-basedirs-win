@@ -2,7 +2,7 @@
 # Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-WIN_APPS='commander contacts mail news notepad telegram twitter viewer vk'
+WIN_APPS='commander contacts mail news notepad telegram viewer vk'
 WIN_EXTENSIONS='mssapi plmp3 rhvoice'
 WIN_PROPERTIES='luwrain player reader windows'
 
