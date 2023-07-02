@@ -4,10 +4,11 @@
 VERSION=2.0.0
 REGISTRY_VERSION=2.0
 
-LANGS='en ru'
+GITS='base browser extensions grammar i18n io interaction-javafx linux luwrain pim player reader registry studio windows'
 APPS='commander contacts mail news notepad telegram viewer vk'
+LANGS='en ru'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
-GITS='base browser extensions i18n io interaction-javafx linux luwrain pim player reader registry studio windows'
+
 
 WIN_ARCH=64
 LINUX_ARCH='64'

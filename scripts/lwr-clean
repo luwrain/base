@@ -6,3 +6,9 @@
 
 rm -rf release
 rm -rf */target */jar  */build
+
+cd i18n
+rm -rf */build */jar
+
+cd ../extensions
+rm -rf */build */jar
