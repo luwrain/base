@@ -1,11 +1,11 @@
 #!/bin/bash -e
-# Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+# Copyright 2012-2023 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
 . init.sh
 
 DEST_DIR="$1"
-[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
 
 rm -rf "$DEST_DIR"
 mkdir "$DEST_DIR"
@@ -13,12 +13,12 @@ cd "$DEST_DIR"
 
 jars()
 {
-    find "$1" -iname '*.jar' | 
+    find "$1" -iname '*.jar' |
     while read l; do
 	echo -n "$l:"
     done
     echo
 }
 
-javadoc -classpath "$(jars "$SRC_DIR"/lib)" \
-	$(find "$SRC_DIR" -iname '*.java' -exec grep -l LWR_API '{}' \;)
+javadoc -classpath "$(jars "$SRC_DIR"/release/lib)" \
+	$(find "$SRC_DIR"/{base,luwrain,javafx-interaction,io,pim}/src/main/java -iname '*.java')
