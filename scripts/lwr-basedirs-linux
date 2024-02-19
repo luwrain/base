@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+# Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
 LINUX_APPS='commander contacts mail news notepad telegram viewer vk'

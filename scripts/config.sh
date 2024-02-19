@@ -1,4 +1,4 @@
-# Copyright 2012-2023 Michael Pozhidaev <msp@luwrain.org>
+# Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
 VERSION=2.0.0
