@@ -2,17 +2,7 @@
 # Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-TEMP_DIR=$(mktemp -d /tmp/.nightly-XXXXXX)
-
-if [ "$1" == '--tmpfs' ]; then
-    echo "Creating tmpfs at $TEMP_DIR"
-    sudo mount -t tmpfs -o size=20g tmpfs "$TEMP_DIR"
-else
-    echo "Working in $TEMP_DIR"
-fi
-
-rm -f /tmp/nightly
-ln -s $TEMP_DIR /tmp/nightly
+TEMP_DIR=$(mktemp -d)
 
 cd $TEMP_DIR
 
@@ -20,7 +10,7 @@ echo 'Downloading files'
 git clone --recursive  https://github.com/luwrain/parent/ &> log
 mv parent src
 cd src/base/scripts
-./lwr-prepare &>> ../../../log
+./lwr-ant-gen-all
 
 DEST="luwrain-nightly-`date -I`"
 ./lwr-dist-src $TEMP_DIR/$DEST
