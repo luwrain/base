@@ -2,7 +2,6 @@
 # Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-JRE=jre18-linux-x64
 ARCH=x64
 
 . init.sh
@@ -14,12 +13,23 @@ rm -rf "$DEST_DIR"
 mkdir -p "$DEST_DIR"
 cd "$DEST_DIR"
 
-wget -q https://download.luwrain.org/compilation/$JRE.tar.xz
-tar xf $JRE.tar.xz
-mv $JRE $ARCH
-rm -f $JRE.tar.xz
 lwr-basedirs-linux "$DEST_DIR/$ARCH/"
-mv $ARCH/jar/luwrain-base*.jar $ARCH/lib/app/luwrain-base.jar
+mv $ARCH/jar "$ARCH/lib"
+
+mkdir "$ARCH"/bin
+cat <<EOF > "$ARCH/bin/luwrain"
+#!/bin/bash -e
+# Copyright $(date +%Y) Michael Pozhidaev <msp@luwrain.org>
+
+THIS="\${0##*/}"
+
+cd "\$(dirname "\$0")"/..
+
+if [ -n "\$JAVA_HOME" ] && [ -x "\$JAVA_HOME/bin/java" ]; then
+exec "\$JAVA_HOME/bin/java" -cp "lib/*" org.luwrain.core.Init "\$@"
+fi
+EOF
+chmod 755 "$ARCH/bin/luwrain"
 
 wget -q https://download.luwrain.org/compilation/rhvoice-data.tar.xz
 tar xf rhvoice-data.tar.xz
