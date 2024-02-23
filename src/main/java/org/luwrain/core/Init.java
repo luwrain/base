@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -42,8 +42,7 @@ public final class Init
 	    final PrintStream log = new PrintStream(new BufferedOutputStream(new FileOutputStream(DEBUG_FILE)), true);
 	    System.setOut(log);
 	    System.setErr(log);
-	} else
-	    Log.enableBriefMode();
+	}
 	final File userHomeDir = new File(System.getProperty("user.home"));
 	final List<URL> urls = new ArrayList<>();
 	addJarsToClassPath(new File("jar"), urls);

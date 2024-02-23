@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -14,8 +14,6 @@
    General Public License for more details.
 */
 
-//LWR_API 1.0
-
 package org.luwrain.core;
 
 /**
@@ -24,7 +22,7 @@ package org.luwrain.core;
  * corresponding exceptions. All method are rather short and purposed
  * only for making code more readable and self-documented.
  */
-public class NullCheck
+public final class NullCheck
 {
     /**
      * Checks that provided reference isn't null. 
@@ -36,7 +34,7 @@ public class NullCheck
     static public void notNull(Object obj, String name)
     {
 	if (obj == null)
-	    throw new NullPointerException(name + " may not be null");
+	    throw new NullPointerException(name + " can't be null");
     }
 
     /**
@@ -49,9 +47,9 @@ public class NullCheck
     static public void notEmpty(Object obj, String name)
     {
 	if (obj == null)
-	    throw new NullPointerException(name + " may not be null");
+	    throw new NullPointerException(name + " can't be null");
 	if (obj.toString().isEmpty())
-	    throw new IllegalArgumentException(name + " may not be empty");
+	    throw new IllegalArgumentException(name + " can't be empty");
     }
 
     /**
@@ -67,7 +65,7 @@ public class NullCheck
 	notNull(items, name);
 	for(int i = 0;i < items.length;++i)
 	    if (items[i] == null)
-		throw new NullPointerException(name + "[" + i + "] may not be null");
+		throw new NullPointerException(name + "[" + i + "] can't be null");
     }
 
     /**
@@ -81,13 +79,13 @@ public class NullCheck
     static public void notEmptyItems(Object[] items, String name)
     {
 	if (items == null)
-	    throw new NullPointerException(name + " may not be null");
+	    throw new NullPointerException(name + " can't be null");
 	for(int i = 0;i < items.length;++i)
 	{
 	    if (items[i] == null)
-		throw new NullPointerException(name + "[" + i + "] may not be null");
+		throw new NullPointerException(name + "[" + i + "] can't be null");
 	    if (items[i].toString().isEmpty())
-		throw new IllegalArgumentException(name + "[" + i + "] may not be empty");
+		throw new IllegalArgumentException(name + "[" + i + "] can't be empty");
 	}
     }
 
@@ -101,8 +99,8 @@ public class NullCheck
     static public void notEmptyArray(Object[] items, String name)
     {
 	if (items == null)
-	    throw new NullPointerException(name + " may not be null");
+	    throw new NullPointerException(name + " can't be null");
 	if (items.length < 1)
-	    throw new IllegalArgumentException(name + " may not be empty");
+	    throw new IllegalArgumentException(name + " can't be empty");
     }
 }
