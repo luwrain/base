@@ -5,7 +5,7 @@
 . init.sh
 
 SRC_DEST_DIR="$1"
-[ -z "$SRC_DEST_DIR" ] && echo "$THIS:no destination directory given" >&2 && exit 1
+[ -z "$SRC_DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
 [ -e "$SRC_DEST_DIR" ] && echo "$THIS:$SRC_DEST_DIR already exists" >&2 && exit 1
 
 mkdir -p "$SRC_DEST_DIR"

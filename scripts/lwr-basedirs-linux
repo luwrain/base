@@ -13,11 +13,18 @@ DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
 mkdir -p "$DEST_DIR"
 
+pushd base/sounds > /dev/null
+./make
+mkdir "$DEST_DIR/generated-sounds"
+cp *.wav "$DEST_DIR/generated-sounds"
+popd > /dev/null
+
 cp -r release/jar "$DEST_DIR"
 cp release/lib/*.jar "$DEST_DIR/jar"
 mkdir -p "$DEST_DIR/data"
 cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
+
 pushd data > /dev/null
 for i in sounds hunspell; do
     wget -q https://download.luwrain.org/compilation/$i.tar.xz
@@ -25,6 +32,8 @@ for i in sounds hunspell; do
     rm -f $i.tar.xz
 done
 popd > /dev/null
+cp generated-sounds/*.wav data/sounds/schemes/pragmatic/
+rm -rf generated-sounds
 
 #Jars
 for i in $LINUX_APPS; do

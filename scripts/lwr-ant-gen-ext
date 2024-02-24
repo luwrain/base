@@ -4,7 +4,7 @@
 
 . init.sh
 
-[ -z "$1" ] && echo "$THIS:no extension name given" >&2 && exit 1
+[ -z "$1" ] && echo "ERROR: $THIS: No extension name" >&2 && exit 1
 EXT_NAME="$1"
 
 cat <<EOF

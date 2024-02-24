@@ -1,22 +1,18 @@
 #!/bin/bash -e
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
-# E major
+# Des major
 
-DUR=140
-INS=10
+INS=13
 
-./melody.sh $INS 120 71 $DUR 76 $DUR 80 $DUR 78 $DUR 83 300 | csvmidi - > melody.midi
-timidity -Ow melody.midi
+./melody.sh $INS 120 68 150 73 160 77 170 75 180 80 300 | csvmidi - > melody.midi
+timidity -Ow melody.midi > /dev/null
 
-sox -n -r 44100 -b 16 -c 2 harm.wav \
-    synth 10 sin %-16 sin %-13 sin %-10 \
-    fade t 0.5 1 0.5 gain -25
+sox -D -n -r 44100 -b 16 -c 2 harm.wav \
+    synth 10 sin %-19 sin %-16 sin %-7 \
+    fade t 0.4 2 1.5 gain -30
 
-sox melody.wav harm.wav -m pre.wav
+sox -D melody.wav harm.wav -m pre.wav
 
-
-
-sox --norm=-0.1 pre.wav done.wav pad 0 1 reverb 65
+sox -D --norm=-0.1 pre.wav done.wav pad 0 0.5 reverb 65
 rm -f *.midi melody.wav harm.wav pre.wav
-

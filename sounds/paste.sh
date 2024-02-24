@@ -16,6 +16,6 @@ sox -D -n -r 48000 -c 2 -b 32 02-2.wav \
 sox -D 02-1.wav 02-2.wav -m 02.wav
 
 sox -D 01.wav 02.wav 03.wav
-sox 03.wav 04.wav REVERB 50 100 100 100 10
+sox -D 03.wav 04.wav pad 0 1 REVERB 65 100 100 100 10
 sox --norm=-0.5 04.wav -c 2 -b 16 -r 44100 paste.wav
 rm -f 0?.wav 0?-?.wav

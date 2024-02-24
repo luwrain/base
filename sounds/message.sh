@@ -1,6 +1,7 @@
 #!/bin/bash -e
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
+# Des major
 
 sox -D -n -r 48000 -c 2 -b 32 01-1.wav \
     synth 5 sin %4 sin %8 sin %16 sin %20 sin fmod %4 \

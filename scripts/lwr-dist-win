@@ -8,7 +8,7 @@ ARCH=x64
 . init.sh
 
 DEST_DIR="$1"
-[ -z "$DEST_DIR" ] && echo "$THIS:no destination directory" >&2 && exit 1
+[ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
 
 rm -rf "$DEST_DIR"
 mkdir -p $DEST_DIR
