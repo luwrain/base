@@ -31,6 +31,7 @@ cat <<EOF
 EOF
 p="$pp"
 shift
+shift
 done
 
 cat <<EOF
