@@ -6,11 +6,11 @@
 INS=12
 
 ./melody.sh $INS 120 \
-	    76 60 80 60 71 70 78 70 68 300 | csvmidi - > melody.midi
+	    76 50 80 50 71 300 | csvmidi - > melody.midi
 timidity -Ow melody.midi > /dev/null
 
 sox -D -n -r 44100 -b 16 -c 2 harm.wav \
-    synth 10 sin %-17 sin %-13 sin %-3 \
+    synth 10 sin %-17 sin %-13 sin %-10 \
     fade t 0.4 2 1.5 gain -30
 
 sox -D melody.wav harm.wav -m pre.wav

@@ -12,9 +12,9 @@ VOL=120
 timidity -Ow _melody.midi > /dev/null
 sox -D --norm=-0.1 _melody.wav _melody1.wav fade t 0 0.3 0.3
 
-./melody.sh 7 120 73 200 | csvmidi - > _melody.midi
+./melody.sh 16 120 61 200 | csvmidi - > _melody.midi
 timidity -Ow _melody.midi > /dev/null
-sox -D --norm=-0.1 _melody.wav _melody2.wav pad 0.161 3 \
+sox -D --norm=-5 _melody.wav _melody2.wav pad 0.161 3 \
     reverb 65 \
     fade t 0 0.5 0.5
 
