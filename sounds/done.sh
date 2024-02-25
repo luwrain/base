@@ -1,6 +1,7 @@
 #!/bin/bash -e
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
+# FIXME: must be E major
 # Des major
 
 INS=13
@@ -9,7 +10,7 @@ INS=13
 timidity -Ow melody.midi > /dev/null
 
 sox -D -n -r 44100 -b 16 -c 2 harm.wav \
-    synth 10 sin %-19 sin %-16 sin %-7 \
+    synth 10 sin %-20 sin %-16 sin %-7 \
     fade t 0.4 2 1.5 gain -30
 
 sox -D melody.wav harm.wav -m pre.wav
