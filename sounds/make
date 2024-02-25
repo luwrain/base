@@ -6,6 +6,11 @@
 mv announce-popup.wav _announce-popup.wav
 sox -D _announce-popup.wav announce-popup.wav gain -22
 
+./main-menu.sh
+mv main-menu.wav _main-menu.wav
+sox -D _main-menu.wav main-menu.wav gain -17.5
+
+
 ./message.sh
 mv message.wav _message.wav
 sox -D _message.wav message.wav gain -22
