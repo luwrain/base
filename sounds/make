@@ -2,9 +2,9 @@
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-./message.sh
-mv message.wav _message.wav
-sox -D _message.wav message.wav gain -22
+./announce-popup.sh
+mv announce-popup.wav _announce-popup.wav
+sox -D _announce-popup.wav announce-popup.wav gain -22
 
 ./done.sh
 mv done.wav _done.wav

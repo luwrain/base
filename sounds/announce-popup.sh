@@ -20,5 +20,5 @@ sox -D -n -r 48000 -c 2 -b 32 02-1.wav \
 
 sox 01.wav 02-1.wav -m 03.wav
 sox 03.wav 04.wav REVERB 75 100 50 100 100 5
-sox --norm=-0.5 04.wav -c 2 -b 16 -r 44100 message.wav
+sox --norm=-0.5 04.wav -c 2 -b 16 -r 44100 announce-popup.wav
 rm -f 0?.wav 0?-?.wav
