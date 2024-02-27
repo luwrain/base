@@ -4,8 +4,8 @@
 # Ges major
 
 DRUM_VOL=-2
-DRUM_DELAY=0.0
-HARM_DELAY=0.12
+DRUM_DELAY=0.3
+HARM_DELAY=0.42
 HARM_VOL=-10
 BASS=10
 
@@ -62,15 +62,21 @@ sox -D _harm1.wav _harm.wav reverb 100 100 100 100 20 5
 timidity -Ow _note1-1.midi > /dev/null
 sox -D --norm=$NOTE1_VOL _note1-1.wav -r 48000 _note1.wav \
     gain -10 \
-        pad 0.65 3 \
+    pad 0.95 3 \
     reverb 100 50 100 100 0 10
 
 ./melody.sh $INST 120 97 $DUR | csvmidi - > _note2-1.midi
 timidity -Ow _note2-1.midi > /dev/null
 sox -D --norm=$NOTE2_VOL _note2-1.wav -r 48000 _note2.wav \
-        pad 1.4 3 \
+    pad 1.7 3 \
     reverb 100  50 100 100 0 10
 
-sox -D _drum.wav _harm.wav _note1.wav _note2.wav -m _startup.wav
-sox -D --norm=-0.1 _startup.wav -r 44100 startup.wav fade q 0 4 4
+sox -D -n -r 48000 -c 1 -b 16 _noise1.wav \
+    synth 1 br synth 0.4 sin fmod %-39-%-15 bass 30 \
+    fade t 0.32 0.52 0.2 \
+    gain -3
+sox -D _noise1.wav -c 2 _noise.wav
+
+sox -D _drum.wav _harm.wav _noise.wav _note1.wav _note2.wav -m _startup.wav
+sox -D --norm=-0.1 _startup.wav -r 44100 startup.wav fade q 0 4.3 4
 rm -f *.midi _*.wav
