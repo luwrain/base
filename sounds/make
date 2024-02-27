@@ -2,6 +2,11 @@
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
+./startup.sh
+mv startup.wav _startup.wav
+sox -D _startup.wav startup.wav gain -10
+
+
 ./announce-popup.sh
 mv announce-popup.wav _announce-popup.wav
 sox -D _announce-popup.wav announce-popup.wav gain -22
