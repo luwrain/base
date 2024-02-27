@@ -36,7 +36,10 @@ tar xf rhvoice-data.tar.xz
 cp -r rhvoice $ARCH/rhvoice
 rm -rf rhvoice*
 
+cp -r "$SRC_DIR/base/txt/linux/." "$ARCH"
+cp "$SRC_DIR/base/LICENSE" "$ARCH/LICENSE.en.txt"
+
 cat <<EOF > $ARCH/ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
-$ARCH release for GNU/Linux
+Release for GNU/Linux
 EOF
