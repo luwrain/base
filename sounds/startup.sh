@@ -14,8 +14,8 @@ NOTE=30
 INST=11
 DUR=300
 
-NOTE1_VOL=-10
-NOTE2_VOL=-15
+NOTE1_VOL=-20
+NOTE2_VOL=-25
 
 cat <<EOF | csvmidi > drum.midi
 0, 0, Header, 1, 2, 480
@@ -56,15 +56,14 @@ sox -D _harm1.wav _harm.wav reverb 100 100 100 100 20 5
 timidity -Ow _note1-1.midi > /dev/null
 sox -D --norm=$NOTE1_VOL _note1-1.wav -r 48000 _note1.wav \
     gain -10 \
-    reverb 75 \
-    pad 0.3 3
+        pad 0.65 3 \
+    reverb 100 50 100 100 0 10
 
 ./melody.sh $INST 120 97 $DUR | csvmidi - > _note2-1.midi
 timidity -Ow _note2-1.midi > /dev/null
 sox -D --norm=$NOTE2_VOL _note2-1.wav -r 48000 _note2.wav \
-    reverb 75 \
-    pad 1.2 3
-
+        pad 1.4 3 \
+    reverb 100  50 100 100 0 10
 
 sox -D _drum.wav _harm.wav _note1.wav _note2.wav -m _startup.wav
 sox -D --norm=-0.1 _startup.wav -r 44100 startup.wav fade q 0 3 3
