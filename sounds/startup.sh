@@ -50,7 +50,7 @@ EOF
 timidity -Ow drum.midi > /dev/null
 mv drum.wav _drum1.wav
 sox --norm=$DRUM_VOL _drum1.wav -r 48000 -c 1 _drum2.wav pad $DRUM_DELAY 5 bass $BASS
-sox _drum2.wav -c 2 _drum.wav reverb 85 50 100 100 50 5
+sox _drum2.wav -c 2 _drum.wav reverb 80 50 100 100 50 5
 
 sox -D -n -r 48000 -c 2 -b 16 _harm1.wav \
     synth 10 sin %1 sin %4 sin %9 \
@@ -80,8 +80,8 @@ LONG=110
 ./melody.sh 9 120 \
 	    75 $LONG 90 $LONG 101 $LONG 119 $LONG 85 $LONG 98 $LONG 93 $LONG 80 $LONG 101 $LONG 95 $LONG 120 $LONG 104 $LONG 87 $LONG 91 $LONG 89 $LONG | csvmidi - > _high1.midi
 timidity -Ow _high1.midi > /dev/null
-sox -D --norm=-25 _high1.wav -r 48000 _high.wav pad 0.5 \
-    REVERB 100 50 100 100 0 10 \
+sox -D --norm=-30 _high1.wav -r 48000 _high.wav pad 0.5 \
+    REVERB 100 100 100 100 50 10 \
 fade l 0 10 10
 
 sox -D _drum.wav _harm.wav _noise.wav _high.wav _note1.wav _note2.wav -m _startup.wav
