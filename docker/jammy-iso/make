@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+UBUNTU_ISO_IMAGE=/mnt/ub-22.04
+
+docker build -t lwr-iso .
+docker run --privileged --rm  -v "$UBUNTU_ISO_IMAGE:/iso" lwr-iso

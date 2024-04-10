@@ -6,10 +6,13 @@ RUN apt-get update && \
     apt-get install -q -y \
     openjdk-17-jdk openjfx ant maven \
     dpkg-dev debhelper make \
-    git sox timidity curl locales iputils-ping file && \
+    sox timidity midicsv \
+    git curl wget locales iputils-ping file && \
     rm -rf /var/lib/apt/lists/* && \
     sed -i '/ru_RU.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
+
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
 
 ENV LC_ALL ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8

@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+THIS="${0##*/}"
+UBUNTU_VERSION=22.04.3
+SQUASHFSSRC=/iso/casper/filesystem.squashfs
+LWRISO_ROOT=/wrk/tmpfs/image
+
+git clone https://github.com/luwrain/linux/
+mkdir tmpfs
+mount -t tmpfs -o size=20g .tmpfs /wrk/tmpfs
+echo Unpacking the ISO image
+unsquashfs -d tmpfs/image "$SQUASHFSSRC" > /dev/null
+cp -r /wrk/linux/ubuntu/$UBUNTU_VERSION/{dist,scripts/.} /wrk/tmpfs
+mount --bind /proc /wrk/tmpfs/image/proc
+cd /wrk/tmpfs
+export LWRISO_ROOT
+./image-prepare
