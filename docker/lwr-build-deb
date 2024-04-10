@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+git clone --recursive https://github.com/luwrain/parent/
+#. ./parent/base/scripts/config.sh
+VERSION=2.0.0.0
+mv parent "luwrain-$VERSION"
+tar -c "luwrain-$VERSION/" | gzip > "luwrain_$VERSION.orig.tar.gz"
+cd "luwrain-$VERSION"
+dpkg-buildpackage -uc -us
