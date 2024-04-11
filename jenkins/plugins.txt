@@ -1,2 +1,0 @@
-docker-workflow
-configuration-as-code
