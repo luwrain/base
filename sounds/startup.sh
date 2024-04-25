@@ -41,7 +41,7 @@ cat <<EOF | csvmidi > drum.midi
 4, 0, Start_track
 4, 0, Instrument_name_t, "MIDI instrument"
 4, 0, Program_c, 1, 55
-4, 0, Note_on_c, 1, 66, 40
+4, 0, Note_on_c, 1, 66, 25
 4, 300, Note_off_c, 1, 66, 0
 4, 300, End_track
 0, 0, End_of_file
@@ -72,7 +72,7 @@ sox -D --norm=$NOTE2_VOL _note2-1.wav -r 48000 _note2.wav \
     reverb 100  50 100 100 0 10
 
 sox -D -n -r 48000 -c 1 -b 16 _noise1.wav \
-    synth 1 br synth 0.4 sin fmod %-39-%-15 bass 30 \
+    synth 1 br synth 0.6 sin fmod %-39-%-15 bass 30 \
     fade t 0.32 0.52 0.2
 sox -D _noise1.wav -c 2 _noise.wav
 
@@ -82,7 +82,7 @@ LONG=110
 timidity -Ow _high1.midi > /dev/null
 sox -D --norm=-30 _high1.wav -r 48000 _high.wav pad 0.5 \
     REVERB 100 100 100 100 50 10 \
-fade l 0 10 10
+fade l 0 7 7
 
 sox -D _drum.wav _harm.wav _noise.wav _high.wav _note1.wav _note2.wav -m _startup.wav
 sox -D --norm=-0.1 _startup.wav -r 44100 startup.wav fade q 0 4.3 4
