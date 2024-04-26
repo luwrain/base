@@ -7,7 +7,7 @@ DRUM_VOL=-2
 DRUM_DELAY=0.3
 HARM_DELAY=0.42
 HARM_VOL=-10
-BASS=10
+BASS=7
 
 NOTE=30
 
@@ -41,7 +41,7 @@ cat <<EOF | csvmidi > drum.midi
 4, 0, Start_track
 4, 0, Instrument_name_t, "MIDI instrument"
 4, 0, Program_c, 1, 55
-4, 0, Note_on_c, 1, 66, 25
+4, 0, Note_on_c, 1, 66, 20
 4, 300, Note_off_c, 1, 66, 0
 4, 300, End_track
 0, 0, End_of_file

@@ -41,9 +41,15 @@ sox -D _cut.wav cut.wav gain  -20
 mv paste.wav _paste.wav
 sox -D _paste.wav paste.wav gain  -20
 
+# List and text navigation, As major
+
 ./list-item.sh
 mv list-item.wav _list-item.wav
 sox -D _list-item.wav list-item.wav gain  -12
+
+./empty-line.sh
+mv empty-line.wav .empty-line.wav
+sox -D .empty-line.wav empty-line.wav gain  -35
 
 ./list-item-important.sh
 mv list-item-important.wav _list-item-important.wav
@@ -51,9 +57,9 @@ sox -D _list-item-important.wav list-item-important.wav gain  -20
 
 ./bounds.sh
 mv bounds.wav _bounds.wav
-sox -D _bounds.wav bounds.wav gain -25
+sox -D _bounds.wav bounds.wav gain -10
 
-rm -f _*.wav
+rm -f _*.wav .*.wav
 
 
 # For compatibility
