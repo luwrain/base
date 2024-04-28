@@ -3,24 +3,19 @@
 # The LUWRAIN Project, GPL v.3
 # As major
 
-sox -D -n -b 32 -r 44100 -c 2 01.wav \
-    synth 1 sin %-6 sin %6 sin fmod %-6 \
-    fade l 0 0.5 0.5
+INS=46
+DUR=30
 
-sox -D -n -b 32 -r 44100 -c 2 02.wav \
-    synth 1 sin %-13 sin %-1 sin fmod %-13 \
-    fade l 0 0.5 0.5 pad 0.05
+./melody.sh $INS 120 75 $DUR 80 $DUR 84 $DUR | csvmidi - > melody.midi
+timidity -Ow melody.midi > /dev/null
+mv melody.wav .melody-src.wav
+sox -D .melody-src.wav -r 48000 -c 1 -b 16 .melody1.wav treble -5
+sox -D .melody1.wav -c 2 .melody.wav
 
-sox -D -n -b 32 -r 44100 -c 2 03.wav \
-    synth 1 sin %-9 sin %3 sin fmod %-9 \
-    fade l 0 0.5 0.5 pad 0.1
+sox -D -n -r 48000 -b 16 -c 2 .harm.wav \
+    synth 10 sin %-13 sin %-9 sin %-6 \
+    fade t 0.5 3 2 gain -25
 
-sox -D -n -b 32 -r 44100 -c 2 04.wav \
-    synth 1 pl %-18 pl %-6 pl %6 sin fmod %6 \
-    fade q 0 1 1 gain -25
-
-sox -D 01.wav 02.wav 03.wav 04.wav -m 05.wav
-sox -D 05.wav 06.wav pad 0 1
-sox 06.wav 07.wav reverb 75 50 50 50 10 3
-sox -D --norm=-0.5 07.wav list-item-important.wav
-rm -f 0?.wav
+sox -D .melody.wav .harm.wav -m .pre.wav
+sox -D --norm=-0.1 .pre.wav list-item-important.wav pad 0 0.5 reverb 65 fade t 0 3 3
+rm -f *.midi .*.wav

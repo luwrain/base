@@ -8,3 +8,4 @@ APPS='commander contacts mail news notepad telegram viewer vk'
 LANGS='en ru'
 EXTENSIONS='cmdtts emacspeak mssapi plmp3 rhvoice speechd voiceman'
 SRC_DEST_DIR=/tmp/luwrain-src
+JAVA_VERSION=17

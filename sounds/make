@@ -53,7 +53,7 @@ sox -D .empty-line.wav empty-line.wav gain  -30
 
 ./list-item-important.sh
 mv list-item-important.wav _list-item-important.wav
-sox -D _list-item-important.wav list-item-important.wav gain  -20
+sox -D _list-item-important.wav list-item-important.wav gain  -28
 
 ./bounds.sh
 mv bounds.wav _bounds.wav
