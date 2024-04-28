@@ -17,5 +17,5 @@ sox -D -n -r 48000 -b 16 -c 2 .harm.wav \
     fade t 0.5 3 2 gain -25
 
 sox -D .melody.wav .harm.wav -m .pre.wav
-sox -D --norm=-0.1 .pre.wav list-item-important.wav pad 0 0.5 reverb 65 fade t 0 3 3
+sox -D --norm=-0.1 .pre.wav list-item-important.wav pad 0 0.5 reverb 65 fade t 0 2 2
 rm -f *.midi .*.wav

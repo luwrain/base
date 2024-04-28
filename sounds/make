@@ -49,15 +49,21 @@ sox -D _list-item.wav list-item.wav gain  -12
 
 ./empty-line.sh
 mv empty-line.wav .empty-line.wav
-sox -D .empty-line.wav empty-line.wav gain  -30
+sox -D .empty-line.wav empty-line.wav gain  -22.5
 
 ./list-item-important.sh
-mv list-item-important.wav _list-item-important.wav
-sox -D _list-item-important.wav list-item-important.wav gain  -28
+mv list-item-important.wav .list-item-important.wav
+sox -D .list-item-important.wav list-item-important.wav gain  -25
 
 ./bounds.sh
 mv bounds.wav _bounds.wav
 sox -D _bounds.wav bounds.wav gain -10
+
+# misc
+
+./commander-location.sh
+mv commander-location.wav .commander-location.wav
+sox -D .commander-location.wav commander-location.wav gain -22.5
 
 rm -f _*.wav .*.wav
 
@@ -68,6 +74,3 @@ cp list-item-important.wav desktop-item.wav
 cp list-item-important.wav main-menu-item.wav
 cp bounds.wav list-bounds.wav
 cp bounds.wav text-bounds.wav
-
-
-
