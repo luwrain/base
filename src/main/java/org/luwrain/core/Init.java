@@ -24,7 +24,6 @@ import java.nio.charset.Charset;
 
 public final class Init
 {
-    static public final String LOG_COMPONENT = "init";
     static private final File
 	DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt"),
 	STANDALONE = new File("standalone");
@@ -57,7 +56,6 @@ public final class Init
 	} else
 	{
 	    userDataDir = createTempDataDir();
-	    Log.info(LOG_COMPONENT, "standalone mode, temporary user data dir is " + userDataDir.getAbsolutePath());
 	}
 	final ClassLoader classLoader = new URLClassLoader(urls.toArray(new java.net.URL[urls.size()]), ClassLoader.getSystemClassLoader());
 	Thread.currentThread().setContextClassLoader(classLoader);
@@ -153,14 +151,14 @@ public final class Init
 	    tmpDir.delete();
 	    if (!tmpDir.mkdir())
 	    {
-		Log.fatal(LOG_COMPONENT, "unable to create temporary directory " + tmpDir.getAbsolutePath());
+		System.err.println("FATAL: Unable to create temporary directory " + tmpDir.getAbsolutePath());
 		System.exit(1);
 	    }
 	    return tmpDir;
 	}
 	catch(IOException e)
 	{
-	    Log.fatal(LOG_COMPONENT, "unable to create the temporary user data directory:" + e.getClass().getName() + ":" + e.getMessage());
+	    System.err.println("FATAL:  Unable to create the temporary user data directory:" + e.getClass().getName() + ":" + e.getMessage());
 	    System.exit(1);
 	    return null;
 	}
