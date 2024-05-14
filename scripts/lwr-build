@@ -4,6 +4,7 @@
 
 . init.sh
 
+lwr-ant-gen-all
 lwr-build-mvn
 
 for i in $APPS; do
