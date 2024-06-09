@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
-# Des major
+# Des major (needs to be checked)
 
 INS=46
 TEMPO=35

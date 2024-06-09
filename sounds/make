@@ -12,7 +12,17 @@ sox -D _startup.wav startup.wav gain -10
 
 ./area-layout.sh
 mv area-layout.wav .area-layout.wav
-sox -D .area-layout.wav area-layout.wav gain -22
+sox -D .area-layout.wav area-layout.wav gain -20
+
+./area-layout-double.sh
+mv area-layout-double.wav .area-layout-double.wav
+sox -D .area-layout-double.wav area-layout-double.wav gain -25
+
+./area-layout-triple.sh
+mv area-layout-triple.wav .area-layout-triple.wav
+sox -D .area-layout-triple.wav area-layout-triple.wav gain -25
+
+
 
 
 ./popup.sh
@@ -37,9 +47,9 @@ sox -D _done.wav done.wav gain -22
 mv inaccessible.wav _inaccessible.wav
 sox -D _inaccessible.wav inaccessible.wav gain -25
 
-./copy.sh
-mv copy.wav _copy.wav
-sox -D _copy.wav copy.wav gain  -20
+./copied.sh
+mv copied.wav .copied.wav
+sox -D .copied.wav copied.wav gain  -20
 
 ./cut.sh
 mv cut.wav _cut.wav
@@ -77,7 +87,6 @@ rm -f _*.wav .*.wav
 
 
 # For compatibility
-cp copy.wav copied.wav
 cp list-item-important.wav desktop-item.wav
 cp list-item-important.wav main-menu-item.wav
 cp bounds.wav list-bounds.wav
