@@ -16,11 +16,11 @@ sox -D .area-layout.wav area-layout.wav gain -20
 
 ./area-layout-double.sh
 mv area-layout-double.wav .area-layout-double.wav
-sox -D .area-layout-double.wav area-layout-double.wav gain -25
+sox -D .area-layout-double.wav area-layout-double.wav gain -20
 
 ./area-layout-triple.sh
 mv area-layout-triple.wav .area-layout-triple.wav
-sox -D .area-layout-triple.wav area-layout-triple.wav gain -25
+sox -D .area-layout-triple.wav area-layout-triple.wav gain -20
 
 
 
