@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+. init.sh
+
+export GROUP=org.luwrain
+export MAVEN_REPO_DIR=/x/maven
+
+egrep '<module>.*</module>' "$SRC_DIR/pom.xml" | sed -e s/'<[^>]\+>'//g | tr -d ' ' | xargs -n 1 -P 8 lwr-depl-maven-component
+
+mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file \
+    -Dfile=$SRC_DIR/base/parent.pom \
+    -DgroupId=$GROUP -DartifactId=luwrain-parent -Dversion=$VERSION \
+    -Dpackaging=pom -DcreateChecksum=true -DgeneratePom=false \
+    -DlocalRepositoryPath="$MAVEN_REPO_DIR" -B -q

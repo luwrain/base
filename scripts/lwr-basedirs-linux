@@ -5,7 +5,7 @@
 LINUX_APPS='commander contacts mail news notepad telegram viewer vk'
 LINUX_EXTENSIONS='cmdtts emacspeak plmp3 rhvoice speechd voiceman'
 LINUX_SCRIPTS='linux'
-LINUX_PROPERTIES='linux luwrain player reader'
+LINUX_PROPERTIES='linux luwrain reader'
 
 . init.sh
 
