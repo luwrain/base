@@ -2,44 +2,48 @@
 # Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-ARCH=x64
-
 . init.sh
 
 DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
+DIST_DIR="$DEST_DIR/luwrain-linux-$VERSION"
 
-rm -rf "$DEST_DIR"
-mkdir -p "$DEST_DIR"
-cd "$DEST_DIR"
+rm -rf "$DIST_DIR"
+mkdir -p "$DIST_DIR"
+cd "$DIST_DIR"
 
-lwr-basedirs-linux "$DEST_DIR/$ARCH/"
-mv $ARCH/jar "$ARCH/lib"
+lwr-basedirs-linux "$DIST_DIR"
+mv jar lib
 
-mkdir "$ARCH"/bin
-cat <<EOF > "$ARCH/bin/luwrain"
+mkdir bin
+cat <<EOF > bin/luwrain
 #!/bin/bash -e
 # Copyright $(date +%Y) Michael Pozhidaev <msp@luwrain.org>
 
 THIS="\${0##*/}"
 
 cd "\$(dirname "\$0")"/..
-
 if [ -n "\$JAVA_HOME" ] && [ -x "\$JAVA_HOME/bin/java" ]; then
-exec "\$JAVA_HOME/bin/java" -cp "lib/*" org.luwrain.core.Init "\$@"
+    exec "\$JAVA_HOME/bin/java" -jar lib/luwrain-base-*.jar "\$@"
+else
+    exec java -jar lib/luwrain-base-*.jar "\$@"
 fi
 EOF
-chmod 755 "$ARCH/bin/luwrain"
+chmod 755 bin/luwrain
 
 wget -q https://download.luwrain.org/compilation/rhvoice-data.tar.xz
 tar xf rhvoice-data.tar.xz
-cp -r rhvoice $ARCH/rhvoice
-rm -rf rhvoice*
+rm -rf rhvoice-data.tar.xz
 
-cp -r "$SRC_DIR/base/txt/linux/." "$ARCH"
-cp "$SRC_DIR/base/LICENSE" "$ARCH/LICENSE.en.txt"
+cp -r "$SRC_DIR/base/txt/linux/." .
+cp "$SRC_DIR/base/LICENSE" LICENSE
 
-cat <<EOF > $ARCH/ReleaseInfo.txt
+cat <<EOF > ReleaseInfo.txt
 LUWRAIN $VERSION ($(date -I))
 Release for GNU/Linux
 EOF
+
+cd "$DEST_DIR"
+tar -c "luwrain-linux-$VERSION" | xz > "luwrain-linux-$VERSION.tar.xz"
+sha1sum "luwrain-linux-$VERSION.tar.xz" >> sha1.txt
+rm -rf "luwrain-linux-$VERSION"
