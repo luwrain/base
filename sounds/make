@@ -97,3 +97,4 @@ cp list-item-important.wav desktop-item.wav
 cp list-item-important.wav main-menu-item.wav
 cp bounds.wav list-bounds.wav
 cp bounds.wav text-bounds.wav
+chmod 644 *.wav
