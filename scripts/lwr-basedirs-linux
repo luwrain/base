@@ -2,7 +2,6 @@
 # Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-LINUX_APPS='commander contacts mail news notepad telegram viewer vk'
 LINUX_EXTENSIONS='cmdtts emacspeak plmp3 rhvoice speechd voiceman'
 LINUX_SCRIPTS='linux'
 LINUX_PROPERTIES='linux luwrain reader'
@@ -11,17 +10,9 @@ LINUX_PROPERTIES='linux luwrain reader'
 
 DEST_DIR="$1"
 [ -z "$DEST_DIR" ] && echo "ERROR: $THIS: No destination directory" >&2 && exit 1
-mkdir -p "$DEST_DIR"
-
-pushd base/sounds > /dev/null
-./make
-mkdir "$DEST_DIR/generated-sounds"
-cp *.wav "$DEST_DIR/generated-sounds"
-popd > /dev/null
-
+mkdir -p "$DEST_DIR/data"
 cp -r release/jar "$DEST_DIR"
 cp release/lib/*.jar "$DEST_DIR/jar"
-mkdir -p "$DEST_DIR/data"
 cp -r extensions/js "$DEST_DIR/data/js"
 cd "$DEST_DIR"
 
@@ -31,14 +22,11 @@ for i in sounds hunspell; do
     tar xf $i.tar.xz
     rm -f $i.tar.xz
 done
+rm -rf sounds/schemes
 popd > /dev/null
-cp generated-sounds/*.wav data/sounds/schemes/pragmatic/
-rm -rf generated-sounds
 
 #Jars
-for i in $LINUX_APPS; do
-    cp "$SRC_DIR"/app-$i/jar/luwrain-app-$i.jar jar
-done
+find "$SRC_DIR/." -name 'luwrain-app-*.jar' -exec cp '{}' jar \;
 for i in $LANGS; do
     cp "$SRC_DIR"/i18n/$i/jar/luwrain-lang-$i.jar jar
 done

@@ -2,7 +2,13 @@
 # Copyright 2024 Michael Pozhidaev <msp@luwrain.org>
 # The LUWRAIN Project, GPL v.3
 
-rm -f *.wav
+if [ "$1" != --no-old ]; then
+    rm -f *.wav
+    wget -q https://download.luwrain.org/compilation/sounds.tar.xz
+    tar xf sounds.tar.xz
+    mv sounds/schemes/pragmatic/*.wav .
+    rm -rf sounds sounds.tar.xz
+fi
 
 ./startup.sh
 mv startup.wav _startup.wav
