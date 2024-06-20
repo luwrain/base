@@ -18,15 +18,15 @@ sox -D _startup.wav startup.wav gain -10
 
 ./area-layout.sh
 mv area-layout.wav .area-layout.wav
-sox -D .area-layout.wav area-layout.wav gain -20
+sox -D .area-layout.wav area-layout.wav gain -15
 
 ./area-layout-double.sh
 mv area-layout-double.wav .area-layout-double.wav
-sox -D .area-layout-double.wav area-layout-double.wav gain -20
+sox -D .area-layout-double.wav area-layout-double.wav gain -15
 
 ./area-layout-triple.sh
 mv area-layout-triple.wav .area-layout-triple.wav
-sox -D .area-layout-triple.wav area-layout-triple.wav gain -20
+sox -D .area-layout-triple.wav area-layout-triple.wav gain -15
 
 
 
@@ -95,6 +95,9 @@ rm -f _*.wav .*.wav
 # For compatibility
 cp list-item-important.wav desktop-item.wav
 cp list-item-important.wav main-menu-item.wav
-cp bounds.wav list-bounds.wav
-cp bounds.wav text-bounds.wav
+#cp bounds.wav list-bounds.wav
+#cp bounds.wav text-bounds.wav
+for i in items-above items-below lines-above lines-below; do
+    cp bounds.wav no-$i.wav
+done
 chmod 644 *.wav
