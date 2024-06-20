@@ -14,5 +14,5 @@ popd > /dev/null
 pushd "$DEST_DIR" > /dev/null
 mv win-installer-x64/Output/luwrain.exe "luwrain-windows-x64-$VERSION.exe"
 rm -rf win-installer-x64
+sha1sum "luwrain-windows-x64-$VERSION.exe" >> sha1.txt
 popd > /dev/null
-

@@ -34,5 +34,6 @@ cd ..
 lwr-win-installer luwrain 64 $DEST_DIR/$ARCH $DEST_DIR/win-installer-$ARCH
 mv "$ARCH" luwrain-windows-portable-"$ARCH"-"$VERSION"
 zip -r luwrain-windows-portable-"$ARCH"-"$VERSION".zip luwrain-windows-portable-"$ARCH"-"$VERSION" > /dev/null
+sha1sum luwrain-windows-portable-"$ARCH"-"$VERSION".zip >> sha1.txt
 rm -rf luwrain-windows-portable-"$ARCH"-"$VERSION"
 
