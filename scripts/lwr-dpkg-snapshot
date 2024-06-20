@@ -4,7 +4,7 @@
 
 . init.sh
 
-cat <<EOF >> debian/changelog
+cat <<EOF > debian/changelog
 luwrain ($(date +%Y%m%d.%H%M)-lwr1) unstable; urgency=medium
 
   * The package for Debian
