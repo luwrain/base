@@ -2,8 +2,10 @@
 
 . init.sh
 
+[ -z "$1" ] && echo "ERROR: $THIS: No destination directory for maven2 repo" >&2 && exit 1
+
 export GROUP=org.luwrain
-export MAVEN_REPO_DIR=/x/maven
+export MAVEN_REPO_DIR="$1"
 
 egrep '<module>.*</module>' "$SRC_DIR/pom.xml" | sed -e s/'<[^>]\+>'//g | tr -d ' ' | xargs -n 1 -P 8 lwr-depl-maven-component
 
