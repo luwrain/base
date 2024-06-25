@@ -39,6 +39,11 @@ sox -D .popup.wav popup.wav gain -22
 mv main-menu.wav _main-menu.wav
 sox -D _main-menu.wav main-menu.wav gain -17.5
 
+./main-menu-item.sh
+mv main-menu-item.wav .main-menu-item.wav
+sox -D .main-menu-item.wav main-menu-item.wav gain -25
+
+
 
 ./message.sh
 mv message.wav _message.wav
@@ -75,9 +80,14 @@ sox -D _list-item.wav list-item.wav gain  -12
 mv empty-line.wav .empty-line.wav
 sox -D .empty-line.wav empty-line.wav gain  -22.5
 
-./list-item-important.sh
-mv list-item-important.wav .list-item-important.wav
-sox -D .list-item-important.wav list-item-important.wav gain  -25
+./marked-list-item.sh
+mv marked-list-item.wav .marked-list-item.wav
+sox -D .marked-list-item.wav marked-list-item.wav gain  -25
+
+./desktop-item.sh
+mv desktop-item.wav .desktop-item.wav
+sox -D .desktop-item.wav desktop-item.wav gain  -20
+
 
 ./bounds.sh
 mv bounds.wav _bounds.wav
@@ -93,9 +103,6 @@ rm -f _*.wav .*.wav
 
 
 # For compatibility
-cp list-item-important.wav desktop-item.wav
-cp list-item-important.wav main-menu-item.wav
-#cp bounds.wav list-bounds.wav
 #cp bounds.wav text-bounds.wav
 for i in items-above items-below lines-above lines-below; do
     cp bounds.wav no-$i.wav
