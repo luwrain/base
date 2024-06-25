@@ -41,7 +41,7 @@ sox -D _main-menu.wav main-menu.wav gain -17.5
 
 ./main-menu-item.sh
 mv main-menu-item.wav .main-menu-item.wav
-sox -D .main-menu-item.wav main-menu-item.wav gain -25
+sox -D .main-menu-item.wav main-menu-item.wav gain -30
 
 
 
