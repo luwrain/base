@@ -10,7 +10,8 @@ lwr-build-mvn
 for i in $APPS; do
     pushd app-$i > /dev/null
     if [ -r build.gradle ]; then
-	gradle build
+	gradle wrapper
+	./gradlew build
     else
 	ant -emacs -quiet
     fi
