@@ -16,9 +16,11 @@ cat <<EOF
 EOF
 
 for i in $APPS; do
+    if ! [ -r app-$i/build.gradle ]; then
     cat <<EOF
     <fileset dir="../../app-$i/jar"><include name="**/*.jar"/></fileset>
 EOF
+    fi
 done
 
 cat <<EOF
