@@ -10,7 +10,7 @@ lwr-build-mvn
 for i in $APPS; do
     pushd app-$i > /dev/null
     if [ -r build.gradle ]; then
-	gradle wrapper
+	lwr-install-gradle-wrapper "$(pwd)"
 	./gradlew build
     else
 	ant -emacs -quiet
