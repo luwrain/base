@@ -1,38 +1,21 @@
+// The LUWRAIN Project
+// Michael Pozhidaev <msp@luwrain.org>
 
 plugins {
-    id 'java'
-  id 'io.freefair.lombok' version '8.6'
-      id 'org.openjfx.javafxplugin' version '0.0.13'
+  id "java-library"
+  id "io.freefair.lombok" version "8.6"
+  id "org.openjfx.javafxplugin" version "0.0.13"
 }
-
 
 dependencies {
   implementation libraries.base
-    implementation libraries.apacheBase
-  implementation libraries.graalvm
-  implementation (project(':luwrain-base'))
-    implementation (project(':luwrain'))
-//    implementation 'org.languagetool:languagetool-core:5.5'
-//        implementation 'org.languagetool:language-ru:5.5'
-//    	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-//		implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
-
-    implementation 'com.github.kklisura.cdt:cdt-java-client:4.0.0'
-
-
-
-//	implementation 'org.openjfx:javafx-base:17'
-//		implementation 'org.openjfx:javafx-graphics:17'
-//				implementation 'org.openjfx:javafx-media:17'
-//	implementation 'org.openjfx:javafx-controls:17'
-//		implementation 'org.openjfx:javafx-web:17'
-	
-		implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+  annotationProcessor libraries.autoService
+  implementation project(':luwrain-base')
+  implementation project(':luwrain')
   testImplementation libraries.junit
 }
 
-
 javafx { 
-	version = "17"
-	modules = [ 'javafx.controls', 'javafx.web' ]
+  version = "17"
+  modules = [ 'javafx.controls', 'javafx.web' ]
 }

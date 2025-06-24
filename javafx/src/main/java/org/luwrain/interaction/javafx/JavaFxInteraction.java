@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
    Copyright 2015-2016 Roman Volovodov <gr.rPman@gmail.com>
 
    This file is part of LUWRAIN.
@@ -20,6 +20,8 @@ package org.luwrain.interaction.javafx;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 
+import com.google.auto.service.*;
+
 import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
@@ -30,6 +32,7 @@ import org.luwrain.core.*;
 import org.luwrain.util.*;
 import org.luwrain.graphical.*;
 
+@AutoService(Interaction.class)
 public final class JavaFxInteraction implements Interaction
 {
     static final String LOG_COMPONENT = "fx";
