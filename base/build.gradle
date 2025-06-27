@@ -13,3 +13,11 @@ dependencies {
 implementation libraries.base
 testImplementation libraries.junit
 }
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.luwrain.core.Init'
+        )
+    }
+}
