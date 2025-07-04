@@ -40,7 +40,7 @@ final class Albums extends ArrayList<Album> implements EditableListArea.Model<Al
     {
 	NullCheck.notNull(luwrain, "luwrain");
 	this.luwrain = luwrain;
-	this.sett = Settings.create(luwrain.getRegistry());
+	this.sett = null;//FIXME:newreg Settings.create(luwrain.getRegistry());
 	load();
     }
 

@@ -34,7 +34,7 @@ final class SettingsForm extends FormArea implements SectionArea
 	this.controlPanel = controlPanel;
 	this.luwrain = controlPanel.getCoreInterface();;
 	this.strings = strings;
-	this.sett = Settings.create(luwrain.getRegistry());
+	this.sett = null;//FIXME:newreg Settings.create(luwrain.getRegistry());
 	fillForm();
     }
 

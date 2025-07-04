@@ -68,7 +68,7 @@ public final class App extends AppBase<Strings>
 
     @Override protected AreaLayout onAppInit() throws IOException
     {
-	this.sett = Settings.create(getLuwrain().getRegistry());
+	this.sett = null;//FIXME:newreg Settings.create(getLuwrain().getRegistry());
 	this.conv = new Conversations(this);
 	this.hooks = new Hooks(this);
 	this.mainLayout = new MainLayout(this);
