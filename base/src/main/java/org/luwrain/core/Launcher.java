@@ -18,7 +18,7 @@ package org.luwrain.core;
 
 import java.io.*;
 
-public interface LaunchFactory
+public interface Launcher
 {
-    Runnable newLaunch(boolean standalone, String[] args, File dataDir, File userDataDir, File userHomeDir);
+    void  launch(String[] args);
 }

@@ -25,14 +25,16 @@ import java.nio.charset.Charset;
 public final class Init
 {
     static private final File
-	DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt"),
-	STANDALONE = new File("standalone");
+	DEBUG_FILE = new File(new File(System.getProperty("user.home")), "luwrain-debug.txt");
+    //	STANDALONE = new File("standalone");
 
+    /*
     static private final String
 	ENV_APP_DATA = "APPDATA",
 	ENV_USER_PROFILE = "USERPROFILE",
 	DEFAULT_USER_DATA_DIR_WINDOWS = "Luwrain",
 	DEFAULT_USER_DATA_DIR_LINUX = ".luwrain";
+    */
 
     static public void main(String[] args) throws IOException
     {
@@ -55,6 +57,7 @@ public final class Init
 	final File userHomeDir = new File(System.getProperty("user.home"));
 	final List<URL> urls = new ArrayList<>();
 	addJarsToClassPath(new File(appDir, "lib"), urls);
+	/*
 	final File userDataDir;
 	final boolean standalone = STANDALONE.exists() && STANDALONE.isFile();
 	if (!standalone)
@@ -66,14 +69,14 @@ public final class Init
 	{
 	    userDataDir = createTempDataDir();
 	}
+	*/
 	final ClassLoader classLoader = new URLClassLoader(urls.toArray(new java.net.URL[urls.size()]), ClassLoader.getSystemClassLoader());
 	Thread.currentThread().setContextClassLoader(classLoader);
-	//setUtf8();
 	final File dataDir = new File("data");
-	final LaunchFactory factory;
+	final Launcher launcher;
 	try {
-	    final Object obj = Class.forName("org.luwrain.core.LaunchFactoryImpl", true, classLoader).getDeclaredConstructor().newInstance();
-	    factory = (LaunchFactory)obj;
+	    final Object obj = Class.forName("org.luwrain.core.LauncherImpl", true, classLoader).getDeclaredConstructor().newInstance();
+	    launcher = (Launcher)obj;
 	}
 	catch(Throwable e)
 	{
@@ -81,7 +84,7 @@ public final class Init
 	    System.exit(1);
 	    return;
 	}
-	factory.newLaunch(standalone, args, dataDir, userDataDir, userHomeDir).run();
+	launcher.launch(args);
     }
 
     static private void addExtensionsJarsToClassPath(File extensionsDir, List<URL> urls)
@@ -121,20 +124,7 @@ public final class Init
 	}
     }
 
-    static private void setUtf8()
-    {
-	System.setProperty("file.encoding","UTF-8");
-	Field charset;
-	try {
-	    charset=Charset.class.getDeclaredField("defaultCharset");
-	    charset.setAccessible(true);
-	    charset.set(null,null);
-	} catch(Exception e)
-	{
-	    e.printStackTrace();
-	}
-    }
-
+    /*
     static public File detectUserDataDir()
     {
 	//Windows: in Application Data
@@ -172,4 +162,5 @@ public final class Init
 	    return null;
 	}
     }
+    */
 }
