@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -42,10 +42,19 @@ public final class Init
 	    System.setOut(log);
 	    System.setErr(log);
 	}
+	File appDir = null;
+	//Normally in launch scripts --app-dir goes before any user args, so it should not be confused
+	for(int i = 0;i < args.length - 1;i++)
+	    if (args[i].equals("--app-dir"))
+	    {
+		appDir = new File(args[i + 1]);
+		break;
+	    }
+	if (appDir == null)
+	    appDir = new File(".");
 	final File userHomeDir = new File(System.getProperty("user.home"));
 	final List<URL> urls = new ArrayList<>();
-	addJarsToClassPath(new File("jar"), urls);
-	addJarsToClassPath(new File("lib"), urls);
+	addJarsToClassPath(new File(appDir, "lib"), urls);
 	final File userDataDir;
 	final boolean standalone = STANDALONE.exists() && STANDALONE.isFile();
 	if (!standalone)
