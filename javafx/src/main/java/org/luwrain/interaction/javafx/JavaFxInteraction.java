@@ -45,7 +45,7 @@ public final class JavaFxInteraction implements Interaction
     private String fontName = "Monospaced";
     private boolean graphicalMode = false;
 
-    @Override public boolean init(final InteractionParams params,final OperatingSystem os)
+    @Override public boolean init(final Interaction.Params params,final OperatingSystem os)
     {
 	NullCheck.notNull(params, "params");
 	if (params.fontName != null && !params.fontName.trim().isEmpty())
@@ -67,10 +67,10 @@ public final class JavaFxInteraction implements Interaction
 		int wndHeight = params.wndHeight;
 		app.setInteractionFont(createFont(currentFontSize),createFont2(currentFontSize));
 		app.setColors(
-			      ColorUtils.InteractionParamColorToFx(params.fontColor),
-			      ColorUtils.InteractionParamColorToFx(params.font2Color),
-			      ColorUtils.InteractionParamColorToFx(params.bkgColor),
-			      ColorUtils.InteractionParamColorToFx(params.splitterColor));
+			      ColorUtils.InteractionColorToFx(params.fontColor),
+			      ColorUtils.InteractionColorToFx(params.font2Color),
+			      ColorUtils.InteractionColorToFx(params.bkgColor),
+			      ColorUtils.InteractionColorToFx(params.splitterColor));
 		app.setMargin(params.marginLeft,params.marginTop,params.marginRight,params.marginBottom);
 		this.keyboard = os.getCustomKeyboardHandler("javafx");
 		app.getStage().addEventHandler(KeyEvent.KEY_PRESSED, (event)->{

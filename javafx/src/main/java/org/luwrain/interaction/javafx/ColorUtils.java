@@ -18,15 +18,15 @@
 package org.luwrain.interaction.javafx;
 
 import javafx.scene.paint.Color;
-import org.luwrain.core.InteractionParamColor;
+import org.luwrain.core.Interaction;
 
 final class ColorUtils
 {
-    static Color InteractionParamColorToFx(InteractionParamColor ipc)
+    static Color InteractionColorToFx(Interaction.Color ipc)
     {
-	if(ipc.getPredefined()==null)
-	    return new Color(ipc.getRed()/256,ipc.getGreen()/256,ipc.getBlue()/256,1);
-	switch(ipc.getPredefined())
+	if(ipc.predefined == null)
+	    return new Color(ipc.red / 256, ipc.green / 256, ipc.blue / 256,1);
+	switch(ipc.predefined)
 	{
 	case BLACK:		return Color.BLACK;
 	case BLUE:		return Color.BLUE;
@@ -42,7 +42,7 @@ final class ColorUtils
 	case WHITE:		return Color.WHITE;
 	case YELLOW:	return Color.YELLOW;	
 	    // WARN: not predefined colors have opacity = 1
-	default: 		return new Color(ipc.getRed()/256,ipc.getGreen()/256,ipc.getBlue()/256,1);
+	default: 		return new Color(ipc.red / 256, ipc.green / 256, ipc.blue / 256,1);
 	}
     }
 }
