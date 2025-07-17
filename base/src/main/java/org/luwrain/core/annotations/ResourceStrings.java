@@ -22,7 +22,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.SOURCE)
 public @interface ResourceStrings
 {
-    String name();
 String[] langs();
-    String resource();
 }

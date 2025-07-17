@@ -23,5 +23,6 @@ import java.lang.annotation.*;
 public @interface AppNoArgs
 {
     String name();
-String[] i18n();
+    String shortcut() default "";
+String[] title();
 }

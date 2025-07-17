@@ -71,7 +71,7 @@ public class AnnotationProcessor extends AbstractProcessor
     {
 	final var a = el.getAnnotation(org.luwrain.core.annotations.AppNoArgs.class);
 	if (a == null)
-	    throw new IllegalStateException("" + el.toString() + " is not annotated with org.luwrain.core.annotations.AppNoArgs");
+	    throw new IllegalStateException(el.toString() + " is not annotated with org.luwrain.core.annotations.AppNoArgs");
 	final var app = (org.luwrain.core.annotations.AppNoArgs)a;
 	final String
 	cl = el.toString(),
@@ -80,8 +80,8 @@ public class AnnotationProcessor extends AbstractProcessor
 	pkg = cl.substring(0, cl.lastIndexOf("."));
 
 	final var titles = new StringBuilder();
-	if (app.i18n() != null)
-	    for(var i: app.i18n())
+	if (app.title() != null)
+	    for(var i: app.title())
 	{
 	    final var m = RE_I18N.matcher(i);
 	    if (!m.find())
@@ -121,18 +121,14 @@ public class AnnotationProcessor extends AbstractProcessor
 	simpleCl = cl.substring(cl.lastIndexOf(".") + 1),
 		newCl = simpleCl + "Extension",
 	pkg = cl.substring(0, cl.lastIndexOf("."));
-
-	System.out.println(cl);
-
 	final var b = new StringBuilder();
 	for(var l: str.langs())
 	{
-	    b.append("i18n.addStrings(\"")
-	    .append(l)
-	    .append("\", \"")
-	    .append(str.name())
-	    .append("\", new ResourceStringsObj(luwrain, getClass().getClassLoader(), getClass(), \"")
-	    .append(str.resource())
+	    final String resource = simpleCl + "-" + l + ".properties";
+		    b.append("i18n.addStrings(\"").append(l).append("\", ")
+		    .append("\"").append(cl).append("\", ")
+	    .append("new ResourceStringsObj(getClass().getClassLoader(), getClass(), \"")
+	    .append(resource)
 	    .append("\").create(\"")
 	    .append(l)
 	    .append("\", ")
@@ -140,7 +136,6 @@ public class AnnotationProcessor extends AbstractProcessor
 	    .append(".class));")
 	    .append(LS);
 	}
-
 	return "// Generated automatically by " + this.getClass().getName() + LS +
 	"package " + pkg + ";" + LS  +
 	"import org.luwrain.core.*;" + LS +
@@ -157,7 +152,7 @@ public class AnnotationProcessor extends AbstractProcessor
 	"}" + LS +
 	"catch(Exception ex)" + LS +
 	"{" + LS +
-	"log.error(\"Unable to load the resource file '" + str.resource() + "' for the strings object '" + str.name() + "'\", ex);" + LS +
+	"log.error(\"Unable to load a string resource file for the strings object " + cl + "\", ex);" + LS +
 	"}" + LS +
 	"}" + LS +
 		"}" + LS;
