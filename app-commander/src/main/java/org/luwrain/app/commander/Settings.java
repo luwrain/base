@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -25,10 +25,4 @@ static final String PATH = "/org/luwrain/app/commander";
     boolean getShowHidden(boolean defValue);
     void setShowHidden(boolean value);
     String getZipFilesEncoding(String defValue);
-
-    static Settings create(Luwrain luwrain)
-    {
-	NullCheck.notNull(luwrain, "luwrain");
-	return RegistryProxy.create(luwrain.getRegistry(), PATH, Settings.class);	
-    }
 }

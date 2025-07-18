@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -40,7 +40,7 @@ final class App extends AppBase<Strings>
 
     App(String startFrom)
     {
-	super(Strings.NAME, Strings.class, "luwrain.commander");
+	super(Strings.class, "luwrain.commander");
 	if (startFrom != null && !startFrom.isEmpty())
 	    this.startFrom = startFrom; else
 	    this.startFrom = null;
@@ -49,7 +49,7 @@ final class App extends AppBase<Strings>
 
     @Override public AreaLayout onAppInit()
     {
-	this.sett = Settings.create(getLuwrain());
+	this.sett = null;
 	this.conv = new Conv(this);
 	this.hooks = new Hooks(this);
 	this.mainLayout = new MainLayout(this);

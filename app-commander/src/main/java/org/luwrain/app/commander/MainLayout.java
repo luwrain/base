@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -92,7 +92,7 @@ final class MainLayout extends LayoutBase
 	    rightPanel.openInitial(app.startFrom);
 	} else
 	{
-	    final String location = app.getLuwrain().getProperty("luwrain.dir.userhome");
+	    final String location = app.getLuwrain().getDir("~");
 	    	    leftPanel.openInitial(location);
 	    rightPanel.openInitial(location);
 	}

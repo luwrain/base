@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -45,7 +45,7 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
     App() { this(null); }
     App(String[] args)
     {
-	super(Strings.NAME, Strings.class, "luwrain.player");
+	super(Strings.class, "luwrain.player");
 	this.args = args != null?args.clone():new String[0];
     }
 
@@ -98,7 +98,6 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
 
     @Override public MonoApp.Result onMonoAppSecondInstance(Application app)
     {
-	NullCheck.notNull(app, "app");
 	return MonoApp.Result.BRING_FOREGROUND;
     }
 

@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -22,17 +22,23 @@ import java.io.*;
 import java.nio.file.*;
 import java.net.*;
 
+import org.apache.logging.log4j.*;
 import org.apache.commons.vfs2.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.queries.*;
 import org.luwrain.controls.*;
 import org.luwrain.script.*;
-import org.luwrain.io.*;
+import org.luwrain.io.vfs.*;
 
+import static java.util.Objects.*;
+import static org.luwrain.controls.CommanderUtils.*;
+import static org.luwrain.io.vfs.CommanderUtils.*;
 
 class PanelArea extends CommanderArea<FileObject>
 {
+    static private final Logger log = LogManager.getLogger();
+
     private final Luwrain luwrain;
 
     PanelArea(Params<FileObject> params, Luwrain luwrain)
@@ -41,9 +47,9 @@ class PanelArea extends CommanderArea<FileObject>
 	this.luwrain = luwrain;
     }
 
-    @Override public CommanderUtilsVfs.Model getCommanderModel()
+    @Override public CommanderModel getCommanderModel()
     {
-	return (CommanderUtilsVfs.Model)super.getCommanderModel();
+	return (CommanderModel)super.getCommanderModel();
     }
 
     void open(File file)
@@ -92,9 +98,9 @@ class PanelArea extends CommanderArea<FileObject>
 
     boolean openLocalPath(String path)
     {
-	NullCheck.notNull(path, "path");
+	requireNonNull(path, "path can't be null");
 	try {
-	    open(CommanderUtilsVfs.prepareLocation((CommanderUtilsVfs.Model)getCommanderModel(), path));
+	    open(createInitialFileObject(getCommanderModel(), path));
 	    return true;
 	}
 	catch(org.apache.commons.vfs2.FileSystemException e)
@@ -107,7 +113,7 @@ class PanelArea extends CommanderArea<FileObject>
     boolean openInitial(String path)
     {
 	try {
-	    return open(CommanderUtilsVfs.prepareLocation((CommanderUtilsVfs.Model)getCommanderModel(), path), false);
+	    return open(createInitialFileObject(getCommanderModel(), path), false);
 	}
 	catch(org.apache.commons.vfs2.FileSystemException e)
 	{
@@ -118,13 +124,13 @@ class PanelArea extends CommanderArea<FileObject>
 
     void showHidden()
     {
-	setCommanderFilter(new CommanderUtils.AllEntriesFilter<>());
+	setCommanderFilter(new AllEntriesFilter<>());
 	reread(false);
     }
 
     void hideHidden()
     {
-	setCommanderFilter(new CommanderUtilsVfs.NoHiddenFilter());
+	setCommanderFilter(new NoHiddenFilter());
 	reread(false);
     }
 
@@ -193,11 +199,10 @@ class PanelArea extends CommanderArea<FileObject>
 
     static Params<FileObject> createParams(ControlContext controlContext)
     {
-	NullCheck.notNull(controlContext, "controlContext");
-	try {
-	    Params<FileObject> params = CommanderUtilsVfs.createParams(controlContext);
+try {
+	final var  params = org.luwrain.io.vfs.CommanderUtils.createParams(requireNonNull(controlContext, "controlContext can't be null"));
 	    params.flags = EnumSet.of(Flags.MARKING);
-	    params.filter = new CommanderUtilsVfs.NoHiddenFilter();
+	    params.filter = new NoHiddenFilter();
 	    params.clipboardSaver = new ListUtils.FunctionalClipboardSaver<>(
 									     (entry)->asFile(entry.getNativeObj()),
 									     (entry)->entry.getBaseName());
@@ -205,6 +210,7 @@ class PanelArea extends CommanderArea<FileObject>
 	}
 	catch(org.apache.commons.vfs2.FileSystemException e)
 	{
+	    log.error(e);
 	    throw new RuntimeException(e);
 	}
     }

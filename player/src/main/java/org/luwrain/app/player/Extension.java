@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -20,11 +20,13 @@ import java.net.*;
 import java.util.*;
 import java.io.*;
 
+import com.google.auto.service.*;
 
 import org.luwrain.util.*;
 import org.luwrain.core.*;
 import static org.luwrain.core.NullCheck.*;
 
+@AutoService(org.luwrain.core.Extension.class)
 public final class Extension extends EmptyExtension
 {
     static private final int VOLUME_STEP = 3;

@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -18,8 +18,11 @@ package org.luwrain.app.commander;
 
 import java.util.*;
 
+import com.google.auto.service.*;
+
 import org.luwrain.core.*;
 
+@AutoService(org.luwrain.core.Extension.class)
 public class Extension extends EmptyExtension
 {
     @Override public Command[] getCommands(Luwrain luwrain)
@@ -49,7 +52,6 @@ public class Extension extends EmptyExtension
 		    return v.toArray(new Application[v.size()]);
 		}
 	    },
-
 	};
     }
 }
