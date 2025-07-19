@@ -87,7 +87,7 @@ class PanelArea extends CommanderArea<FileObject>
 
     FileObject[] getToProcess()
     {
-	final List<FileObject> res = new ArrayList<>();
+	final var res = new ArrayList<FileObject>();
 	for(Object o: getMarked())
 	    res.add((FileObject)o);
 	if (!res.isEmpty())

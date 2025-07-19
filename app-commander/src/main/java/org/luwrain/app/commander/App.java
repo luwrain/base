@@ -25,7 +25,7 @@ import org.luwrain.core.events.*;
 import org.luwrain.app.base.*;
 import org.luwrain.app.commander.fileops.*;
 
-final class App extends AppBase<Strings>
+public final class App extends AppBase<Strings>
 {
     enum Side {LEFT, RIGHT};
 
@@ -161,7 +161,7 @@ final class App extends AppBase<Strings>
 	getLuwrain().setActiveArea(activeArea);
     }
 
-    Layouts layouts()
+    public Layouts layouts()
     {
 	return new Layouts(){
 	    @Override public void main()
@@ -181,7 +181,7 @@ final class App extends AppBase<Strings>
     Conv getConv() { return this.conv; }
     Hooks getHooks() { return this.hooks; }
 
-    interface Layouts
+    public interface Layouts
     {
 	void main();
 	void operations();

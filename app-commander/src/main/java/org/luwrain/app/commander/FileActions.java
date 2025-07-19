@@ -17,18 +17,24 @@
 package org.luwrain.app.commander;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.io.*;
 import java.nio.file.*;
+import org.apache.logging.log4j.*;
 import org.apache.commons.vfs2.*;
 
 import org.luwrain.core.*;
 import org.luwrain.controls.*;
 import org.luwrain.app.commander.fileops.*;
 import org.luwrain.io.json.*;
+import org.luwrain.app.commander.layouts.*;
+
 import static org.luwrain.util.PathUtils.*;
 
 final class FileActions extends OperationsNames
 {
+    static private final Logger log = LogManager.getLogger();
+    
     FileActions(App app)
     {
 	super(app);
@@ -36,7 +42,6 @@ final class FileActions extends OperationsNames
 
     boolean size(PanelArea panelArea)
     {
-	NullCheck.notNull(panelArea, "panelArea");
 	final FileObject[] files = panelArea.getToProcess();
 	if (files.length == 0)
 	    return false;
@@ -57,7 +62,6 @@ final class FileActions extends OperationsNames
 
     private long getSize(FileObject fileObj) throws org.apache.commons.vfs2.FileSystemException
     {
-	NullCheck.notNull(fileObj, "fileObj");
 	if (fileObj.getType().hasChildren())
 	    return getSize(fileObj.getChildren());
 	if (fileObj.isFile() && !fileObj.isSymbolicLink())
@@ -67,7 +71,6 @@ final class FileActions extends OperationsNames
 
     private long getSize(FileObject[] files) throws org.apache.commons.vfs2.FileSystemException
     {
-	NullCheck.notNullItems(files, "files");
 	long sum = 0;
 	for(FileObject f: files)
 	    sum += getSize(f);
@@ -76,8 +79,6 @@ final class FileActions extends OperationsNames
 
     boolean localCopy(PanelArea copyFromArea, PanelArea copyToArea)
     {
-	NullCheck.notNull(copyFromArea, "copyFromArea");
-	NullCheck.notNull(copyToArea, "copyToArea");
 	if (!copyFromArea.isLocalDir() || !copyToArea.isLocalDir())
 	    return false;
 	final Path copyFromDir = PanelArea.asPath(copyFromArea.opened());
@@ -100,8 +101,6 @@ final class FileActions extends OperationsNames
 
     boolean localMove(PanelArea moveFromArea, PanelArea moveToArea)
     {
-	NullCheck.notNull(moveFromArea, "moveFromArea");
-	NullCheck.notNull(moveToArea, "moveToArea");
 	if (!moveFromArea.isLocalDir() || !moveToArea.isLocalDir())
 	    return false;
 	final Path moveFromDir = PanelArea.asPath(moveFromArea.opened());
@@ -124,7 +123,6 @@ final class FileActions extends OperationsNames
 
     boolean localMkdir(PanelArea panelArea)
     {
-	NullCheck.notNull(panelArea, "panelArea");
 	if (!panelArea.isLocalDir())
 	    return false;
 	final File createIn = PanelArea.asFile(panelArea.opened());
@@ -164,13 +162,12 @@ final class FileActions extends OperationsNames
 
     boolean localRun(PanelArea panelArea)
     {
-	NullCheck.notNull(panelArea, "panelArea");
 	if (!panelArea.isLocalDir())
 	    return false;
-	final Path dir = PanelArea.asPath(panelArea.opened());
+	final var dir = PanelArea.asPath(panelArea.opened());
 	if (dir == null)
 	    return false;
-	final Path[] toProcess = PanelArea.asPath(panelArea.getToProcess());
+	final var toProcess = PanelArea.asPath(panelArea.getToProcess());
 	if (toProcess.length == 0)
 	    return false;
 	final String cmd = app.getConv().run();
@@ -190,13 +187,29 @@ final class FileActions extends OperationsNames
 		b.append(" ").append(escapeBash(p.toString()));
 	    b.append(" ").append(cmd.substring(pos + 2).trim());
 	}
-	app.getLuwrain().newJob("sys", new String[]{new String(b)}, dir.toAbsolutePath().toString(), EnumSet.noneOf(Luwrain.JobFlags.class), null);//FIXME: reread panel on finish
+	final var output = new AtomicReference<CommandOutputLayout>(null);
+	app.getLuwrain().newJob("sys", new String[]{new String(b)}, dir.toAbsolutePath().toString(),
+				EnumSet.noneOf(Luwrain.JobFlags.class), new EmptyJobListener(){
+					@Override public void onInfoChange(Job instance, String infoType, List<String> value) 
+					{
+					    log.debug("Job info change: " + instance.getInstanceName() + ", type '" + infoType + "'");
+					    if (!infoType.equals("main"))
+						return;
+					    app.getLuwrain().runUiSafely(()-> {
+						    if (output.get() == null)
+						    {
+							output.set(new CommandOutputLayout(app, instance));
+							app.setAreaLayout(output.get());
+						    } else
+							output.get().update(value);
+						});
+					}
+				    });//FIXME: reread panel on finish
 	return true;
     }
 
         boolean localMail(PanelArea panelArea)
     {
-	NullCheck.notNull(panelArea, "panelArea");
 	if (!panelArea.isLocalDir())
 	    return false;
 		final Path[] toProcess = PanelArea.asPath(panelArea.getToProcess());
@@ -217,10 +230,8 @@ final class FileActions extends OperationsNames
 	return true;
     }
 
-
     boolean zipCompress(PanelArea panelArea)
     {
-	NullCheck.notNull(panelArea, "panelArea");
 	final Path[] toProcess = PanelArea.asPath(panelArea.getToProcess());
 	if (toProcess.length == 0)
 	    return false;
