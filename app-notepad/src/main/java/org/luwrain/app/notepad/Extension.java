@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -17,10 +17,12 @@
 package org.luwrain.app.notepad;
 
 import java.util.*;
+import com.google.auto.service.*;
 
 import org.luwrain.core.*;
 import org.luwrain.cpanel.*;
 
+@AutoService(org.luwrain.core.Extension.class)
 public final class Extension extends EmptyExtension
 {
     static private final Element controlPanelElement = new SimpleElement(StandardElements.APPLICATIONS, Extension.class.getName());
@@ -78,7 +80,7 @@ public final class Extension extends EmptyExtension
 		}
 		@Override public org.luwrain.cpanel.Section createSection(Element el)
 		{
-		    final Strings strings = (Strings)luwrain.i18n().getStrings(Strings.NAME);
+		    final Strings strings = (Strings)luwrain.i18n().getStrings(Strings.class.getName());
 		    if (el.equals(controlPanelElement))
 			return new SimpleSection(controlPanelElement, strings.settingsFormName(), (controlPanel)->SettingsForm.create(controlPanel));
 		    return null;

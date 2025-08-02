@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2024 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -19,6 +19,7 @@ package org.luwrain.app.notepad;
 import java.util.*;
 import java.util.concurrent.*;
 import java.io.*;
+import org.apache.logging.log4j.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.events.*;
@@ -29,7 +30,7 @@ import org.luwrain.app.base.*;
 
 public final class App extends AppBase<Strings>
 {
-    static final String LOG_COMPONENT = "notepad";
+    static private final Logger log = LogManager.getLogger();
     static private final String DEFAULT_CHARSET = "UTF-8";
     static private final String NATURAL_MODE_CORRECTOR_HOOK = "luwrain.notepad.mode.natural";
     static private final String PROGRAMMING_MODE_CORRECTOR_HOOK = "luwrain.notepad.mode.programming";
@@ -60,7 +61,7 @@ public final class App extends AppBase<Strings>
 
     public App(String arg)
     {
-	super(Strings.NAME, Strings.class, "luwrain.notepad");
+	super(Strings.class, "luwrain.notepad");
 	this.arg = arg;
 	this.corrector = new EditUtils.ActiveCorrector();
 	setTabProcessing(false);
@@ -181,7 +182,7 @@ public final class App extends AppBase<Strings>
 	    getLuwrain().message(getStrings().noChannelToSynth(sett.getNarratingChannelName("")), Luwrain.MessageType.ERROR);
 	    return true;
 	}
-	Log.debug(LOG_COMPONENT, "narrating channel loaded: " + channel.getChannelName());
+	log.debug("Narrating channel loaded: " + channel.getChannelName());
 	final NarratingLayout layout = new NarratingLayout(this, ()->cancelNarrating());
 	this.narrating = new Narrating(this, layout, narratingText.sents.toArray(new String[narratingText.sents.size()]),
 				       destDir, new File(getLuwrain().getFileProperty("luwrain.dir.scripts"), "lwr-audio-compress").getAbsolutePath(), channel);

@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -26,7 +26,7 @@ import org.luwrain.util.*;
 
 class Narrating implements Runnable
 {
-    static private final String LOG_COMPONENT = App.LOG_COMPONENT;
+    static private final String LOG_COMPONENT = "narrating";
 
     interface Listener
     {

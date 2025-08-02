@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-2022 Michael Pozhidaev <msp@luwrain.org>
+   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
    This file is part of LUWRAIN.
 
@@ -130,7 +130,7 @@ final class SettingsForm extends FormArea implements SectionArea
     static SettingsForm create(ControlPanel controlPanel)
     {
 	NullCheck.notNull(controlPanel, "controlPanel");
-	final Strings strings = (Strings)controlPanel.getCoreInterface().i18n().getStrings(Strings.NAME);
+	final Strings strings = (Strings)controlPanel.getCoreInterface().i18n().getStrings(Strings.class.getName());
 	return new SettingsForm(controlPanel, strings);
     }
 }
