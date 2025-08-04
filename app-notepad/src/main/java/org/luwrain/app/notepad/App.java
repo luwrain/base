@@ -31,9 +31,10 @@ import org.luwrain.app.base.*;
 public final class App extends AppBase<Strings>
 {
     static private final Logger log = LogManager.getLogger();
-    static private final String DEFAULT_CHARSET = "UTF-8";
-    static private final String NATURAL_MODE_CORRECTOR_HOOK = "luwrain.notepad.mode.natural";
-    static private final String PROGRAMMING_MODE_CORRECTOR_HOOK = "luwrain.notepad.mode.programming";
+    static private final String
+	DEFAULT_CHARSET = "UTF-8",
+	NATURAL_MODE_CORRECTOR_HOOK = "luwrain.notepad.mode.natural",
+	PROGRAMMING_MODE_CORRECTOR_HOOK = "luwrain.notepad.mode.programming";
 
     enum Mode { NONE, NATURAL, PROGRAMMING };
 
@@ -42,7 +43,7 @@ public final class App extends AppBase<Strings>
     String charset = DEFAULT_CHARSET;
     String lineSeparator = System.lineSeparator();
     Mode mode = Mode.NONE;
-    final EditUtils.ActiveCorrector corrector;
+
     boolean speakIndent = false;
 
     private FutureTask narratingTask = null; 
@@ -63,7 +64,6 @@ public final class App extends AppBase<Strings>
     {
 	super(Strings.class, "luwrain.notepad");
 	this.arg = arg;
-	this.corrector = new EditUtils.ActiveCorrector();
 	setTabProcessing(false);
     }
 

@@ -25,7 +25,7 @@ import org.luwrain.controls.edit.*;
 import org.luwrain.nlp.*;
 import static org.luwrain.core.DefaultEventResponse.*;
 
-abstract class Appearance extends EditUtils.DefaultEditAreaAppearance
+abstract class Appearance extends DefaultEditAreaAppearance
 {
     Appearance(ControlContext context)
     {

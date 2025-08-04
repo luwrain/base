@@ -26,13 +26,11 @@ final class TextFragmentUtils
     private final Lines lines;
     public TextFragmentUtils(Lines lines)
     {
-	NullCheck.notNull(lines, "lines");
 	this.lines = lines;
     }
 
     String getWord(int pos, int lineIndex, Predicate<Character> wordCharCond)
     {
-	NullCheck.notNull(wordCharCond, "wordCharCond");
 	if (pos < 0)
 	    throw new IllegalArgumentException("pos can't be negative");
 	if (lineIndex < 0)
@@ -61,8 +59,6 @@ public String getWord(int pos, int lineIndex)
 
     String replaceWord(int pos, int lineIndex, String replaceWith, Predicate<Character> wordCharCond)
     {
-	NullCheck.notNull(wordCharCond, "wordCharCond");
-	NullCheck.notNull(replaceWith, "replaceWith");
 	if (pos < 0)
 	    throw new IllegalArgumentException("pos can't be negative");
 	if (lineIndex < 0)
@@ -86,9 +82,6 @@ return line.substring(0, posFrom) + replaceWith + line.substring(posTo + 1);
 
     public String replaceWord(int pos, int lineIndex, String replaceWith)
 {
-    NullCheck.notNull(replaceWith, "replaceWith");
     return replaceWord(pos, lineIndex, replaceWith, (ch)->(Character.isLetter(ch) || ch.charValue() == '-'));
 }
-
-    
 }

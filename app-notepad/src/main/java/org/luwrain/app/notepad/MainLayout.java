@@ -33,7 +33,7 @@ final class MainLayout extends LayoutBase
 {
     private final App app;
     final EditArea editArea;
-
+    final MultilineEditModelWrap corrector;
     final EditSpellChecking spellChecking;
     final EditArea.ChangeListener modificationMarkListener;
 
@@ -43,16 +43,16 @@ final class MainLayout extends LayoutBase
 	this.app = app;
 	this.spellChecking =new EditSpellChecking(getLuwrain());
 	this.modificationMarkListener = (area, lines, hotPoint)->{app.modified = true;};
-	this.editArea = new EditArea(editParams((params)->{
+
+	this.editArea = new EditArea(editParams( params -> {
 		    params.name = "";
 		    params.appearance = new Appearance(params.context){
 			    @Override App.Mode getMode() { return app.mode; }
 			    @Override public EditArea getEditArea() { return editArea; };
 			};
 		    params.changeListeners = Arrays.asList(modificationMarkListener);
-		    params.editFactory = (p)->{
-			app.corrector.setDefaultCorrector((MultilineEditCorrector)p.model);
-			p.model = app.corrector;
+		    params.editFactory = p -> {
+			p.model = new MultilineEditModelWrap(p.model);
 			return new MultilineEdit(p);
 		    };
 		})){
@@ -64,8 +64,6 @@ final class MainLayout extends LayoutBase
 			case SAVE:
 			    app.onSave();
 			    return true;
-			case PROPERTIES:
-			    return showProperties();
 			case IDLE:
 			    return onIdle();
 			}
@@ -84,9 +82,11 @@ final class MainLayout extends LayoutBase
 		    return app.file.getName();
 		}
 	    };
+	this.corrector = (MultilineEditModelWrap)editArea.getEdit().getMultilineEditModel();
+
 	setAreaLayout(editArea, actions(
 					action("replace", app.getStrings().actionReplace(), new InputEvent(InputEvent.Special.F5), this::actReplace),
-										action("spell-right", app.getStrings().actionSpellRight(), new InputEvent(InputEvent.Special.ARROW_RIGHT, EnumSet.of(InputEvent.Modifiers.SHIFT)), this::actFindSpellRight),
+					action("spell-right", app.getStrings().actionSpellRight(), new InputEvent(InputEvent.Special.ARROW_RIGHT, EnumSet.of(InputEvent.Modifiers.SHIFT)), this::actFindSpellRight),
 					action("word-suggestions", app.getStrings().actionWordSuggestions(), new InputEvent(InputEvent.Special.F8), this::actWordSuggestions),
 					action("add-spell-exclusion", app.getStrings().actionAddSpellExclusion(), new InputEvent(InputEvent.Special.F8, EnumSet.of(InputEvent.Modifiers.SHIFT)), this::actAddSpellExclusion),
 					action("charset", app.getStrings().actionCharset(), new InputEvent(InputEvent.Special.F9), MainLayout .this::actCharset),
@@ -253,20 +253,6 @@ final class MainLayout extends LayoutBase
     private boolean actNarrating()
     {
 	return app.narrating(editArea.getText());
-    }
-
-    private boolean showProperties()
-    {
-	final String[] lines = app.getHooks().runPropertiesHook(editArea);
-	if (lines.length == 0)
-	    return false;
-	final PropertiesLayout propertiesLayout = new PropertiesLayout(app, lines, ()->{
-		app.setAreaLayout(this);
-		app.getLuwrain().announceActiveArea();
-	    });
-	app.openLayout(propertiesLayout.getLayout());
-	app.getLuwrain().announceActiveArea();
-	return true;
     }
 
     private boolean actModeNone()
