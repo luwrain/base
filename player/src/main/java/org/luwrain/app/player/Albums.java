@@ -32,36 +32,31 @@ final class Albums extends ArrayList<Album> implements EditableListArea.Model<Al
     static private final String LOG_COMPONENT = App.LOG_COMPONENT;
     static final Type ALBUM_LIST_TYPE = new TypeToken<List<Album>>(){}.getType();
 
-    private transient final Gson gson = new Gson();
-    private transient final Luwrain luwrain;
-    private transient final Settings sett;
+    private final App app;
 
-    Albums(Luwrain luwrain)
+    Albums(App app)
     {
-	NullCheck.notNull(luwrain, "luwrain");
-	this.luwrain = luwrain;
-	this.sett = null;//FIXME:newreg Settings.create(luwrain.getRegistry());
+	this.app = app;
 	load();
     }
 
     private synchronized void load()
     {
 	clear();
-	final List<Album> res = gson.fromJson(sett.getAlbums(""), ALBUM_LIST_TYPE);
-	if (res == null)
+	if (app.conf.albums == null)
 	    return;
-	addAll(res);
+		addAll(app.conf.albums);
 		        }
 
         synchronized void save()
     {
-	final String value = gson.toJson(this);
-	sett.setAlbums(value);
+	app.conf.albums = new ArrayList<>();
+	app.conf.albums.addAll(this);
+	app.getLuwrain().saveConf(app.conf);
     }
 
     synchronized int addAlbum(int pos, Album album)
     {
-	NullCheck.notNull(album, "album");
 	if (pos < 0 || pos >= size())
 	{
 	    add(album);
@@ -83,7 +78,6 @@ final class Albums extends ArrayList<Album> implements EditableListArea.Model<Al
 
     @Override public synchronized boolean addToModel(int pos, java.util.function.Supplier<Object> supplier)
     {
-	NullCheck.notNull(supplier, "supplier");
 	final Object supplied = supplier.get();
 	if (supplied == null)
 	    return false;

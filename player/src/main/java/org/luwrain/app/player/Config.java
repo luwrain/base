@@ -16,21 +16,11 @@
 
 package org.luwrain.app.player;
 
-import java.io.*;
 import java.util.*;
 
 import org.luwrain.core.*;
 
-interface Settings
+final class Config
 {
-    static final String PLAYER_PATH = "/org/luwrain/player";
-
-    String getAlbums(String defValue);
-    void setAlbums(String value);
-
-    static Settings create(Registry registry)
-    {
-	NullCheck.notNull(registry, "registry");
-	return RegistryProxy.create(registry, PLAYER_PATH, Settings.class);
-    }
+    List<Album> albums;
 }

@@ -35,6 +35,7 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
 
     private final String[] args;
     final Starting starting = new Starting(this);
+    Config conf = null;
     private org.luwrain.player.Player player = null;
     private Conv conv = null;
     private MainLayout mainLayout = null;
@@ -51,14 +52,19 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
 
     @Override public AreaLayout onAppInit() throws Exception
     {
-	this.conv = new Conv(this);
-	this.albums = new Albums(getLuwrain());
-	this.player = getLuwrain().getPlayer();
+conv = new Conv(this);
+conf = getLuwrain().loadConf(Config.class);
+	if (conf == null)
+	{
+	    conf = new Config();
+	}
+albums = new Albums(this);
+player = getLuwrain().getPlayer();
 	if (player == null)
 	    throw new Exception("No system player");
-	this.player.addListener(this);
-	this.hooks = new Hooks(getLuwrain());
-	this.mainLayout = new MainLayout(this, this.player);
+player.addListener(this);
+hooks = new Hooks(getLuwrain());
+mainLayout = new MainLayout(this, this.player);
 	setAppName(getStrings().appName());
 	return mainLayout.getAreaLayout();
     }

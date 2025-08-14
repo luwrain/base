@@ -55,7 +55,6 @@ public final class Extension extends EmptyExtension
 		@Override public String getExtObjName() { return "player"; }
 		@Override public Application[] prepareApp(String[] args)
 		{
-		    notNullItems(args, "args");
 		    return new Application[]{new App(args)};
 		}
 	    },
@@ -64,7 +63,6 @@ public final class Extension extends EmptyExtension
 		@Override public String getExtObjName() { return "player-single-local"; }
 		@Override public Application[] prepareApp(String[] args)
 		{
-		    NullCheck.notNullItems(args, "args");
 		    if (args.length != 1 || args[0].isEmpty())
 			return null;
 		    final org.luwrain.player.Player player = luwrain.getPlayer();
