@@ -14,17 +14,8 @@
    General Public License for more details.
 */
 
-package org.luwrain.core.annotations;
+package org.luwrain.core;
 
-import java.lang.annotation.*;
-import org.luwrain.core.*;
-
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
-public @interface AppNoArgs
-{
-    String name();
-    String shortcut() default "";
-    StarterCategory category() default StarterCategory.NONE;
-String[] title();
-}
+public enum StarterCategory {
+    TOOLS, COMMUNICATIONS, DOCUMENTS, DOCUMENTATION, SYSTEM, SHUTDOWN, NONE
+};

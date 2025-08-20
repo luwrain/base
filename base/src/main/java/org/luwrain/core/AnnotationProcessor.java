@@ -52,20 +52,6 @@ public class AnnotationProcessor extends AbstractProcessor
 	return true;
     }
 
-	void write(String className, String text)
-	{
-	try {
-	final var file = processingEnv.getFiler().createSourceFile(className);
-	            try (PrintWriter out = new PrintWriter(file.openWriter())) {
-			out.println(text);
-			out.flush();
-		    }
-	}
-	catch(IOException ex)
-	{
-	    	    throw new RuntimeException(ex);
-	}
-	}
 
 	    String generateAppNoArgs(Element el)
     {
@@ -96,12 +82,19 @@ public class AnnotationProcessor extends AbstractProcessor
 	    .append(LS);
 	}
 
+	final String starter;
+	if (app.category() != null && app.category() != StarterCategory.NONE)
+	{
+	    starter = ", new DefaultStarter(\"command:" + app.name() + "\", StarterCategory." + app.category().toString() + ")";
+	} else
+	    starter = "";
+
 	return "package " + pkg + ";" + LS  +
 	"import org.luwrain.core.*;" + LS +
 			   "import com.google.auto .service.*;" + LS +
 			   "@AutoService(org.luwrain.core.Extension.class)" + LS +
 			   "public final class " + newCl + " extends org.luwrain.core.EmptyExtension {" + LS +
-			   "@Override public ExtensionObject[] getExtObjects(Luwrain luwrain) { return new ExtensionObject[] { new SimpleShortcut(\"" + app.name() + "\", " + simpleCl + ".class) }; }" + LS +
+			   "@Override public ExtensionObject[] getExtObjects(Luwrain luwrain) { return new ExtensionObject[] { new SimpleShortcut(\"" + app.name() + "\", " + simpleCl + ".class)" + starter + " }; }" + LS +
 				   "@Override public Command[] getCommands(Luwrain luwrain) { return new Command[] { new SimpleShortcutCommand(\"" + app.name() + "\") }; }" + LS +
 	        "@Override public void i18nExtension(Luwrain luwrain, org.luwrain.i18n.I18nExtension i18n)" + LS +
     "{" + LS +
@@ -157,5 +150,21 @@ public class AnnotationProcessor extends AbstractProcessor
 	"}" + LS +
 		"}" + LS;
     }
+
+    	void write(String className, String text)
+	{
+	try {
+	final var file = processingEnv.getFiler().createSourceFile(className);
+	            try (PrintWriter out = new PrintWriter(file.openWriter())) {
+			out.println(text);
+			out.flush();
+		    }
+	}
+	catch(IOException ex)
+	{
+	    	    throw new RuntimeException(ex);
+	}
+	}
+
 
             }
