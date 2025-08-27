@@ -34,16 +34,12 @@ public class Extension extends EmptyExtension
     {
 	return new ExtensionObject[]{
 
-	    new Shortcut() {
-		@Override public String getExtObjName()
-		{
-		    return "commander";
-		}
+	    new DefaultShortcut("commander", App.class) {
 		@Override public Application[] prepareApp(String[] args)
 		{
 		    if (args == null || args.length < 1)
 			return new Application[]{new App()};
-		    final LinkedList<Application> v = new LinkedList<Application>();
+		    final var v = new ArrayList<Application>();
 		    for(String s: args)
 			if (s != null)
 			    v.add(new App(s));

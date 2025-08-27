@@ -45,11 +45,7 @@ public final class Extension extends EmptyExtension
     @Override public ExtensionObject[] getExtObjects(Luwrain luwrain)
     {
 	return new ExtensionObject[]{
-	    new Shortcut() {
-		@Override public String getExtObjName()
-		{
-		    return "notepad";
-		}
+	    new DefaultShortcut("notepad", App.class) {
 		@Override public Application[] prepareApp(String[] args)
 		{
 		    NullCheck.notNullItems(args, "args");

@@ -51,16 +51,14 @@ public final class Extension extends EmptyExtension
     {
 	return new Shortcut[]{
 
-	    new Shortcut() {
-		@Override public String getExtObjName() { return "player"; }
+	    new DefaultShortcut("player", App.class) {
 		@Override public Application[] prepareApp(String[] args)
 		{
 		    return new Application[]{new App(args)};
 		}
 	    },
 
-	    new Shortcut() {
-		@Override public String getExtObjName() { return "player-single-local"; }
+	    new DefaultShortcut("player-single-local", App.class) {
 		@Override public Application[] prepareApp(String[] args)
 		{
 		    if (args.length != 1 || args[0].isEmpty())
