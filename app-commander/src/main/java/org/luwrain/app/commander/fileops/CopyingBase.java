@@ -1,21 +1,9 @@
-/*
-   Copyright 2012-2025 Michael Pozhidaev <michael.pozhidaev@gmail.com>
-
-   This file is part of LUWRAIN.
-
-   LUWRAIN is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
-
-   LUWRAIN is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-*/
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.commander.fileops;
 
+import java.util.*;
 import java.io.*;
 import java.nio.file.*;
 
@@ -23,12 +11,12 @@ import org.luwrain.core.*;
 import org.luwrain.util.*;
 import org.luwrain.app.commander.*;
 
+import static java.util.Objects.*;
+
 abstract class CopyingBase extends Operation
 {
-    private long totalBytes = 0;
-    private long processedBytes = 0;
-    private int percent = 0;
-    private int lastPercent = 0;
+    private long totalBytes = 0, processedBytes = 0;
+    private int percent = 0, lastPercent = 0;
 
     CopyingBase(OperationListener listener, String name)
     {
@@ -40,37 +28,42 @@ abstract class CopyingBase extends Operation
 	return percent;
     }
 
-    protected void copy(Path[] toCopy, Path dest) throws IOException
+    protected void copy(CopyMoveParams params) throws IOException
     {
-	NullCheck.notNullItems(toCopy, "toCopy");
-	NullCheck.notEmptyArray(toCopy, "toCopy");
-	NullCheck.notNull(dest, "dest");
-	for(Path p: toCopy)
+	requireNonNull(params, "params can't be null");
+	requireNonNull(params.getSource(), "source can't be null");
+	requireNonNull(params.getDest(), "dest can't be null");
+	if (params.getSource().isEmpty())
+	    throw new IllegalArgumentException("source can't be empty");
+	for(Path p: params.getSource())
+	{
+	    requireNonNull(p, "p can't be null");
 	    if (!p.isAbsolute())
 		throw new IllegalArgumentException("Paths of all source files must be absolute");
+	}
 	// Calculating the total size of the source files
 	totalBytes = 0;
-	for(Path f: toCopy)
+	for(Path f: params.getSource())
 	{
 	    status("calculating size of " + f);
 	    totalBytes += getTotalSize(f);
 	}
 	status("total size is " + String.valueOf(totalBytes));
-	Path d = dest;
+	Path d = params.getDest();
 	if (!d.isAbsolute())
 	{
-	    final Path parent = toCopy[0].getParent();
+	    final Path parent = params.getSource().get(0).getParent();
 	    NullCheck.notNull(parent, "parent");
 	    d = parent.resolve(d);
 	    status("absolute destination path:" + d.toString());
 	}
 	// Checking that d is not a child of any item of toCopy
-	for(Path path: toCopy)
+	for(final var path: params.getSource())
 	    if (d.startsWith(path))
 		throw new IOException(SOURCE_IS_A_PARENT_OF_THE_DEST);
-	if (toCopy.length == 1)
-	    singleSource(toCopy[0], d); else
-	    multipleSource(toCopy, d);
+	if (params.getSource().size() == 1)
+	    singleSource(params.getSource().get(0), d); else
+	    multipleSource(params.getSource(), d);
     }
 
     private void singleSource(Path fileFrom, Path dest) throws IOException
@@ -80,7 +73,7 @@ abstract class CopyingBase extends Operation
 	if (isDirectory(dest, true))
 	{
 	    status("" + dest + " exists and is a directory (or a symlink to a directory), copying the source file to it");
-	    copyRecurse(new Path[]{fileFrom}, dest);
+	    copyRecurse(List.of(fileFrom), dest);
 	    return;
 	}
 	// We sure the destination isn't a directory, maybe even doesn't exist
@@ -102,7 +95,7 @@ abstract class CopyingBase extends Operation
 	    }
 	    Files.createDirectories(dest);
 	    // Copying the content of fileFrom to the newly created directory
-	    copyRecurse(getDirContent(fileFrom), dest);
+	    copyRecurse(Arrays.asList(getDirContent(fileFrom)), dest);
 	    return;
 	}
 	// We sure that fileFrom and dest aren't directories, but dest may exist
@@ -130,7 +123,7 @@ abstract class CopyingBase extends Operation
 	copySingleFile(fileFrom, dest);//This takes care if fromFile is a symlink
     }
 
-    private void multipleSource(Path[] toCopy, Path dest) throws IOException
+    private void multipleSource(List<Path> toCopy, Path dest) throws IOException
     {
 	status("multiple source mode");
 	if (exists(dest, false) && !isDirectory(dest, true))
@@ -151,11 +144,9 @@ abstract class CopyingBase extends Operation
 	copyRecurse(toCopy, dest);
     }
 
-    private void copyRecurse(Path[] filesFrom, Path fileTo) throws IOException
+    private void copyRecurse(List<Path> filesFrom, Path fileTo) throws IOException
     {
-	NullCheck.notNullItems(filesFrom, "filesFrom");
-	NullCheck.notNull(fileTo, "fileTo");
-	status("copyRecurse:copying " + filesFrom.length + " entries to " + fileTo);
+	status("copyRecurse:copying " + filesFrom.size() + " entries to " + fileTo);
 	//toFile should already exist and should be a directory
 	for(Path f: filesFrom)
 	{
@@ -184,7 +175,7 @@ abstract class CopyingBase extends Operation
 	    if (!exists(newDest, false))//just for the case newDest  is a symlink to a directory
 		Files.createDirectories(newDest);
 	    status("" + newDest + " prepared");
-	    copyRecurse(getDirContent(f), newDest);
+	    copyRecurse(Arrays.asList(getDirContent(f)), newDest);
 	}
     }
 
