@@ -6,6 +6,7 @@ package org.luwrain.app.commander.fileops;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
+import org.apache.logging.log4j.*;
 
 import org.luwrain.core.*;
 import org.luwrain.util.*;
@@ -15,6 +16,8 @@ import static java.util.Objects.*;
 
 abstract class CopyingBase extends Operation
 {
+    static private final Logger log = LogManager.getLogger();
+    
     private long totalBytes = 0, processedBytes = 0;
     private int percent = 0, lastPercent = 0;
 
