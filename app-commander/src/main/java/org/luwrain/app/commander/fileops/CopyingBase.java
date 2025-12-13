@@ -49,17 +49,17 @@ abstract class CopyingBase extends Operation
 	totalBytes = 0;
 	for(Path f: params.getSource())
 	{
-	    status("calculating size of " + f);
+	    log.trace("Calculating the size of " + f);
 	    totalBytes += getTotalSize(f);
 	}
-	status("total size is " + String.valueOf(totalBytes));
+	log.trace("Total size is " + String.valueOf(totalBytes));
 	Path d = params.getDest();
 	if (!d.isAbsolute())
 	{
 	    final Path parent = params.getSource().get(0).getParent();
-	    NullCheck.notNull(parent, "parent");
+	    requireNonNull(parent, "parent can't be null");
 	    d = parent.resolve(d);
-	    status("absolute destination path:" + d.toString());
+	    log.trace("absolute destination path:" + d.toString());
 	}
 	// Checking that d is not a child of any item of toCopy
 	for(final var path: params.getSource())
@@ -72,11 +72,11 @@ abstract class CopyingBase extends Operation
 
     private void singleSource(Path fileFrom, Path dest) throws IOException
     {
-	status("single source mode:copying " + fileFrom + " to " + dest);
+	log.trace("Single source mode:copying " + fileFrom + " to " + dest);
 	// If the destination directory already exists, just copying whatever fileFrom is
 	if (isDirectory(dest, true))
 	{
-	    status("" + dest + " exists and is a directory (or a symlink to a directory), copying the source file to it");
+	    log.trace("" + dest + " exists and is a directory (or a symlink to a directory), copying the source file to it");
 	    copyRecurse(List.of(fileFrom), dest);
 	    return;
 	}
@@ -84,7 +84,7 @@ abstract class CopyingBase extends Operation
 		    // If fileFrom is a directory, we should copy its content to newly created directory
 	if (isDirectory(fileFrom, false))
 	{
-	    status("" + fileFrom + " is a directory and isn\'t a symlink");
+	    log.trace("" + fileFrom + " is a directory and isn\'t a symlink");
 	    if (exists(dest, false)) // Dest can exist, but it's certainly not a directory
 	    {
 		switch(confirmOverwrite(dest))
@@ -94,7 +94,7 @@ abstract class CopyingBase extends Operation
 		case CANCEL:
 		    throw new IOException(INTERRUPTED);
 		}
-		status("deleting previously existing " + dest.toString());
+		log.trace("Deleting previously existing " + dest.toString());
 		Files.delete(dest);
 	    }
 	    Files.createDirectories(dest);
@@ -105,19 +105,19 @@ abstract class CopyingBase extends Operation
 	// We sure that fileFrom and dest aren't directories, but dest may exist
 	if (!Files.isSymbolicLink(fileFrom) && !isRegularFile(fileFrom, false))
 	{
-	    status("" + fileFrom + "is not a symlink and is not a regular file, nothing to do");
+	    log.trace("" + fileFrom + "is not a symlink and is not a regular file, nothing to do");
 	    return;
 	}
-	status("" + fileFrom + " is a symlink or a regular file");
+	log.trace("" + fileFrom + " is a symlink or a regular file");
 	if (exists(dest, false))
 	{
-	    status("" + dest + " exists, trying to overwrite it");
+	    log.trace("" + dest + " exists, trying to overwrite it");
 	    switch(confirmOverwrite(dest))
 	    {
 	    case SKIP:
 		return;
 	    case CANCEL:
-		throw new IOException(INTERRUPTED);
+		throw new OperationCancelledException();
 	    }
 	    Files.delete(dest);
 	}
@@ -129,18 +129,18 @@ abstract class CopyingBase extends Operation
 
     private void multipleSource(List<Path> toCopy, Path dest) throws IOException
     {
-	status("multiple source mode");
+	log.trace("Multiple source mode");
 	if (exists(dest, false) && !isDirectory(dest, true))
 	{
-	    status("" + dest.toString() + " exists and is not a directory");
+	    log.trace("" + dest.toString() + " exists and is not a directory");
 	    switch(confirmOverwrite(dest))
 	    {
 	    case SKIP:
 		return;
 	    case CANCEL:
-		throw new IOException(INTERRUPTED);
+		throw new OperationCancelledException();
 	    }
-	    status("deleting previously existing " + dest.toString());
+	    log.trace("Deleting previously existing " + dest.toString());
 	    Files.delete(dest);
 	}
 	if (!exists(dest, false))//just for the case dest is a symlink to a directory
@@ -150,43 +150,43 @@ abstract class CopyingBase extends Operation
 
     private void copyRecurse(List<Path> filesFrom, Path fileTo) throws IOException
     {
-	status("copyRecurse:copying " + filesFrom.size() + " entries to " + fileTo);
+	log.trace("CopyRecurse:copying " + filesFrom.size() + " entries to " + fileTo);
 	//toFile should already exist and should be a directory
 	for(Path f: filesFrom)
 	{
 	    if (!isDirectory(f, false))
 	    {
-		status("" + f.toString() + " is not a directory, copying it");
+		log.trace("" + f.toString() + " is not a directory, copying it");
 		copyFileToDir(f, fileTo);
 		continue;
 	    }
-	    status("" + f.toString() + " is a directory");
+	    log.trace("" + f.toString() + " is a directory");
 	    final Path newDest = fileTo.resolve(f.getFileName());
-	    status("new destination is " + newDest.toString());
+	    log.trace("New destination is " + newDest.toString());
 	    if (exists(newDest, false) && !isDirectory(newDest, true))
 	    {
-		status("" + newDest + " already exists and isn\'t a directory, asking confirmation and trying to delete it");
+		log.trace("" + newDest + " already exists and isn\'t a directory, asking confirmation and trying to delete it");
 		switch(confirmOverwrite(newDest))
 		{
 		case SKIP:
 		    continue;
 		case CANCEL:
-		    throw new IOException("INTERRUPTED");
+		    throw new OperationCancelledException();
 		}
 		status("deleting previously existing " + newDest.toString());
 		Files.delete(newDest);
 	    }
 	    if (!exists(newDest, false))//just for the case newDest  is a symlink to a directory
 		Files.createDirectories(newDest);
-	    status("" + newDest + " prepared");
+	    log.trace("" + newDest + " prepared");
 	    copyRecurse(Arrays.asList(getDirContent(f)), newDest);
 	}
     }
 
     private void copyFileToDir(Path file, Path destDir) throws IOException
     {
-	NullCheck.notNull(file, "file");
-	NullCheck.notNull(destDir, "destDir");
+	requireNonNull(file, "file can't be null");
+	requireNonNull(destDir, "destDir can't be null");
 	copySingleFile(file, destDir.resolve(file.getFileName()));
     }
 
@@ -196,13 +196,13 @@ abstract class CopyingBase extends Operation
 	requireNonNull(toFile, "toFile can't be null");
 	if (exists(toFile, false))
 	{
-	    status("" + toFile + " already exists");
+	    log.trace("" + toFile + " already exists");
 	    switch(confirmOverwrite(toFile))
 	    {
 	    case SKIP:
 		return;
 	    case CANCEL:
-		throw new IOException(INTERRUPTED);
+		throw new OperationCancelledException();
 	    }
 	    delete(toFile);
 	} // toFile exists
@@ -214,7 +214,7 @@ abstract class CopyingBase extends Operation
 	try (final var in = new BufferedInputStream(newInputStream(fromFile))) {
 	    try (final var out = new BufferedOutputStream(newOutputStream(toFile))) {
 		StreamUtils.copyAllBytes(in, out,
-					 (chunkNumBytes, totalNumBytes)->onNewChunk(chunkNumBytes), ()->interrupted);
+					 (chunkNumBytes, totalNumBytes) -> onNewChunk(chunkNumBytes), ()->interrupted);
 		out.flush();
 		if (interrupted)
 		    throw new IOException("INTERRUPTED");
