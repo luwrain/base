@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.zip .*;
+import org.apache.commons.io.*;
 
 import org.luwrain.core.*;
 import org.luwrain.app.commander.*;
@@ -59,7 +60,7 @@ public final class ZipCompress extends Operation
 	try (final InputStream is = Files.newInputStream(file)) {
 	    final ZipEntry zipEntry = new ZipEntry(file.toString());
 	    zip.putNextEntry(zipEntry);
-	    StreamUtils.copyAllBytes(is, zip);            
+	    IOUtils.copy(is, zip);            
 	}
     }
 

@@ -13,6 +13,7 @@ import org.luwrain.util.*;
 import org.luwrain.app.commander.*;
 
 import static java.util.Objects.*;
+import static java.nio.file.Files.*;
 
 abstract class CopyingBase extends Operation
 {
@@ -191,8 +192,8 @@ abstract class CopyingBase extends Operation
 
     private void copySingleFile(Path fromFile, Path toFile) throws IOException
     {
-	NullCheck.notNull(fromFile, "fromFile");
-	NullCheck.notNull(toFile, "toFile");
+	requireNonNull(fromFile, "fromFile can't be null");
+	requireNonNull(toFile, "toFile can't be null");
 	if (exists(toFile, false))
 	{
 	    status("" + toFile + " already exists");
@@ -203,15 +204,15 @@ abstract class CopyingBase extends Operation
 	    case CANCEL:
 		throw new IOException(INTERRUPTED);
 	    }
-	    Files.delete(toFile);
+	    delete(toFile);
 	} // toFile exists
-	if (Files.isSymbolicLink(fromFile))
+	if (isSymbolicLink(fromFile))
 	{
-	    Files.createSymbolicLink(toFile, Files.readSymbolicLink(fromFile));
+	    createSymbolicLink(toFile, readSymbolicLink(fromFile));
 	    return;
 	}
-	try (final InputStream in = Files.newInputStream(fromFile)) {
-	    try (final OutputStream out = Files.newOutputStream(toFile)) {
+	try (final var in = new BufferedInputStream(newInputStream(fromFile))) {
+	    try (final var out = new BufferedOutputStream(newOutputStream(toFile))) {
 		StreamUtils.copyAllBytes(in, out,
 					 (chunkNumBytes, totalNumBytes)->onNewChunk(chunkNumBytes), ()->interrupted);
 		out.flush();
