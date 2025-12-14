@@ -1,6 +1,7 @@
 
 plugins {
   id 'java-library'
+  id 'io.freefair.lombok' version '8.6'  
 }
 
 dependencies {
@@ -14,4 +15,9 @@ dependencies {
   annotationProcessor project(':luwrain-base')
   testImplementation libraries.junit
 }
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
 

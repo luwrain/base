@@ -57,8 +57,8 @@ class Narrating implements Runnable
 	    throw new RuntimeException("No supported audio formats");
 	this.chosenFormat = formats[0];
 	Log.debug(LOG_COMPONENT, "chosen format is " + chosenFormat.toString());
-	if (app.sett.getNarratedFileLen(0) > 0)
-	    this.maxFragmentBytes = timeToBytes(app.sett.getNarratedFileLen(0) * 1000); else
+	if (app.conf.getNarratedFileLen() > 0)
+	    this.maxFragmentBytes = timeToBytes(app.conf.getNarratedFileLen() * 1000); else
 	    this.maxFragmentBytes = 0;
 	Log.debug(LOG_COMPONENT, "max length of a fragment in bytes is " + String.valueOf(maxFragmentBytes));
     }
@@ -76,7 +76,7 @@ class Narrating implements Runnable
 		    final String s = text[i];
 		    if (!s.isEmpty())
 			onNewSent(app.getLuwrain().getSpeakableText(s, Luwrain.SpeakableTextType.NATURAL)); else
-			silence(app.sett.getNarratingPauseDuration(500));
+			silence(app.conf.getNarratingPauseDuration());
 		    listener.progressUpdate(i, text.length);
 		}
 	    }
@@ -105,8 +105,8 @@ class Narrating implements Runnable
 	    }
 	}
 	final Channel.SyncParams p = new Channel.SyncParams();
-	p.setRate(app.sett.getNarratingSpeechRate(0));
-	p.setPitch(app.sett.getNarratingSpeechPitch(0));
+	p.setRate(app.conf.getNarratingSpeechRate());
+	p.setPitch(app.conf.getNarratingSpeechPitch());
 	Log.debug(LOG_COMPONENT, "Speaking \'" + s + "\'");
 	final Channel.Result res = channel.synth(s, stream, chosenFormat, p, EnumSet.noneOf(Channel.Flags.class));
     }

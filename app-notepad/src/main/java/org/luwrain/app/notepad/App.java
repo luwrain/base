@@ -15,6 +15,8 @@ import org.luwrain.controls.edit.*;
 import org.luwrain.speech.*;
 import org.luwrain.app.base.*;
 
+import static org.luwrain.util.TextUtils.*;
+
 public final class App extends AppBase<Strings>
 {
     static private final Logger log = LogManager.getLogger();
@@ -30,14 +32,13 @@ public final class App extends AppBase<Strings>
     String charset = DEFAULT_CHARSET;
     String lineSeparator = System.lineSeparator();
     Mode mode = Mode.NONE;
-
     boolean speakIndent = false;
-
+    Config conf = null;
     private FutureTask narratingTask = null; 
     private Narrating narrating = null;
     Settings sett = null;
     private final String arg;
-    private Conversations conv = null;
+    private Conv conv = null;
     private Hooks hooks = null;
     private MainLayout mainLayout = null;
     private NarratingLayout narratingLayout = null;
@@ -56,10 +57,15 @@ public final class App extends AppBase<Strings>
 
     @Override protected AreaLayout onAppInit() throws IOException
     {
-	this.sett = null;//FIXME:newreg Settings.create(getLuwrain().getRegistry());
-	this.conv = new Conversations(this);
-	this.hooks = new Hooks(this);
-	this.mainLayout = new MainLayout(this);
+		conf = getLuwrain().loadConf(Config.class);
+	if (conf == null)
+	{
+	    conf = new Config();
+	    getLuwrain().saveConf(conf);
+	}
+	conv = new Conv(this);
+	hooks = new Hooks(this);
+	mainLayout = new MainLayout(this);
 	this.narratingLayout = new NarratingLayout(this, ()->{});
 	setAppName(getStrings().appName());
 	if (arg != null && !arg.isEmpty())
@@ -157,7 +163,7 @@ public final class App extends AppBase<Strings>
 	    return true;
 	final Channel channel;
 	try {
-	    channel = getLuwrain().loadSpeechChannel(sett.getNarratingChannelName(""), sett.getNarratingChannelParams(""));
+	    channel = getLuwrain().loadSpeechChannel(conf.getNarratingChannelName(), conf.getNarratingChannelParams());
 	}
 	catch(Exception e)
 	{
@@ -166,7 +172,7 @@ public final class App extends AppBase<Strings>
 	}
 	if (channel == null)
 	{
-	    getLuwrain().message(getStrings().noChannelToSynth(sett.getNarratingChannelName("")), Luwrain.MessageType.ERROR);
+	    getLuwrain().message(getStrings().noChannelToSynth(conf.getNarratingChannelName()), Luwrain.MessageType.ERROR);
 	    return true;
 	}
 	log.debug("Narrating channel loaded: " + channel.getChannelName());
@@ -200,14 +206,14 @@ public final class App extends AppBase<Strings>
 
     String[] read() throws IOException
     {
-	final String text = org.luwrain.util.FileUtils.readTextFileSingleString(file, charset);
-	return org.luwrain.util.FileUtils.universalLineSplitting(text);
+	final String text = org.luwrain.util.FileUtils.readTextFile(file, charset);
+	return splitLines(text);
     }
 
     void save(String[] lines) throws IOException
     {
 	NullCheck.notNullItems(lines, "lines");
-	org.luwrain.util.FileUtils.writeTextFileMultipleStrings(file, lines, charset, lineSeparator);
+	//	org.luwrain.util.FileUtils.writeTextFileMultipleStrings(file, lines, charset, lineSeparator);
     }
 
     @Override public boolean isBusy()
@@ -233,7 +239,7 @@ public final class App extends AppBase<Strings>
 	super.closeApp();
     }
 
-            Conversations getConv() { return this.conv; }
+            Conv getConv() { return this.conv; }
     Hooks getHooks() { return this.hooks; }
     Settings getSett() { return this.sett; }
 

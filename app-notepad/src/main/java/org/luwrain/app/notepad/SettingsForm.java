@@ -12,7 +12,7 @@ final class SettingsForm extends FormArea implements SectionArea
 {
     private ControlPanel controlPanel;
     private Luwrain luwrain;
-    private Settings sett;
+    private Config conf = null;
     private Strings strings;
 
     SettingsForm(ControlPanel controlPanel, Strings strings)
@@ -21,24 +21,23 @@ final class SettingsForm extends FormArea implements SectionArea
 	this.controlPanel = controlPanel;
 	this.luwrain = controlPanel.getCoreInterface();;
 	this.strings = strings;
-	this.sett = null;//FIXME:newreg Settings.create(luwrain.getRegistry());
 	fillForm();
     }
 
     private void fillForm()
     {
-	addEdit("narrating-channel-name", strings.settingsFormNarratingChannelName(), sett.getNarratingChannelName(""));
-	addEdit("narrating-channel-params", strings.settingsFormNarratingChannelParams(), sett.getNarratingChannelParams(""));
-	addEdit("narrated-file-len", strings.settingsFormNarratedFileLen(), String.valueOf(sett.getNarratedFileLen(0)));
-	addEdit("narrating-speech-pitch", strings.settingsFormNarratingSpeechPitch(), String.valueOf(sett.getNarratingSpeechPitch(0)));
-	addEdit("narrating-speech-rate", strings.settingsFormNarratingSpeechRate(), String.valueOf(sett.getNarratingSpeechRate(0)));
-	addEdit("narrating-pause-duration", strings.settingsFormNarratingPauseDuration(), String.valueOf(sett.getNarratingPauseDuration(0)));
+	addEdit("narrating-channel-name", strings.settingsFormNarratingChannelName(), conf.getNarratingChannelName());
+	addEdit("narrating-channel-params", strings.settingsFormNarratingChannelParams(), conf.getNarratingChannelParams());
+	addEdit("narrated-file-len", strings.settingsFormNarratedFileLen(), String.valueOf(conf.getNarratedFileLen()));
+	addEdit("narrating-speech-pitch", strings.settingsFormNarratingSpeechPitch(), String.valueOf(conf.getNarratingSpeechPitch()));
+	addEdit("narrating-speech-rate", strings.settingsFormNarratingSpeechRate(), String.valueOf(conf.getNarratingSpeechRate()));
+	addEdit("narrating-pause-duration", strings.settingsFormNarratingPauseDuration(), String.valueOf(conf.getNarratingPauseDuration()));
     }
 
     @Override public boolean saveSectionData()
     {
-	sett.setNarratingChannelName(getEnteredText("narrating-channel-name"));
-	sett.setNarratingChannelParams(getEnteredText("narrating-channel-params"));
+	conf.setNarratingChannelName(getEnteredText("narrating-channel-name"));
+	conf.setNarratingChannelParams(getEnteredText("narrating-channel-params"));
 	try {
 	    final int value = Integer.parseInt(getEnteredText("narrated-file-len"));
 	    if (value < 0)
@@ -46,7 +45,7 @@ final class SettingsForm extends FormArea implements SectionArea
 		luwrain.message(strings.settingsFormFileLenMayNotBeNegative(), Luwrain.MessageType.ERROR);
 		return false;
 	    }
-	    sett.setNarratedFileLen(value);
+	    conf.setNarratedFileLen(value);
 	}
 	catch(NumberFormatException e)
 	{
@@ -60,7 +59,7 @@ final class SettingsForm extends FormArea implements SectionArea
 		luwrain.message("fixme", Luwrain.MessageType.ERROR);
 		return false;
 	    }
-	    sett.setNarratingSpeechPitch(value);
+	    conf.setNarratingSpeechPitch(value);
 	}
 	catch(NumberFormatException e)
 	{
@@ -74,7 +73,7 @@ final class SettingsForm extends FormArea implements SectionArea
 		luwrain.message("fixme", Luwrain.MessageType.ERROR);
 		return false;
 	    }
-	    sett.setNarratingSpeechRate(value);
+	    conf.setNarratingSpeechRate(value);
 	}
 	catch(NumberFormatException e)
 	{
@@ -88,7 +87,7 @@ final class SettingsForm extends FormArea implements SectionArea
 		luwrain.message("fixme", Luwrain.MessageType.ERROR);
 		return false;
 	    }
-	    sett.setNarratingPauseDuration(value);
+	    conf.setNarratingPauseDuration(value);
 	}
 	catch(NumberFormatException e)
 	{

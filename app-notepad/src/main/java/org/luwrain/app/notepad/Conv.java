@@ -11,7 +11,7 @@ import org.luwrain.popups.*;
 
 import static org.luwrain.popups.Popups.*;
 
-final class Conversations
+final class Conv
 {
     static final String
 	charsets = "UTF-8:KOI8-R:windows-1251:IBM866:ISO-8859-5";
@@ -25,9 +25,8 @@ final class Conversations
 	replaceExpHistory = new HashSet<>(),
 	replaceWithHistory = new HashSet<>();
 
-    Conversations(App app)
+    Conv(App app)
     {
-	NullCheck.notNull(app, "app");
 	this.luwrain = app.getLuwrain();
 	this.strings = app.getStrings();
     }
