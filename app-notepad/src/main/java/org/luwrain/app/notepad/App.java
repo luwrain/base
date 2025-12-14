@@ -63,6 +63,9 @@ Hooks hooks = null;
 	    conf = new Config();
 	    getLuwrain().saveConf(conf);
 	}
+	if (conf.getCharsets() == null)
+	    conf.setCharsets(Arrays.asList(getStrings().defaultCharsetList().split(",", -1)).stream()
+			     .map(e -> e.trim().toUpperCase()).toList());
 	conv = new Conv(this);
 	hooks = new Hooks(this);
 	mainLayout = new MainLayout(this);

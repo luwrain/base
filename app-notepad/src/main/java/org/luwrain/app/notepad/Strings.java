@@ -14,12 +14,9 @@ public interface Strings
     String actionNoIndents();
     String actionOpen();
     String actionReplace();
-
-
     String actionSaveAs();
     String appName();
     String cancelNarratingBeforeClosing();
-
     String enteredPathMayNotBeDir(String fileName);
     String fileIsSaved();
     String initialTitle();
@@ -52,19 +49,15 @@ public interface Strings
     String settingsFormNarratingPauseDuration();
     String settingsFormNarratingSpeechPitch();
     String settingsFormNarratingSpeechRate();
-
-
-        String charsetPopupPrefix();
-
+    String charsetPopupPrefix();
     String replacePopupName();
     String replaceExpPopupPrefix();
     String replaceWithPopupPrefix();
-
-        String actionSpellRight();
-
+    String actionSpellRight();
     String actionWordSuggestions();
     String correctionSuggestionsPopupName();
-
     String actionAddSpellExclusion();
     String settingsAreaName();
+    String defaultCharsetList();
+    String settingsFormCharsetList();
 }

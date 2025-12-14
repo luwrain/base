@@ -8,14 +8,11 @@ import org.luwrain.app.base.*;
 import org.luwrain.controls.*;
 
 import static java.util.Objects.*;
+import static java.util.stream.Collectors.*;
 
 public final class SettingsLayout extends LayoutBase
 {
     static private final Logger log = LogManager.getLogger();
-
-static private final String
-    YANDEX_FOLDER_ID = "yandex-folder-id",
-    YANDEX_API_KEY = "yandex-api-key";
 
     final App app;
     final FormArea form;
@@ -26,6 +23,7 @@ static private final String
 	this.app = app;
 	final var s = app.getStrings();
 	form = new FormArea(getControlContext(), s.settingsAreaName());
+	form.addEdit("charsets", s.settingsFormCharsetList(), app.conf.getCharsets().stream().collect(joining(", ")));
 	form.addEdit("narrating-channel-name", s.settingsFormNarratingChannelName(), requireNonNullElse(app.conf.getNarratingChannelName(), ""));
 	form.addEdit("narrating-channel-params", s.settingsFormNarratingChannelParams(), requireNonNullElse(app.conf.getNarratingChannelParams(), ""));
 	form.addEdit("narrated-file-len", s.settingsFormNarratedFileLen(), String.valueOf(app.conf.getNarratedFileLen()));
