@@ -72,7 +72,7 @@ final class MainLayout extends LayoutBase
 		}
 	    };
 	this.corrector = (MultilineEditModelWrap)editArea.getEdit().getMultilineEditModel();
-
+	setPropertiesHandler(editArea, a -> new SettingsLayout(app, getReturnAction()));
 	setAreaLayout(editArea, actions(
 					action("replace", app.getStrings().actionReplace(), new InputEvent(InputEvent.Special.F5), this::actReplace),
 					action("spell-right", app.getStrings().actionSpellRight(), new InputEvent(InputEvent.Special.ARROW_RIGHT, EnumSet.of(InputEvent.Modifiers.SHIFT)), this::actFindSpellRight),

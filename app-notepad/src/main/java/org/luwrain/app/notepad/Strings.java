@@ -66,4 +66,5 @@ public interface Strings
     String correctionSuggestionsPopupName();
 
     String actionAddSpellExclusion();
+    String settingsAreaName();
 }
