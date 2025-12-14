@@ -67,7 +67,7 @@ final class Conv
 	return res.toString();
     }
 
-    boolean rereadWithNewCharser(File file)
+    boolean rereadWithNewCharset(File file)
     {
 	NullCheck.notNull(file, "file");
 	return Popups.confirmDefaultYes(luwrain, "Новая кодировка", "Перечитать файл \"" + file.getAbsolutePath() + "\" с новой кодировкой?");

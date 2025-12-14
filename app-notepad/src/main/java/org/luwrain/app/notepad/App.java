@@ -16,6 +16,7 @@ import org.luwrain.speech.*;
 import org.luwrain.app.base.*;
 
 import static org.luwrain.util.TextUtils.*;
+import static org.luwrain.app.notepad.TextFiles.*;
 
 public final class App extends AppBase<Strings>
 {
@@ -34,12 +35,11 @@ public final class App extends AppBase<Strings>
     Mode mode = Mode.NONE;
     boolean speakIndent = false;
     Config conf = null;
+Conv conv = null;
+Hooks hooks = null;
     private FutureTask narratingTask = null; 
     private Narrating narrating = null;
-    Settings sett = null;
     private final String arg;
-    private Conv conv = null;
-    private Hooks hooks = null;
     private MainLayout mainLayout = null;
     private NarratingLayout narratingLayout = null;
 
@@ -72,7 +72,7 @@ public final class App extends AppBase<Strings>
 	{
 	    this.file = new File(arg);
 	    if (this.file.exists() && !this.file.isDirectory())
-		mainLayout.setText(read());
+		mainLayout.setText(read(file, charset));
 	    this.modified = false;
 	    setAppName(file.getName());
 	}
@@ -134,7 +134,6 @@ public final class App extends AppBase<Strings>
 
     void activateMode(Mode mode)
     {
-	NullCheck.notNull(mode, "mode");
 	switch(mode)
 	{
 	case NATURAL:
@@ -148,7 +147,6 @@ public final class App extends AppBase<Strings>
 
     boolean narrating(String[] text)
     {
-	NullCheck.notNullItems(text, "text");
 	if (isBusy())
 	    return false;
 	final NarratingText narratingText = new NarratingText();
@@ -175,7 +173,7 @@ public final class App extends AppBase<Strings>
 	    getLuwrain().message(getStrings().noChannelToSynth(conf.getNarratingChannelName()), Luwrain.MessageType.ERROR);
 	    return true;
 	}
-	log.debug("Narrating channel loaded: " + channel.getChannelName());
+	log.trace("Narrating channel loaded: " + channel.getChannelName());
 	final NarratingLayout layout = new NarratingLayout(this, ()->cancelNarrating());
 	this.narrating = new Narrating(this, layout, narratingText.sents.toArray(new String[narratingText.sents.size()]),
 				       destDir, new File(getLuwrain().getFileProperty("luwrain.dir.scripts"), "lwr-audio-compress").getAbsolutePath(), channel);
@@ -202,12 +200,6 @@ public final class App extends AppBase<Strings>
     {
 	narrating = null;
 	narratingTask = null;
-    }
-
-    String[] read() throws IOException
-    {
-	final String text = org.luwrain.util.FileUtils.readTextFile(file, charset);
-	return splitLines(text);
     }
 
     void save(String[] lines) throws IOException
@@ -238,9 +230,4 @@ public final class App extends AppBase<Strings>
 	    return;
 	super.closeApp();
     }
-
-            Conv getConv() { return this.conv; }
-    Hooks getHooks() { return this.hooks; }
-    Settings getSett() { return this.sett; }
-
 }

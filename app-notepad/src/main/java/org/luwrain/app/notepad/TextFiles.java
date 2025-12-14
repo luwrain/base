@@ -6,23 +6,25 @@ import java.io.*;
 
 import static java.util.Objects.*;
 import static org.luwrain.util.StreamUtils.*;
+import static org.luwrain.util.TextUtils.*;
 
-final class textFiles
+final class TextFiles
 {
-static String readAsString(File file, String charset) throws IOException
+    static String readAsString(File file, String charset) throws IOException
     {
 	requireNonNull(file, "file can't be null");
 	requireNonNull(charset, "charset can't be null");
 	try (final InputStream is = new FileInputStream(file)) {
-	final byte[] bytes = readAllBytes(is);
-	return new String(bytes, charset);
+	    return new String(readAllBytes(is), charset);
     }
     }
 
     static List<String> read(File file, String charset) throws IOException
     {
-	final String s= readAsString(file, charset).replaceAll("\r\n",
-							       "\r").replaceAll("\r", "\n");
-	return Arrays.asList(s.split("\n", -1));
+	requireNonNull(file, "file can't be null");
+	requireNonNull(charset, "charset can't be null");
+	if (charset.isEmpty())
+	    throw new IllegalArgumentException("charset can't be empty");
+	return splitLinesAsList(readAsString(file, charset));
     }
 }

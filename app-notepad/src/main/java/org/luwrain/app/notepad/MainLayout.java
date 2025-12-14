@@ -16,6 +16,8 @@ import org.luwrain.script.*;
 import org.luwrain.app.base.*;
 import org.luwrain.nlp.*;
 
+import static org.luwrain.app.notepad.TextFiles.*;
+
 final class MainLayout extends LayoutBase
 {
     private final App app;
@@ -88,13 +90,13 @@ final class MainLayout extends LayoutBase
 
     private boolean actReplace()
     {
-	final String oldValue = app.getConv().replaceExp();
+	final String oldValue = app.conv.replaceExp();
 	if (oldValue == null || oldValue.isEmpty())
 	    return true;
-	final String newValue = app.getConv().replaceWith();
+	final String newValue = app.conv.replaceWith();
 	if (newValue == null)
 	    return true;
-	editArea.update((lines, hotPoint)->{
+	editArea.update((lines, hotPoint) -> {
 		for(int i = 0;i < lines.getLineCount();i++)
 		    lines.setLine(i, lines.getLine(i).replaceAll(oldValue, newValue));
 		return true;
@@ -173,14 +175,14 @@ final class MainLayout extends LayoutBase
     {
 	if (!app.everythingSaved())
 	    return true;
-	final File file = app.getConv().open();
+	final File file = app.conv.open();
 	if (file == null)
 	    return true;
 	//To restore on failed reading
 	final File origFile = app.file;
 	app.file = file;
 	try {
-	    setText(app.read());
+	    setText(read(app.file, app.charset));
 	}
 	catch(IOException e)
 	{
@@ -197,7 +199,7 @@ final class MainLayout extends LayoutBase
 
     private boolean actSaveAs()
     {
-	final File f = app.getConv().save(app.file);
+	final File f = app.conv.save(app.file);
 	if (f == null)
 	    return true;
 	app.file = f;
@@ -219,14 +221,14 @@ final class MainLayout extends LayoutBase
     {
 	if (!app.everythingSaved())
 	    return true;
-	final String res = app.getConv().charset();
+	final String res = app.conv.charset();
 	if (res == null)
 	    return true;
 	app.charset = res;
-	if (app.file != null && app.getConv().rereadWithNewCharser(app.file))
+	if (app.file != null && app.conv.rereadWithNewCharset(app.file))
 	{
 	    try {
-		setText(app.read());
+		setText(read(app.file, app.charset));
 	    }
 	    catch(IOException e)
 	    {
@@ -278,7 +280,7 @@ final class MainLayout extends LayoutBase
 	if (suggestions != null)
 	if (suggestions == null || suggestions.isEmpty())
 	    return false;
-	final String correction = app.getConv().correctionSuggestion(suggestions.toArray(new String[suggestions.size()]));
+	final String correction = app.conv.correctionSuggestion(suggestions.toArray(new String[suggestions.size()]));
 	if (correction == null)
 	    return true;
 	editArea.update((lines, hotPoint)->{
@@ -308,10 +310,10 @@ final class MainLayout extends LayoutBase
 	return true;
     }
 
-    void setText(String[] text)
+    void setText(List<String> text)
     {
-	editArea.update((lines, hotPoint)->{
-		lines.setLines(text);
+	editArea.update((lines, hotPoint) -> {
+		lines.setLines(text.toArray(new String[text.size()]));
 		return false;//Means no need to call listeners etc
 	    });
 	editArea.refresh();
