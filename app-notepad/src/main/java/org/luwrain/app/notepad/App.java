@@ -106,7 +106,7 @@ Hooks hooks = null;
 	    setAppName(file.getName());
 	}
 	try {
-	    save(mainLayout.editArea.getText());
+	    write(file, mainLayout.editArea.getTextAsList(), charset, lineSeparator);
 	}
 	catch(IOException e)
 	{
@@ -203,12 +203,6 @@ Hooks hooks = null;
     {
 	narrating = null;
 	narratingTask = null;
-    }
-
-    void save(String[] lines) throws IOException
-    {
-	NullCheck.notNullItems(lines, "lines");
-	//	org.luwrain.util.FileUtils.writeTextFileMultipleStrings(file, lines, charset, lineSeparator);
     }
 
     @Override public boolean isBusy()

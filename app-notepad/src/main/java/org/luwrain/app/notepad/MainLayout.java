@@ -205,7 +205,7 @@ final class MainLayout extends LayoutBase
 	app.file = f;
 	onNewFile();
 	try {
-	    app.save(editArea.getText());
+	    write(app.file, editArea.getTextAsList(), app.charset, app.lineSeparator);
 	}
 	catch(IOException e)
 	{
