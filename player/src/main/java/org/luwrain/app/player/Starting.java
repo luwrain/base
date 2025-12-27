@@ -1,18 +1,5 @@
-/*
-   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
-
-   This file is part of LUWRAIN.
-
-   LUWRAIN is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
-
-   LUWRAIN is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-*/
+// SPDX-License-Identifier: BUSL-1.1
+// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.player;
 
@@ -46,22 +33,22 @@ final class Starting
 			final AtomicLong prevPosMsec = new AtomicLong(album.getPosMsec());
 			final Playlist playlist = new FixedPlaylist(urls.toArray(new String[urls.size()]),
 								    (trackNum, posMsec)->{
-									if (!album.isSavePosition())
+									if (!album.isSavePos())
 									    return;
 									if (Math.abs(posMsec - prevPosMsec.get()) < SAVE_POS_STEP)
 									    return;
 									prevPosMsec.set(posMsec);
 									album.setTrackNum(trackNum);
 									album.setPosMsec(posMsec);
-									app.getAlbums().save();
+									app.albums.save();
 								    },
 								    (value)->{
 									album.setVolume(value);
-									app.getAlbums().save();
+									app.albums.save();
 								    }, album.getVolume());
 			app.getPlayer().play(playlist,
-					     album.isSavePosition()?album.getTrackNum():0,
-					     album.isSavePosition()?album.getPosMsec():0,
+					     album.isSavePos()?album.getTrackNum():0,
+					     album.isSavePos()?album.getPosMsec():0,
 					     EnumSet.noneOf(Player.Flags.class));
 		    });
 	    });
@@ -75,7 +62,7 @@ final class Starting
 	    return false;
 	final Playlist playlist = new FixedPlaylist(new String[]{url.trim()}, (value)->{
 		album.setVolume(value);
-		app.getAlbums().save();
+		app.albums.save();
 	    }, album.getVolume());
 	app.getPlayer().play(playlist, 0, 0, EnumSet.of(Player.Flags.STREAMING));
 	return true;

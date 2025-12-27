@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: BUSL-1.1
 // Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.commander;
@@ -7,11 +7,12 @@ import java.io.*;
 import java.nio.file.*;
 
 import org.luwrain.app.commander.fileops.*;
+import org.luwrain.core.annotations.*;
 
+
+    @ResourceStrings(langs = { "en", "ru" })
 public interface Strings
 {
-    static final String NAME = "luwrain.commander";
-
     String appName();
     String leftPanelName();
     String rightPanelName();

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: BUSL-1.1
 // Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.notepad;
@@ -50,15 +50,15 @@ final class NarratingLayout extends LayoutBase implements Narrating.Listener
 		    app.getLuwrain().setEventResponse(DefaultEventResponse.text(app.getLuwrain().getSpeakableText(line, Luwrain.SpeakableTextType.PROGRAMMING)));
 		}
 	    };
-	narratingArea.addLine(app.getStrings().narratingProgress("0.0%"));
-	narratingArea.addLine("");
+	narratingArea.add(app.getStrings().narratingProgress("0.0%"));
+	narratingArea.add("");
     }
 
     @Override public void writeMessage(String text)
     {
 	NullCheck.notNull(text, "text");
 	app.getLuwrain().runUiSafely(()->{
-		narratingArea.insertLine(narratingArea.getLineCount() - 2, text);
+		narratingArea.add(narratingArea.getLineCount() - 2, text);
 	    });
     }
 

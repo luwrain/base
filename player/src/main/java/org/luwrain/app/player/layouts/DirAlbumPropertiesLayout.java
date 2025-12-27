@@ -1,18 +1,5 @@
-/*
-   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
-
-   This file is part of LUWRAIN.
-
-   LUWRAIN is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
-
-   LUWRAIN is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-*/
+// SPDX-License-Identifier: BUSL-1.1
+// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.player.layouts;
 
@@ -60,7 +47,7 @@ public final class DirAlbumPropertiesLayout extends LayoutBase
 	    };
 	formArea.addEdit(TITLE, app.getStrings().albumPropTitle(), album.getTitle());
 	formArea.addEdit(PATH, app.getStrings().albumPropPath(), album.getPath());
-	formArea.addCheckbox(SAVE_POSITION, app.getStrings().albumPropSavePosition(), album.isSavePosition());
+	formArea.addCheckbox(SAVE_POSITION, app.getStrings().albumPropSavePosition(), album.isSavePos());
 	setCloseHandler(closing);
 	setOkHandler(()->onOk(album, closing));
 	setAreaLayout(formArea, null);
@@ -78,7 +65,7 @@ public final class DirAlbumPropertiesLayout extends LayoutBase
 	}
 	album.setTitle(title.trim());
 	album.setPath(path);
-	album.setSavePosition(formArea.getCheckboxState(SAVE_POSITION));
+	album.setSavePos(formArea.getCheckboxState(SAVE_POSITION));
 	closing.onAction();
 	return true;
     }

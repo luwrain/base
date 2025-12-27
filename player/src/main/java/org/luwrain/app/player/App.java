@@ -1,18 +1,5 @@
-/*
-   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
-
-   This file is part of LUWRAIN.
-
-   LUWRAIN is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
-
-   LUWRAIN is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-*/
+// SPDX-License-Identifier: BUSL-1.1
+// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.player;
 
@@ -20,6 +7,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.io.*;
 import java.net.*;
+import org.apache.logging.log4j.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.events.*;
@@ -29,9 +17,7 @@ import org.luwrain.app.base.*;
 
 public final class App extends AppBase<Strings> implements Application, MonoApp, org.luwrain.player.Listener
 {
-    static final String
-	DATA_DIR_NAME = "luwrain.player",
-	LOG_COMPONENT = "player";
+    static private final Logger log = LogManager.getLogger();
 
     private final String[] args;
     final Starting starting = new Starting(this);
@@ -39,7 +25,7 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
     private org.luwrain.player.Player player = null;
     private Conv conv = null;
     private MainLayout mainLayout = null;
-    private Albums albums = null;
+    Albums albums = null;
     private Hooks hooks = null;
     final ConcurrentMap<String, TrackInfo> trackInfoMap = new ConcurrentHashMap<>();
 
@@ -84,7 +70,7 @@ mainLayout = new MainLayout(this, this.player);
 		    }
 		    catch(Throwable e)
 		    {
-			Log.debug(LOG_COMPONENT, "unable to read tags of the file: " + e.getClass().getName() + ": " + e.getMessage());
+			log.debug("Unable to read tags of the file: " + e.getClass().getName() + ": " + e.getMessage());
 		    }
 		}
 	    });
@@ -170,7 +156,7 @@ mainLayout = new MainLayout(this, this.player);
 	crash(e);
     }
 
-    Albums getAlbums() { return this.albums; }
+    //    Albums getAlbums() { return this.albums; }
     Player getPlayer() { return this.player; }
     Hooks getHooks() { return this.hooks; }
     public Conv getConv() { return conv; }

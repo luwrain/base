@@ -1,18 +1,5 @@
-/*
-   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
-
-   This file is part of LUWRAIN.
-
-   LUWRAIN is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
-
-   LUWRAIN is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-*/
+// SPDX-License-Identifier: BUSL-1.1
+// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.player;
 
@@ -67,7 +54,7 @@ final class MainLayout extends LayoutBase
 	{
 	    final EditableListArea.Params<Album> params = new EditableListArea.Params<>();
 	    params.context = getControlContext();
-	    params.model = app.getAlbums();
+	    params.model = app.albums;
 	    params.name = app.getStrings().albumsAreaName();
 	    params.clickHandler = (area, index, obj)->app.starting.play((Album)obj);
 	    params.appearance = new ListUtils.DoubleLevelAppearance<Album>(params.context){
@@ -151,7 +138,7 @@ final class MainLayout extends LayoutBase
 	    if (title == null)
 		return true;
 	    album.setTitle(title);
-	    final int index = app.getAlbums().addAlbum(albumsArea.selectedIndex(), album);
+	    final int index = app.albums.addAlbum(albumsArea.selectedIndex(), album);
 	    albumsArea.refresh();
 	    albumsArea.select(index, false);
 	    return true;
@@ -183,7 +170,7 @@ final class MainLayout extends LayoutBase
 	default:
 	    return true;
 	}
-	final int index = app.getAlbums().addAlbum(albumsArea.selectedIndex(), album);
+	final int index = app.albums.addAlbum(albumsArea.selectedIndex(), album);
 	albumsArea.refresh();
 	albumsArea.select(index, false);
 	return true;
@@ -236,7 +223,7 @@ final class MainLayout extends LayoutBase
 	if (album == null)
 	    return false;
 	final ActionHandler closing = ()->{
-	    app.getAlbums().save();
+	    app.albums.save();
 		    app.setAreaLayout(this);
 		    setActiveArea(albumsArea);
 		    return true;

@@ -1,36 +1,18 @@
-/*
-   Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
-
-   This file is part of LUWRAIN.
-
-   LUWRAIN is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 3 of the License, or (at your option) any later version.
-
-   LUWRAIN is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-*/
+// SPDX-License-Identifier: BUSL-1.1
+// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.player;
 
 import java.util.*;
 import java.io.*;
-import java.net.*;
-import java.lang.reflect.*;
-
-import com.google.gson.*;
-import com.google.gson.reflect.*;
+import org.apache.logging.log4j.*;
 
 import org.luwrain.core.*;
 import org.luwrain.controls.*;
 
 final class Albums extends ArrayList<Album> implements EditableListArea.Model<Album>
 {
-    static private final String LOG_COMPONENT = App.LOG_COMPONENT;
-    static final Type ALBUM_LIST_TYPE = new TypeToken<List<Album>>(){}.getType();
+    static private final Logger log = LogManager.getLogger();
 
     private final App app;
 
@@ -45,10 +27,10 @@ final class Albums extends ArrayList<Album> implements EditableListArea.Model<Al
 	clear();
 	if (app.conf.albums == null)
 	    return;
-		addAll(app.conf.albums);
-		        }
+	addAll(app.conf.albums);
+    }
 
-        synchronized void save()
+    synchronized void save()
     {
 	app.conf.albums = new ArrayList<>();
 	app.conf.albums.addAll(this);
@@ -90,7 +72,7 @@ final class Albums extends ArrayList<Album> implements EditableListArea.Model<Al
 	for(Object o: newObjs)
 	    if (!(o instanceof Album))
 	    {
-				Log.error(LOG_COMPONENT, "illegal class of album object: " + o.getClass().getName());
+				log.error("Illegal class of album object: " + o.getClass().getName());
 		return false;
 	    }
 	    addAll(pos, Arrays.asList(Arrays.copyOf(newObjs, newObjs.length, Album[].class)));
