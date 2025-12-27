@@ -38,4 +38,10 @@ public interface Strings
     String albumPropPath();
     String albumPropSavePosition();
     String albumPropTitleCannotBeEmpty();
+
+    String newAlbumIntro();
+    String wizardNewAlbumTitle();
+    String wizardNewAlbumDir();
+    String wizardNewAlbumPlaylist();
+    String wizardNewAlbumStream();
 }

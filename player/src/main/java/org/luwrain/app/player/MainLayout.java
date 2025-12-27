@@ -127,53 +127,21 @@ final class MainLayout extends LayoutBase
 
     private boolean actAddAlbum()
     {
-	final Album.Type type = app.getConv().newAlbumType();
-	if (type == null)
-	    return true;
-	if (type == Album.Type.SECTION)
-	{
-	    final Album album = new Album();
-	    album.setType(Album.Type.SECTION);
-	    final String title = app.getConv().newSectionTitle();
-	    if (title == null)
-		return true;
-	    album.setTitle(title);
+	try {
+	    final var layout = new NewAlbumLayout(app, getReturnAction());
+	app.setAreaLayout(layout);
+	getLuwrain().announceActiveArea();
+	/*
 	    final int index = app.albums.addAlbum(albumsArea.selectedIndex(), album);
 	    albumsArea.refresh();
 	    albumsArea.select(index, false);
-	    return true;
+	*/
 	}
-	final String title = app.getConv().newAlbumTitle();
-	if (title == null)
-	    return true;
-	final Album album = new Album();
-	album.setType(type);
-	album.setTitle(title);
-	switch(type)
+	catch(IOException ex)
 	{
-	case STREAMING:
-	    {
-		final String url = app.getConv().newStreamingAlbumUrl();
-		if (url == null)
-		    return true;
-		album.setUrl(url);
-		break;
-	    }
-	case DIR:
-	    {
-		final File path = app.getConv().dirAlbumPath();
-		if (path == null)
-		    return true;
-		album.setPath(path.getAbsolutePath());
-		break;
-	    }
-	default:
-	    return true;
+	    app.crash(ex);
 	}
-	final int index = app.albums.addAlbum(albumsArea.selectedIndex(), album);
-	albumsArea.refresh();
-	albumsArea.select(index, false);
-	return true;
+		    return true;
     }
 
     private boolean actTrack(int pos)
