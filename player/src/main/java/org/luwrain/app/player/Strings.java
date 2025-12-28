@@ -39,9 +39,10 @@ public interface Strings
     String albumPropSavePosition();
     String albumPropTitleCannotBeEmpty();
 
-    String newAlbumIntro();
+    String wizardNewAlbumIntro();
     String wizardNewAlbumTitle();
     String wizardNewAlbumDir();
     String wizardNewAlbumPlaylist();
     String wizardNewAlbumStream();
+    String wizardNewAlbumTitleCannotBeEmpty();
 }

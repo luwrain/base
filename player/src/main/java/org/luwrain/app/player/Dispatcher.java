@@ -6,14 +6,14 @@ package org.luwrain.app.player;
 import java.util.*;
 import java.net.*;
 import java.nio.file.*;
+import org.apache.logging.log4j.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.MediaResourcePlayer.*;
 
 final class Dispatcher implements org.luwrain.player.Player, MediaResourcePlayer.Listener
 {
-    static final String
-	LOG_COMPONENT = "player";
+    static private final Logger log = LogManager.getLogger();
 
     private interface ListenerNotification
     {
@@ -22,7 +22,7 @@ final class Dispatcher implements org.luwrain.player.Player, MediaResourcePlayer
 
     private final Luwrain luwrain;
     private final Random rand = new Random();
-    private MediaResourcePlayer[] mediaResourcePlayers;
+    private List<MediaResourcePlayer> mediaResourcePlayers;
     private final List<org.luwrain.player.Listener> listeners = new ArrayList<>();
 
     private State state = State.STOPPED;
@@ -37,9 +37,9 @@ final class Dispatcher implements org.luwrain.player.Player, MediaResourcePlayer
     {
 	NullCheck.notNull(luwrain, "luwrain");
 	this.luwrain = luwrain;
-	this.mediaResourcePlayers = luwrain.getMediaResourcePlayers();
-	for(MediaResourcePlayer p: mediaResourcePlayers)
-	    Log.debug(LOG_COMPONENT, "'" + p.getExtObjName() + "' is a known media resource player");
+	this.mediaResourcePlayers = luwrain.createInstances(MediaResourcePlayer.class);
+	for(var p: mediaResourcePlayers)
+	    log.info("'" + p.getExtObjName() + "' is a known media resource player");
     }
 
     @Override public synchronized Result play(org.luwrain.player.Playlist playlist, int startingTrackNum, long startingPosMsec, Set<Flags> flags)
@@ -333,7 +333,7 @@ this.posMsec = 0;
 	    }
 	    catch(Throwable e)
 	    {
-		Log.warning(LOG_COMPONENT, "a player listener has thrown an exception: " + e.getClass().getName() + ": " + e.getMessage());
+		log.warn("A player listener has thrown an exception: " + e.getClass().getName() + ": " + e.getMessage());
 	    }
     }
 
@@ -347,7 +347,7 @@ this.posMsec = 0;
 	}
 	catch (java.io.IOException e)
 	{
-	    Log.error(LOG_COMPONENT, "unable to create the URL object for " + url + ":" + e.getClass().getName() + ":" + e.getMessage());
+	    log.error("Unable to create the URL object for " + url + ":" + e.getClass().getName() + ":" + e.getMessage());
 	    return null;
 	}
     }
@@ -373,10 +373,10 @@ this.posMsec = 0;
 	final MediaResourcePlayer p = findPlayer(task);
 	if (p == null)
 	{
-	    Log.error(LOG_COMPONENT, "unable to choose a player for " + task.url.toString());
+	    log.error("Unable to choose a player for " + task.url.toString());
 	    return Result.UNSUPPORTED_FORMAT_STARTING_TRACK;
 	}
-	final MediaResourcePlayer.Instance instance = p.newMediaResourcePlayer(this);
+	final MediaResourcePlayer.Instance instance = p.newMediaResourcePlayer(luwrain, this);
 	final MediaResourcePlayer.Params params = new MediaResourcePlayer.Params();
 	params.playFromMsec = task.startPosMsec;
 	params.volume = volume;
