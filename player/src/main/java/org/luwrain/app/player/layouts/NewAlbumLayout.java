@@ -23,13 +23,20 @@ public final class NewAlbumLayout extends LayoutBase
     final WizardGroovyController controller;
     private String title = "";
 
-    public NewAlbumLayout(App app, ActionHandler closing) throws IOException
+    public NewAlbumLayout(App app, EditableListArea<Album> area, ActionHandler closing) throws IOException
     {
 	super(app);
 	this.app = app;
 	wizardArea = new WizardArea(getControlContext()) ;
 	controller = new WizardGroovyController(getLuwrain(), wizardArea){
 		public Strings getStrings() { return app.getStrings(); }
+		public void addDirAlbum(String title, String path)
+		{
+		    final var m = (Albums)area.getListModel();
+		    m.add(new Album(Album.Type.DIR, title, path, null));
+		    area.refresh();
+		    closing.onAction();
+		}
 		//		public void skip() {app.layouts().main(); }
 	    };
 	Eval.me("wizard", controller, getStringResource(this.getClass(), "new-album.groovy"));

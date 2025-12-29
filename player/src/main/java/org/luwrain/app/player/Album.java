@@ -7,6 +7,8 @@ import lombok.*;
 
 import org.luwrain.player.Player;
 
+import static java.util.Objects.*;
+
 @Data
 @NoArgsConstructor
 public final class Album implements Comparable
@@ -17,10 +19,17 @@ public final class Album implements Comparable
     private String title, 	url, path;
 
     private Integer volume = null;
-
     private boolean savePos;
     private int trackNum;
     private long posMsec;
+
+    public Album(Type type, String title, String path, String url)
+    {
+	this.type = requireNonNull(type, "type");
+	this.title = requireNonNull(title, "title can't be null");
+	this.path = path;
+	this.url = url;
+    }
 
 public int getVolume()
     {

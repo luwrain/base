@@ -1,11 +1,11 @@
 
-def title = ''
+def title = ""
 
 wizard 'Подключение электронной почты', 'greeting', {
-
+def s = getStrings()
 
 frame 'greeting', {
-text getStrings().wizardNewAlbumIntro()
+text s.wizardNewAlbumIntro()
 input 'album-title', getStrings().wizardNewAlbumTitle()
 button getStrings().wizardNewAlbumDir(), { values ->
 title = values.getText(0)
@@ -40,7 +40,17 @@ return
 }
 
 frame 'dir', {
-input 'dir-path', 'kakak'
+text s.wizardNewAlbumDirIntro(title)
+input 'dir-path', s.wizardNewAlbumDirPath()
+button s.wizardNewAlbumCreate(), { values ->
+def path = values.getText(0).trim()
+if (path.isEmpty())
+{
+error s.wizardNewAlbumDirPathCannotBeEmpty()
+return
+}
+addDirAlbum(title, path);
+}
 }
 }
 

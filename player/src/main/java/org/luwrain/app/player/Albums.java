@@ -10,7 +10,7 @@ import org.apache.logging.log4j.*;
 import org.luwrain.core.*;
 import org.luwrain.controls.*;
 
-final class Albums extends ArrayList<Album> implements EditableListArea.Model<Album>
+public final class Albums extends ArrayList<Album> implements EditableListArea.Model<Album>
 {
     static private final Logger log = LogManager.getLogger();
 

@@ -128,7 +128,7 @@ final class MainLayout extends LayoutBase
     private boolean actAddAlbum()
     {
 	try {
-	    final var layout = new NewAlbumLayout(app, getReturnAction());
+	    final var layout = new NewAlbumLayout(app, albumsArea, getReturnAction());
 	app.setAreaLayout(layout);
 	getLuwrain().announceActiveArea();
 	/*

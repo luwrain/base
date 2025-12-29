@@ -45,4 +45,8 @@ public interface Strings
     String wizardNewAlbumPlaylist();
     String wizardNewAlbumStream();
     String wizardNewAlbumTitleCannotBeEmpty();
+    String wizardNewAlbumDirIntro(String title);
+    String wizardNewAlbumDirPath();
+    String wizardNewAlbumCreate();
+    String wizardNewAlbumDirPathCannotBeEmpty();
 }
