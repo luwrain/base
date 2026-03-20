@@ -22,7 +22,6 @@ final class MainLayout extends LayoutBase
 {
     private final App app;
     final EditArea editArea;
-    final MultilineEditModelWrap corrector;
     final EditSpellChecking spellChecking;
     final EditArea.ChangeListener modificationMarkListener;
 
@@ -32,19 +31,23 @@ final class MainLayout extends LayoutBase
 	this.app = app;
 	this.spellChecking =new EditSpellChecking(getLuwrain());
 	this.modificationMarkListener = (area, lines, hotPoint)->{app.modified = true;};
-
-	this.editArea = new EditArea(editParams( params -> {
-		    params.name = "";
-		    params.appearance = new Appearance(params.context){
+	
+	this.editArea = new EditArea(editParams( p -> {
+		    p.name = "";
+		    p.appearance = new Appearance(getControlContext()){
 			    @Override App.Mode getMode() { return app.mode; }
 			    @Override public EditArea getEditArea() { return editArea; };
 			};
-		    params.changeListeners = Arrays.asList(modificationMarkListener);
-		    params.editFactory = p -> {
-			p.model = new MultilineEditModelWrap(p.model);
-			return new MultilineEdit(p);
+		    p.changeListeners = List.of(modificationMarkListener);
+		    p.editFactory = pp -> {
+			pp.model = new Indents(pp.model){
+				@Override App.Mode getMode() { return app.mode; }
+				@Override public EditArea getEditArea() { return editArea; };
+			    };
+			return new MultilineEdit(pp);
 		    };
 		})){
+
 		@Override public boolean onSystemEvent(SystemEvent event)
 		{
 		    if (event.getType() == SystemEvent.Type.REGULAR)
@@ -58,12 +61,14 @@ final class MainLayout extends LayoutBase
 			}
 		    return super.onSystemEvent(event);
 		}
+
 		@Override public boolean onAreaQuery(AreaQuery query)
 		{
 		    if (query.getQueryCode() == AreaQuery.CURRENT_DIR && query instanceof CurrentDirQuery)
 			return onDirectoryQuery((CurrentDirQuery)query);
 		    return super.onAreaQuery(query);
 		}
+
 		@Override public String getAreaName()
 		{
 		    if (app.file == null)
@@ -71,7 +76,7 @@ final class MainLayout extends LayoutBase
 		    return app.file.getName();
 		}
 	    };
-	this.corrector = (MultilineEditModelWrap)editArea.getEdit().getMultilineEditModel();
+
 	setPropertiesHandler(editArea, a -> new SettingsLayout(app, getReturnAction()));
 	setAreaLayout(editArea, actions(
 					action("replace", app.getStrings().actionReplace(), new InputEvent(InputEvent.Special.F5), this::actReplace),

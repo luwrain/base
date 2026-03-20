@@ -12,18 +12,20 @@ public interface Strings
     String albumDeletingPopupName();
     String albumDeletingPopupText(String albumName);
     String albumsAreaName();
-    String albumTypeDir();
-    String albumTypeM3u();
-    String albumTypeSection();
-    String albumTypeStreaming();
+    //    String albumTypeDir();
+    //    String albumTypeM3u();
+    //    String albumTypeSection();
+    //    String albumTypeStreaming();
     String appName();
     String controlAreaName(); 
-    String newAlbumPopupName();
-    String newAlbumTitlePopupPrefix();
-    String newAlbumTypePopupName();
+    //    //    String newAlbumPopupName();
+    //    String newAlbumTitlePopupPrefix();
+    //    String newAlbumTypePopupName();
     String newSectionPopupName();
     String newSectionTitlePopupPrefix();
     String playlistAreaName();
+
+    String albumDirPopupName();
 
     String actionPauseResume();
     String actionPrevTrack();
