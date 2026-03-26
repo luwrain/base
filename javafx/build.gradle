@@ -1,10 +1,9 @@
-// The LUWRAIN Project
-// Michael Pozhidaev <msp@luwrain.org>
 
 plugins {
   id "java-library"
   id "io.freefair.lombok" version "8.6"
-  id "org.openjfx.javafxplugin" version "0.0.13"
+//  id "org.openjfx.javafxplugin" version "0.0.13"
+  id "org.openjfx.javafxplugin" version "0.1.0"
 }
 
 dependencies {
@@ -16,6 +15,6 @@ dependencies {
 }
 
 javafx { 
-  version = "17"
+  version = ver.javafx
   modules = [ 'javafx.controls', 'javafx.web' ]
 }

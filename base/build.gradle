@@ -11,6 +11,7 @@ annotationProcessor libraries.autoService
 testImplementation libraries.junit
 }
 
+
 jar {
     manifest {
         attributes(
