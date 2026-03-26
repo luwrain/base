@@ -1,21 +1,37 @@
 
 plugins {
-id 'application'
+  id 'application'
+  id 'maven-publish'
   id 'java'
   id 'io.freefair.lombok' version '8.6'
 }
 
 dependencies {
-implementation libraries.base
-annotationProcessor libraries.autoService
-testImplementation libraries.junit
+  implementation libraries.base
+  annotationProcessor libraries.autoService
+  testImplementation libraries.junit
 }
 
-
 jar {
-    manifest {
-        attributes(
-                'Main-Class': 'org.luwrain.core.Init'
-        )
+  manifest {
+    attributes(
+        'Main-Class': 'org.luwrain.core.Init'
+    )
+  }
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      groupId = 'org.luwrain'
+      artifactId = 'luwrain-base'
+      version = ver.lwr
+      from components.java
     }
+  }
+  repositories {
+    maven {
+      url = uri(mavenDestRepo)
+    }
+  }
 }
