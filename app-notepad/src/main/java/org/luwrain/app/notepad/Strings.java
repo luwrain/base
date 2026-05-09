@@ -15,6 +15,7 @@ public interface Strings
     String actionOpen();
     String actionReplace();
     String actionSaveAs();
+    String actionAiAssist();
     String appName();
     String cancelNarratingBeforeClosing();
     String enteredPathMayNotBeDir(String fileName);
@@ -60,4 +61,5 @@ public interface Strings
     String settingsAreaName();
     String defaultCharsetList();
     String settingsFormCharsetList();
+
 }

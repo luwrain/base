@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: BUSL-1.1
-// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
+// Copyright 2012-2026 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.notepad;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.io.*;
+import org.apache.logging.log4j.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.events.*;
@@ -15,11 +16,15 @@ import org.luwrain.controls.edit.*;
 import org.luwrain.script.*;
 import org.luwrain.app.base.*;
 import org.luwrain.nlp.*;
+import org.luwrain.io.ai.*;
 
+import static java.util.stream.Collectors.*;
 import static org.luwrain.app.notepad.TextFiles.*;
 
 final class MainLayout extends LayoutBase
 {
+    static private final Logger log = LogManager.getLogger();
+    
     private final App app;
     final EditArea editArea;
     final EditSpellChecking spellChecking;
@@ -84,13 +89,53 @@ final class MainLayout extends LayoutBase
 					action("word-suggestions", app.getStrings().actionWordSuggestions(), new InputEvent(InputEvent.Special.F8), this::actWordSuggestions),
 					action("add-spell-exclusion", app.getStrings().actionAddSpellExclusion(), new InputEvent(InputEvent.Special.F8, EnumSet.of(InputEvent.Modifiers.SHIFT)), this::actAddSpellExclusion),
 					action("charset", app.getStrings().actionCharset(), new InputEvent(InputEvent.Special.F9), MainLayout .this::actCharset),
-					action("narrating", app.getStrings().actionNarrating(), new InputEvent(InputEvent.Special.F10), MainLayout.this::actNarrating),
+					//					action("narrating", app.getStrings().actionNarrating(), new InputEvent(InputEvent.Special.F10), MainLayout.this::actNarrating),
+					actAiAssist(),
 					action("open", app.getStrings().actionOpen(), new InputEvent(InputEvent.Special.F3, EnumSet.of(InputEvent.Modifiers.SHIFT)), MainLayout.this::actOpen),
 					action("save-as", app.getStrings().actionSaveAs(), new InputEvent(InputEvent.Special.F2, EnumSet.of(InputEvent.Modifiers.SHIFT)), MainLayout.this::actSaveAs),
 					action("mode-none", app.getStrings().modeNone(), new InputEvent(InputEvent.Special.F1, EnumSet.of(InputEvent.Modifiers.ALT)), MainLayout.this::actModeNone),
 					action("mode-natural", app.getStrings().modeNatural(), new InputEvent(InputEvent.Special.F2, EnumSet.of(InputEvent.Modifiers.ALT)), MainLayout.this::actModeNatural),
 					action("mode-programming", app.getStrings().modeProgramming(), new InputEvent(InputEvent.Special.F3, EnumSet.of(InputEvent.Modifiers.ALT)), MainLayout.this::actModeProgramming)
 					));
+    }
+
+    private ActionInfo actAiAssist()
+    {
+	return action("ai-assist",
+		      app.getStrings().actionAiAssist(),
+		      new InputEvent(InputEvent.Special.F10), () -> {
+			  final var conf = getLuwrain().loadConf(org.luwrain.settings.ai.Config.class);
+			  //FIXME: Say error message
+			  if (conf == null)
+			      return false;
+			  final var completion = Completion.newInstance(conf);
+			  if (completion == null)
+			      return false;
+			  final var prompt = app.conv.aiPrompt();
+			  if (prompt == null)
+			      return true;
+			  			  final var text = editArea.getTextAsList().stream().collect(joining("\n"));
+						  completion.addUserMessage(text);
+			  completion.addUserMessage(prompt);
+			  log.trace("Prepared the completion object to assist editing");
+			  final var taskId = app.newTaskId();
+			  return app.runTask(taskId, ()-> {
+				  log.trace("Performing the query");
+				  final var res = completion.querySincSingle();
+				  log.trace("LLM gave the result, {}", res.length() > 80?res.substring(0, 80):res);
+				  log.trace("Total result length is {}", res.length());
+				  app.finishedTask(taskId, () -> {
+					  log.trace("Updating the edit area {}", res);
+					  editArea.update((lines, hotPoint) -> {
+						  lines.setLines(res.split("\n", -1));
+						  hotPoint.setHotPointX(0);
+						  hotPoint.setHotPointY(0);
+						  return false;
+					      });
+					  app.getLuwrain().playSound(Sounds.DONE);
+				      });
+			      });
+		      });
     }
 
     private boolean actReplace()
