@@ -8,15 +8,33 @@ import org.luwrain.core.annotations.*;
 @ResourceStrings(langs = { "en", "ru" })
 public interface Strings
 {
+        String appName();
+    
     String actionCharset();
     String actionIndents();
     String actionNarrating();
     String actionNoIndents();
     String actionOpen();
+        String openPopupName();
+    String openPopupPrefix();
+    String errorOpeningFile(String message);
+
+    
     String actionReplace();
+        String replacePopupName();
+    String replaceExpPopupPrefix();
+    String replaceWithPopupPrefix();
+
     String actionSaveAs();
+        String saveChangesPopupName();
+    String saveChangesPopupQuestion();
+    String savePopupName();
+    String savePopupPrefix();
+    String errorSavingFile(String message);
+
+    
     String actionAiAssist();
-    String appName();
+
     String cancelNarratingBeforeClosing();
     String enteredPathMayNotBeDir(String fileName);
     String fileIsSaved();
@@ -34,13 +52,7 @@ public interface Strings
     String noChannelToSynth(String channelName);
     String noModificationsToSave();
     String noTextToSynth();
-    String openPopupName();
-    String openPopupPrefix();
     String propsAreaName();
-    String saveChangesPopupName();
-    String saveChangesPopupQuestion();
-    String savePopupName();
-    String savePopupPrefix();
     String settingsFormFileLenIsNotInteger();
     String settingsFormFileLenMayNotBeNegative();
     String settingsFormName();
@@ -51,9 +63,6 @@ public interface Strings
     String settingsFormNarratingSpeechPitch();
     String settingsFormNarratingSpeechRate();
     String charsetPopupPrefix();
-    String replacePopupName();
-    String replaceExpPopupPrefix();
-    String replaceWithPopupPrefix();
     String actionSpellRight();
     String actionWordSuggestions();
     String correctionSuggestionsPopupName();
@@ -61,5 +70,4 @@ public interface Strings
     String settingsAreaName();
     String defaultCharsetList();
     String settingsFormCharsetList();
-
 }

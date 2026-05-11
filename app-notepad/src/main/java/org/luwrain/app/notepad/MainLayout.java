@@ -91,7 +91,7 @@ final class MainLayout extends LayoutBase
 					action("charset", app.getStrings().actionCharset(), new InputEvent(InputEvent.Special.F9), MainLayout .this::actCharset),
 					//					action("narrating", app.getStrings().actionNarrating(), new InputEvent(InputEvent.Special.F10), MainLayout.this::actNarrating),
 					actAiAssist(),
-					action("open", app.getStrings().actionOpen(), new InputEvent(InputEvent.Special.F3, EnumSet.of(InputEvent.Modifiers.SHIFT)), MainLayout.this::actOpen),
+					actOpen(),
 					action("save-as", app.getStrings().actionSaveAs(), new InputEvent(InputEvent.Special.F2, EnumSet.of(InputEvent.Modifiers.SHIFT)), MainLayout.this::actSaveAs),
 					action("mode-none", app.getStrings().modeNone(), new InputEvent(InputEvent.Special.F1, EnumSet.of(InputEvent.Modifiers.ALT)), MainLayout.this::actModeNone),
 					action("mode-natural", app.getStrings().modeNatural(), new InputEvent(InputEvent.Special.F2, EnumSet.of(InputEvent.Modifiers.ALT)), MainLayout.this::actModeNatural),
@@ -221,30 +221,34 @@ final class MainLayout extends LayoutBase
 	return true;
     }
 
-    private boolean actOpen()
+    ActionInfo actOpen()
     {
-	if (!app.everythingSaved())
-	    return true;
-	final File file = app.conv.open();
-	if (file == null)
-	    return true;
-	//To restore on failed reading
-	final File origFile = app.file;
-	app.file = file;
-	try {
-	    setText(read(app.file, app.charset));
-	}
-	catch(IOException e)
-	{
-	    app.file = origFile;
-	    app.crash(e);
-	    return true;
-	}
-	app.setAppName(app.file.getName());
-	editArea.reset(false);
-	onNewFile();
-	app.modified = false;
-	return true;
+	return action("open",
+		      app.getStrings().actionOpen(),
+		      new InputEvent(InputEvent.Special.F3, EnumSet.of(InputEvent.Modifiers.SHIFT)), ()-> {
+			  if (!app.everythingSaved())
+			      return true;
+			  final File file = app.conv.open();
+			  if (file == null)
+			      return true;
+			  //To restore on failed reading
+			  final File origFile = app.file;
+			  app.file = file;
+			  try {
+			      setText(read(app.file, app.charset));
+			  }
+			  catch(IOException ex)
+			  {
+			      app.file = origFile;
+			      app.message(app.getStrings().errorOpeningFile(ex.getMessage()), Luwrain.MessageType.ERROR);
+			      return true;
+			  }
+			  app.setAppName(app.file.getName());
+			  editArea.reset(false);
+			  onNewFile();
+			  app.modified = false;
+			  return true;
+		      });
     }
 
     private boolean actSaveAs()

@@ -36,14 +36,15 @@ final class Conv
     {
 	return path(luwrain, 
 		    strings.savePopupName(), strings.savePopupPrefix(),
-		    currentFile, //It's OK, if this value is null
+		    currentFile, //OK if it's null
 		    (fileToCheck, announce)->{
 			if (fileToCheck.exists() && fileToCheck.isDirectory())
 			{
 			    if (announce)
 				luwrain.message(strings.enteredPathMayNotBeDir(fileToCheck.getAbsolutePath()), Luwrain.MessageType.ERROR);
 			    return false;
-			}
+}
+			//FIXME: Check the file already exists
 			return true;
 		    });
     }

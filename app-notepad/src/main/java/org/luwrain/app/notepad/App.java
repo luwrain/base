@@ -84,7 +84,6 @@ Hooks hooks = null;
 
     void openLayout(AreaLayout layout)
     {
-	NullCheck.notNull(layout, "layout");
 	getLayout().setBasicLayout(layout);
     }
 
@@ -108,9 +107,9 @@ Hooks hooks = null;
 	try {
 	    write(file, mainLayout.editArea.getTextAsList(), charset, lineSeparator);
 	}
-	catch(IOException e)
+	catch(IOException ex)
 	{
-	    getLuwrain().crash(e);
+	    message(getStrings().errorSavingFile(ex.getMessage()), Luwrain.MessageType.ERROR);
 	    return false;
 	}
 	this.modified = false;
@@ -118,7 +117,7 @@ Hooks hooks = null;
 	return true;
     }
 
-    //Returns true, if there are no modifications a user might want to save
+    //Returns true, if there are modifications, but a user don't want to save them
     boolean everythingSaved()
     {
 	if (!modified)
@@ -220,11 +219,13 @@ Hooks hooks = null;
 
     @Override public void closeApp()
     {
+	/*
 	if (isBusy())
 	{
 	    getLuwrain().message(getStrings().cancelNarratingBeforeClosing(), Luwrain.MessageType.ERROR);
 	    return;
 	}
+	*/
 	if (!everythingSaved())
 	    return;
 	super.closeApp();
