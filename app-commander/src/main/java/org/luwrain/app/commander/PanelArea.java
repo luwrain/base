@@ -54,7 +54,7 @@ class PanelArea extends CommanderArea<FileObject>
     {
 	if (query.getQueryCode() == AreaQuery.CURRENT_DIR && query instanceof CurrentDirQuery)
 	{
-	    final CurrentDirQuery currentDirQuery = (CurrentDirQuery)query;
+	    final var currentDirQuery = (CurrentDirQuery)query;
 	    final File f = asFile(opened());
 	    if (f == null)
 		return false;

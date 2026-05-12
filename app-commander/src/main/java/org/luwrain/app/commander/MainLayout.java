@@ -33,7 +33,7 @@ final class MainLayout extends LayoutBase
 	this.app = app;
 	this.fileActions = new FileActions(app);
 
-	final CommanderArea.Params<FileObject> params = PanelArea.createParams(getControlContext());
+	final var params = PanelArea.createParams(getControlContext());
 	params.clickHandler = this::onClick;
 
  	this.leftPanel = new PanelArea(params, getLuwrain()) {
@@ -79,7 +79,7 @@ final class MainLayout extends LayoutBase
 	    rightPanel.openInitial(app.startFrom);
 	} else
 	{
-	    final String location = app.getLuwrain().getDir("~");
+	    final String location = app.getLuwrain().getPath("~");
 	    	    leftPanel.openInitial(location);
 	    rightPanel.openInitial(location);
 	}
