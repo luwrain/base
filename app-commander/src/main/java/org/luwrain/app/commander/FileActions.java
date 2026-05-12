@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
+// Copyright 2012-2026 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.commander;
 
@@ -77,7 +77,7 @@ final class FileActions extends OperationsNames
 	final Path copyToDir = PanelArea.asPath(copyToArea.opened());
 	if (copyToDir == null || !copyToDir.isAbsolute() || !Files.isDirectory(copyToDir))
 	    return false;
-	final Path dest = app.getConv().copy(copyFromDir, filesToCopy, copyToDir);
+	final Path dest = app.conv.copy(copyFromDir, filesToCopy, copyToDir);
 	if (dest == null)
 	    return true;
 	final String name = copyOperationName(filesToCopy, dest);
@@ -104,7 +104,7 @@ final class FileActions extends OperationsNames
 	final Path moveToDir = PanelArea.asPath(moveToArea.opened());
 	if (moveToDir == null || !moveToDir.isAbsolute() || !Files.isDirectory(moveToDir))
 	    return false;
-	final Path dest = app.getConv().move(moveFromDir, filesToMove, moveToDir);
+	final Path dest = app.conv.move(moveFromDir, filesToMove, moveToDir);
 	if (dest == null)
 	    return true;
 		final String name = moveOperationName(filesToMove, dest);
@@ -120,7 +120,7 @@ final class FileActions extends OperationsNames
 	final File createIn = PanelArea.asFile(panelArea.opened());
 	if (createIn == null || !createIn.isAbsolute())
 	    return false;
-	final File newDir = app.getConv().mkdirPopup(createIn);
+	final File newDir = app.conv.mkdirPopup(createIn);
 	if (newDir == null)
 	    return true;
 	try {
@@ -144,7 +144,7 @@ final class FileActions extends OperationsNames
 	final Path[] files = PanelArea.asPath(area.getToProcess());
 	if (files.length == 0)
 	    return false;
-	if (!app.getConv().deleteConfirmation(files))
+	if (!app.conv.deleteConfirmation(files))
 	    return true;
 	final String opName = "Удаление";//app.getStrings().delOperationName(files);
 	Log.debug("proba", "preparing");
@@ -162,7 +162,7 @@ final class FileActions extends OperationsNames
 	final var toProcess = PanelArea.asPath(panelArea.getToProcess());
 	if (toProcess.length == 0)
 	    return false;
-	final String cmd = app.getConv().run();
+	final String cmd = app.conv.run();
 	if (cmd == null || cmd.trim().isEmpty())
 	    return true;
 	final StringBuilder b = new StringBuilder();

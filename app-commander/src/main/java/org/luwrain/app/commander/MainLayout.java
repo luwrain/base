@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
+// Copyright 2012-2026 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.commander;
 
@@ -98,7 +98,7 @@ final class MainLayout extends LayoutBase
 	    oppositePanelArea = leftPanel;
 	}
 	return actions(
-		       app.getHooks().panelActions(this, panelArea, oppositePanelArea),
+		       app.hooks.panelActions(this, panelArea, oppositePanelArea),
 		       action("copy", app.getStrings().actionCopy(), new InputEvent(InputEvent.Special.F5), ()->fileActions.localCopy(panelArea, oppositePanelArea)),
 		       action("move", app.getStrings().actionMove(), new InputEvent(InputEvent.Special.F6), ()->fileActions.localMove(panelArea, oppositePanelArea)),
 		       action("mkdir", app.getStrings().actionMkdir(), new InputEvent(InputEvent.Special.F7), ()->fileActions.localMkdir(panelArea)),
@@ -157,7 +157,7 @@ final class MainLayout extends LayoutBase
     private boolean actPanelVolume(PanelArea panelArea)
     {
 	NullCheck.notNull(panelArea, "panelArea");
-	final File res = panelArea == leftPanel?app.getConv().leftPanelVolume():app.getConv().rightPanelVolume();
+	final File res = panelArea == leftPanel?app.conv.leftPanelVolume():app.conv.rightPanelVolume();
 	if (res == null)
 	    return true;
 	panelArea.open(res);
@@ -213,7 +213,7 @@ final class MainLayout extends LayoutBase
     boolean onOpenFtp(PanelArea area)
     {
 	NullCheck.notNull(area, "area");
-	final String addr = app.getConv().ftpAddress();
+	final String addr = app.conv.ftpAddress();
 	if (addr == null)
 	    return true;
 	area.openLocalPath(addr);

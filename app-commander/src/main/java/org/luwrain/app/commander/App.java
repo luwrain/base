@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
+// Copyright 2012-2026 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.commander;
 
@@ -12,18 +12,27 @@ import org.luwrain.core.events.*;
 import org.luwrain.app.base.*;
 import org.luwrain.app.commander.fileops.*;
 
+import static java.util.Objects.*;
+
 public final class App extends AppBase<Strings>
 {
     enum Side {LEFT, RIGHT};
 
+        public interface Layouts
+    {
+	void main();
+	void operations();
+    }
+
+
     final String startFrom;
     final List<Operation> operations = new ArrayList<>();
     final OperationListener opListener = newOperationListener();
-    private Settings sett = null;
-    private Conv conv = null;
-    private Hooks hooks = null;
-    private MainLayout mainLayout = null;
-    private OperationsLayout operationsLayout = null;
+    public Config conf;
+    public Conv conv;
+    public Hooks hooks;
+    private MainLayout mainLayout;
+    private OperationsLayout operationsLayout;
 
     App(String startFrom)
     {
@@ -36,7 +45,7 @@ public final class App extends AppBase<Strings>
 
     @Override public AreaLayout onAppInit()
     {
-	this.sett = null;
+	this.conf = requireNonNullElse(getLuwrain().loadConf(Config.class), new Config());
 	this.conv = new Conv(this);
 	this.hooks = new Hooks(this);
 	this.mainLayout = new MainLayout(this);
@@ -162,15 +171,5 @@ public final class App extends AppBase<Strings>
 		getLuwrain().announceActiveArea();
 	    }
 	};
-    }
-
-    Settings getSett() { return this.sett; }
-    Conv getConv() { return this.conv; }
-    Hooks getHooks() { return this.hooks; }
-
-    public interface Layouts
-    {
-	void main();
-	void operations();
     }
 }
