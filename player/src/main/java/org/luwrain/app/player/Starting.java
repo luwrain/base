@@ -30,7 +30,7 @@ final class Starting
 	return app.runTask(taskId, ()->{
 		collectMusicFiles(new File(path), urls);
 		app.finishedTask(taskId, ()->{
-			final AtomicLong prevPosMsec = new AtomicLong(album.getPosMsec());
+			final var prevPosMsec = new AtomicLong(album.getPosMsec());
 			final Playlist playlist = new FixedPlaylist(urls.toArray(new String[urls.size()]),
 								    (trackNum, posMsec)->{
 									if (!album.isSavePos())
@@ -46,10 +46,15 @@ final class Starting
 									album.setVolume(value);
 									app.albums.save();
 								    }, album.getVolume());
+			final var flags = EnumSet.noneOf(Player.Flags.class);
+			if (album.isRandom())
+			    flags.add(Player.Flags.RANDOM);
+			if (album.isCycled())
+			    flags.add(Player.Flags.CYCLED);
 			app.getPlayer().play(playlist,
 					     album.isSavePos()?album.getTrackNum():0,
 					     album.isSavePos()?album.getPosMsec():0,
-					     EnumSet.noneOf(Player.Flags.class));
+					     flags);
 		    });
 	    });
     }

@@ -19,7 +19,7 @@ public final class Album implements Comparable
     private String title, 	url, path;
 
     private Integer volume = null;
-    private boolean savePos;
+    private boolean random, cycled, savePos;
     private int trackNum;
     private long posMsec;
 

@@ -40,15 +40,15 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
 
     @Override public AreaLayout onAppInit() throws Exception
     {
-conv = new Conv(this);
-conf = requireNonNullElse(getLuwrain().loadConf(Config.class), new Config());
-albums = new Albums(this);
-player = getLuwrain().getPlayer();
+	conv = new Conv(this);
+	conf = requireNonNullElse(getLuwrain().loadConf(Config.class), new Config());
+	albums = new Albums(this);
+	player = getLuwrain().getPlayer();
 	if (player == null)
 	    throw new Exception("No system player");
-player.addListener(this);
-hooks = new Hooks(getLuwrain());
-mainLayout = new MainLayout(this, this.player);
+	player.addListener(this);
+	hooks = new Hooks(getLuwrain());
+	mainLayout = new MainLayout(this, this.player);
 	setAppName(getStrings().appName());
 	return mainLayout.getAreaLayout();
     }
@@ -90,7 +90,7 @@ mainLayout = new MainLayout(this, this.player);
     {
 	return MonoApp.Result.BRING_FOREGROUND;
     }
-
+    
     @Override public void onNewPlaylist(org.luwrain.player.Playlist playlist)
     {
 	getLuwrain().runUiSafely(()->{

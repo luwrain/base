@@ -68,7 +68,7 @@ class Utils
     static boolean isStreamingPlaylist(org.luwrain.player.Playlist playlist)
     {
 	/*
-	NullCheck.notNull(playlist, "playlist");
+	requireNonNull(playlist, "playlist can't be null");
 	if (!playlist.getProperties().containsKey("streaming"))
 	    return false;
 	final String value = playlist.getProperties().get("streaming");

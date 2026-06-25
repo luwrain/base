@@ -17,7 +17,9 @@ public final class DirAlbumPropertiesLayout extends LayoutBase
     static private final String
 	TITLE = "title",
 	PATH = "path",
-	SAVE_POSITION = "save-pos";
+	SAVE_POSITION = "save-pos",
+	CYCLED = "cycled",
+	RANDOM = "random";
 
     private final App app;
     private final FormArea formArea;

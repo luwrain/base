@@ -7,12 +7,14 @@ import com.google.auto.service.*;
 
 import org.luwrain.core.*;
 
+import static java.util.Objects.*;
+
 @AutoService(org.luwrain.player.Factory.class)
 public class Factory implements org.luwrain.player.Factory
 {
     @Override public org.luwrain.player.Player  newPlayer(Params params)
     {
-	NullCheck.notNull(params, "params");
+	requireNonNull(params, "params can't be null");
 	NullCheck.notNull(params.luwrain, "params.luwrain");
 	return new Dispatcher(params.luwrain);
     }

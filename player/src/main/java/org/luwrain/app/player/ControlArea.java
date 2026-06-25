@@ -11,6 +11,8 @@ import org.luwrain.player.*;
 import static org.luwrain.app.player.Utils.*;
 import static org.luwrain.core.DefaultEventResponse.*;
 
+import static java.util.Objects.*;
+
 class ControlArea extends NavigationArea
 {
     enum Mode {STOPPED, PAUSED, PLAYING, PLAYING_STREAMING};
@@ -60,21 +62,21 @@ class ControlArea extends NavigationArea
 
     void setMode(Mode mode)
     {
-	NullCheck.notNull(mode, "mode");
+	requireNonNull(mode, "mode can't be null");
 	this.mode = mode;
 	updateText();
     }
 
     void setPlaylistTitle(String value)
     {
-	NullCheck.notNull(value, "value");
+	requireNonNull(value, "value can't be null");
 	this.playlistTitle = value;
 	updateText();
     }
 
     void setTrackTitle(String value)
     {
-	NullCheck.notNull(value, "value");
+	requireNonNull(value, "value can't be null");
 	this.trackTitle = value;
 	updateText();
     }

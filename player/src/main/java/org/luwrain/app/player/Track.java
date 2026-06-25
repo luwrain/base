@@ -7,6 +7,8 @@ import java.util.*;
 
 import org.luwrain.core.*;
 
+import static java.util.Objects.*;
+
 final class Track
 {
     final String url;
@@ -15,7 +17,7 @@ final class Track
     Track(String url, Map<String, TrackInfo> trackInfoMap)
     {
 	NullCheck.notEmpty(url, "url");
-	NullCheck.notNull(trackInfoMap, "trackInfoMap");
+	requireNonNull(trackInfoMap, "trackInfoMap can't be null");
 	this.url = url;
 	this.trackInfoMap = trackInfoMap;
     }

@@ -13,6 +13,8 @@ import org.apache.tika.Tika;
 import org.luwrain.core.*;
 import org.luwrain.core.MediaResourcePlayer.*;
 
+import static java.util.Objects.*;
+
 final class Dispatcher implements org.luwrain.player.Player, MediaResourcePlayer.Listener
 {
     static private final Logger log = LogManager.getLogger();
@@ -38,17 +40,17 @@ final class Dispatcher implements org.luwrain.player.Player, MediaResourcePlayer
 
     Dispatcher(Luwrain luwrain)
     {
-	NullCheck.notNull(luwrain, "luwrain");
+	requireNonNull(luwrain, "luwrain can't be null");
 	this.luwrain = luwrain;
 	this.mediaResourcePlayers = luwrain.createInstances(MediaResourcePlayer.class);
 	for(var p: mediaResourcePlayers)
-	    log.info("'" + p.getExtObjName() + "' is a known media resource player");
+	    log.info("{} ({}) is a known media resource player", p.getExtObjName(), p.getClass().getName());
     }
 
     @Override public synchronized Result play(org.luwrain.player.Playlist playlist, int startingTrackNum, long startingPosMsec, Set<Flags> flags)
     {
-	NullCheck.notNull(playlist, "playlist");
-	NullCheck.notNull(flags, "flags");
+	requireNonNull(playlist, "playlist can't be null");
+	requireNonNull(flags, "flags can't be null");
 	if (startingTrackNum < 0 || startingTrackNum >= playlist.getTrackCount())
 	    throw new IllegalArgumentException("Illegal starting track num: " + String.valueOf(startingTrackNum));
 	if (startingPosMsec < 0)
@@ -310,7 +312,7 @@ this.posMsec = 0;
 
     @Override public synchronized void addListener(org.luwrain.player.Listener listener)
     {
-	NullCheck.notNull(listener, "listener");
+	requireNonNull(listener, "listener can't be null");
 	for(org.luwrain.player.Listener l: listeners)
 	    if (l == listener)
 		return;
@@ -319,7 +321,7 @@ this.posMsec = 0;
 
     @Override public synchronized void removeListener(org.luwrain.player.Listener listener)
     {
-	NullCheck.notNull(listener, "listener");
+	requireNonNull(listener, "listener can't be null");
 	for(int i = 0;i < listeners.size();++i)
 	    if (listeners.get(i) == listener)
 	    {
@@ -357,19 +359,22 @@ this.posMsec = 0;
 
     private MediaResourcePlayer findPlayer(Task task)
     {
-	NullCheck.notNull(task, "task");
+	requireNonNull(task, "task can't be null");
 	try {
 	    final String contentType = tika.detect(task.url);
+	    log.trace("Detected the content type {} for {}", contentType, task.url.toString());
 	    for(MediaResourcePlayer p: mediaResourcePlayers)
 	    {
 		final String supportedTypes = p.getSupportedMimeType();
-		if (supportedTypes.trim().toLowerCase().equals(contentType.trim().toLowerCase()))
+		log.trace("Player {} supports {}", p.getClass().getName(), supportedTypes);
+		if (supportedTypes.trim().equalsIgnoreCase(contentType.trim()))
 		    return p;
 	    }
 	    return null;
 	}
 	catch(IOException ex)
 	{
+	    log.error("Unable to choose the player", ex);
 	    throw new RuntimeException(ex);
 	}
 	}
