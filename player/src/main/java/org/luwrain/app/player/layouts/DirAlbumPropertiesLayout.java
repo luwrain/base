@@ -50,6 +50,8 @@ public final class DirAlbumPropertiesLayout extends LayoutBase
 	formArea.addEdit(TITLE, app.getStrings().albumPropTitle(), album.getTitle());
 	formArea.addEdit(PATH, app.getStrings().albumPropPath(), album.getPath());
 	formArea.addCheckbox(SAVE_POSITION, app.getStrings().albumPropSavePosition(), album.isSavePos());
+	formArea.addCheckbox(CYCLED, app.getStrings().albumPropCycled(), album.isCycled());
+	formArea.addCheckbox(RANDOM, app.getStrings().albumPropRandom(), album.isRandom());
 	setCloseHandler(closing);
 	setOkHandler(()->onOk(album, closing));
 	setAreaLayout(formArea, null);
@@ -68,6 +70,8 @@ public final class DirAlbumPropertiesLayout extends LayoutBase
 	album.setTitle(title.trim());
 	album.setPath(path);
 	album.setSavePos(formArea.getCheckboxState(SAVE_POSITION));
+	album.setCycled(formArea.getCheckboxState(CYCLED));
+	album.setRandom(formArea.getCheckboxState(RANDOM));
 	closing.onAction();
 	return true;
     }

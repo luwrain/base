@@ -40,6 +40,8 @@ public interface Strings
     String albumPropUrl();
     String albumPropPath();
     String albumPropSavePosition();
+    String albumPropCycled();
+    String albumPropRandom();
     String albumPropTitleCannotBeEmpty();
 
     String wizardNewAlbumIntro();
