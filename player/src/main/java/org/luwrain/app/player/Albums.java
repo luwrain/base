@@ -28,6 +28,7 @@ public final class Albums extends ArrayList<Album> implements EditableListArea.M
 	if (app.conf.albums == null)
 	    return;
 	addAll(app.conf.albums);
+	log.trace("Loaded {} album(s)", size());
     }
 
     synchronized void save()
@@ -37,7 +38,7 @@ public final class Albums extends ArrayList<Album> implements EditableListArea.M
 	app.getLuwrain().saveConf(app.conf);
     }
 
-    synchronized int addAlbum(int pos, Album album)
+    public synchronized int addAlbum(int pos, Album album)
     {
 	if (pos < 0 || pos >= size())
 	{
@@ -50,7 +51,7 @@ public final class Albums extends ArrayList<Album> implements EditableListArea.M
 	return pos;
     }
 
-    synchronized void deleteAlbum(int index) throws IOException
+    synchronized void deleteAlbum(int index)
     {
 	if (index < 0 || index >= size())
 	    throw new IllegalArgumentException("index (" + String.valueOf(index) + ") must be non-negative and less than " + String.valueOf(size()));

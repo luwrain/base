@@ -29,12 +29,17 @@ public final class NewAlbumLayout extends LayoutBase
 	this.app = app;
 	wizardArea = new WizardArea(getControlContext()) ;
 	controller = new WizardGroovyController(getLuwrain(), wizardArea){
-		public Strings getStrings() { return app.getStrings(); }
+		public Strings getStrings()
+		{
+		    return app.getStrings();
+		}
+		
 		public void addDirAlbum(String title, String path)
 		{
 		    final var m = (Albums)area.getListModel();
-		    m.add(new Album(Album.Type.DIR, title, path, null));
+		    final int index = m.addAlbum(area.selectedIndex(), new Album(Album.Type.DIR, title, path, null));
 		    area.refresh();
+		    area.select(index, false);
 		    closing.onAction();
 		}
 		//		public void skip() {app.layouts().main(); }

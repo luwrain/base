@@ -83,19 +83,13 @@ final class MainLayout extends LayoutBase
 			    switch(event.getCode())
 			    {
 			    case PROPERTIES:
-			    return onAlbumProperties();
+				return onAlbumProperties();
 			    }
 			return super.onSystemEvent(event);
 		    }
 		};
 	}
-	final Actions albumsActions = actions(
-					      action("add-album", app.getStrings().actionAddAlbum(), new InputEvent(Special.INSERT), MainLayout.this::actAddAlbum),
-					      actionPauseResume,
-					      actionNextTrack, actionPrevTrack,
-					      actionJumpForward, actionJumpBackward,
-					      actionVolumePlus, actionVolumeMinus
-					      );
+	
 	this.playlistArea = new ListArea<>(listParams((params)->{
 		    params.name = app.getStrings().playlistAreaName();
 		    params.model = new ListUtils.ArrayModel<>(()->tracks);
@@ -116,6 +110,15 @@ final class MainLayout extends LayoutBase
 						actionVolumePlus, actionVolumeMinus
 						);
 	this.controlArea = new ControlArea(app, getControlContext(), app.getStrings());
+
+		final Actions albumsActions = actions(
+					      actAddAlbum(), actDeleteAlbum(),
+					      actionPauseResume, actionNextTrack, actionPrevTrack,
+					      actionJumpForward, actionJumpBackward,
+					      actionVolumePlus, actionVolumeMinus
+					      );
+
+		
 	final Actions controlActions = actions(
 					       actionPauseResume,
 					       actionNextTrack, actionPrevTrack,
@@ -125,23 +128,34 @@ final class MainLayout extends LayoutBase
 	setAreaLayout(AreaLayout.LEFT_TOP_BOTTOM, albumsArea, albumsActions, playlistArea, playlistActions, controlArea, controlActions);
     }
 
-    private boolean actAddAlbum()
+    private ActionInfo actAddAlbum()
     {
-	try {
-	    final var layout = new NewAlbumLayout(app, albumsArea, getReturnAction());
-	app.setAreaLayout(layout);
-	getLuwrain().announceActiveArea();
-	/*
-	    final int index = app.albums.addAlbum(albumsArea.selectedIndex(), album);
-	    albumsArea.refresh();
-	    albumsArea.select(index, false);
-	*/
-	}
-	catch(IOException ex)
-	{
-	    app.crash(ex);
-	}
+	return action("add-album", app.getStrings().actionAddAlbum(), new InputEvent(Special.INSERT), () -> {
+		try {
+		    app.setAreaLayout(new NewAlbumLayout(app, albumsArea, getReturnAction()));
+		}
+		catch(IOException ex)
+		{
+		    app.crash(ex);
 		    return true;
+		}
+		getLuwrain().announceActiveArea();
+		return true;
+	    });
+    }
+
+    private ActionInfo actDeleteAlbum()
+    {
+	return action("delete-album", app.getStrings().actionDeleteAlbum(), new InputEvent(InputEvent.Special.DELETE), () -> {
+		final Album album = albumsArea.selected();
+		if (album == null)
+		    return false;
+		if (!app.getConv().confirmAlbumDeleting(album))
+		    return true;
+		app.albums.deleteAlbum(albumsArea.selectedIndex());
+		albumsArea.refresh();
+		return true;
+	    });
     }
 
     private boolean actTrack(int pos)
@@ -184,6 +198,7 @@ final class MainLayout extends LayoutBase
 	  controlArea.setTrackTime(0);
 	*/
     }
+
 
     private boolean onAlbumProperties()
     {

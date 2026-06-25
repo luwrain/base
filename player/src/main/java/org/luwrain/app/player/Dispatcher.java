@@ -4,9 +4,11 @@
 package org.luwrain.app.player;
 
 import java.util.*;
+import java.io.*;
 import java.net.*;
 import java.nio.file.*;
 import org.apache.logging.log4j.*;
+import org.apache.tika.Tika;
 
 import org.luwrain.core.*;
 import org.luwrain.core.MediaResourcePlayer.*;
@@ -21,6 +23,7 @@ final class Dispatcher implements org.luwrain.player.Player, MediaResourcePlayer
     }
 
     private final Luwrain luwrain;
+    private final Tika tika = new Tika();
     private final Random rand = new Random();
     private List<MediaResourcePlayer> mediaResourcePlayers;
     private final List<org.luwrain.player.Listener> listeners = new ArrayList<>();
@@ -355,15 +358,21 @@ this.posMsec = 0;
     private MediaResourcePlayer findPlayer(Task task)
     {
 	NullCheck.notNull(task, "task");
-	final String contentType = luwrain.suggestContentType(task.url, ContentTypes.ExpectedType.AUDIO);
-	for(MediaResourcePlayer p: mediaResourcePlayers)
-	{
-	    final String supportedTypes = p.getSupportedMimeType();
-	    if (supportedTypes.trim().toLowerCase().equals(contentType.trim().toLowerCase()))
-		return p;
+	try {
+	    final String contentType = tika.detect(task.url);
+	    for(MediaResourcePlayer p: mediaResourcePlayers)
+	    {
+		final String supportedTypes = p.getSupportedMimeType();
+		if (supportedTypes.trim().toLowerCase().equals(contentType.trim().toLowerCase()))
+		    return p;
+	    }
+	    return null;
 	}
-	return null;
-    }
+	catch(IOException ex)
+	{
+	    throw new RuntimeException(ex);
+	}
+	}
 
     private Result runPlayer()
     {

@@ -15,6 +15,8 @@ import org.luwrain.controls.*;
 import org.luwrain.player.*;
 import org.luwrain.app.base.*;
 
+import static java.util.Objects.*;
+
 public final class App extends AppBase<Strings> implements Application, MonoApp, org.luwrain.player.Listener
 {
     static private final Logger log = LogManager.getLogger();
@@ -39,11 +41,7 @@ public final class App extends AppBase<Strings> implements Application, MonoApp,
     @Override public AreaLayout onAppInit() throws Exception
     {
 conv = new Conv(this);
-conf = getLuwrain().loadConf(Config.class);
-	if (conf == null)
-	{
-	    conf = new Config();
-	}
+conf = requireNonNullElse(getLuwrain().loadConf(Config.class), new Config());
 albums = new Albums(this);
 player = getLuwrain().getPlayer();
 	if (player == null)

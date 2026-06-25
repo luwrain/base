@@ -9,6 +9,7 @@ import org.luwrain.core.annotations.*;
 public interface Strings
 {
         String actionAddAlbum();
+    String actionDeleteAlbum();
     String albumDeletingPopupName();
     String albumDeletingPopupText(String albumName);
     String albumsAreaName();
