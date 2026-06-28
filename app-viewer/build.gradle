@@ -1,0 +1,22 @@
+
+plugins {
+  id "java-library"
+  id 'maven-publish'
+  id "io.freefair.lombok" version "8.6"
+  id "org.openjfx.javafxplugin" version "0.1.0"
+}
+
+dependencies {
+  implementation libraries.base
+  annotationProcessor libraries.autoService
+  implementation 'org.apache.pdfbox:pdfbox:2.0.29'
+  implementation project(':luwrain-base')
+  implementation project(':luwrain')
+  implementation project(':luwrain-javafx')
+  testImplementation libraries.junit
+}
+
+javafx { 
+  version = ver.javafx
+  modules = [ 'javafx.controls', 'javafx.swing' ]
+}

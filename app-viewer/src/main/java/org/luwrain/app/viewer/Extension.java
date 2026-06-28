@@ -34,6 +34,7 @@ public final class Extension extends EmptyExtension
 	return new ExtensionObject[]{
 	    new Shortcut() {
 		@Override public String getExtObjName() { return "viewer"; }
+		@Override     public Set<Flags> getShortcutFlags() { return EnumSet.noneOf(Flags.class); }
 		@Override public Application[] prepareApp(String[] args)
 		{
 		    if (args.length == 0)
@@ -45,6 +46,10 @@ public final class Extension extends EmptyExtension
 			return new Application[]{new App()};
 		    return v.toArray(new Application[v.size()]);
 		}
+		@Override     public String[] getFileExtensions()
+		{
+		    return new String[0];
+		}
 	    },
 	};
     }
@@ -53,13 +58,5 @@ public final class Extension extends EmptyExtension
     {
 	i18nExt.addCommandTitle(Lang.EN, "viewer", "Graphical preview");
 	i18nExt.addCommandTitle(Lang.RU, "preview", "Графический просмотр");
-	try {
-	    i18nExt.addStrings(Lang.EN, Strings.NAME, new ResourceStringsObj(luwrain, getClass().getClassLoader(), getClass(), "strings.properties").create(Lang.EN, Strings.class));
-	    i18nExt.addStrings(Lang.RU, Strings.NAME, new ResourceStringsObj(luwrain, getClass().getClassLoader(), getClass(), "strings.properties").create(Lang.RU, Strings.class));
-	}
-	catch(java.io.IOException e)
-	{
-	    throw new RuntimeException(e);
-	}
     }
 }
