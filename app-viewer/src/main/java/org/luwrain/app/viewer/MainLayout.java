@@ -4,6 +4,7 @@
 package org.luwrain.app.viewer;
 
 import java.util.*;
+import java.io.*;
 import java.nio.file.*;
 
 import org.luwrain.core.*;
@@ -33,9 +34,14 @@ final class MainLayout extends LayoutBase implements ListArea.ClickHandler<Path>
 
     @Override public boolean onListClick(ListArea<Path> area, int index, Path path)
     {
-	if (path == null)
-	    return false;
-	return false;
+	try {
+	app.openPdf(path);
+	}
+	catch(IOException e)
+	{
+	    app.crash(e);
+	}
+	return true;
     }
 
     private static final class FileAppearance extends AbstractAppearance<Path>

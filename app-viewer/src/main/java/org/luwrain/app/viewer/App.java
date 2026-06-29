@@ -14,6 +14,7 @@ import org.luwrain.controls.*;
 import org.luwrain.app.base.*;
 import org.luwrain.util.*;
 
+import static java.util.Objects.*;
 import static org.luwrain.util.UrlUtils.*;
 
 public class App extends AppBase<Strings>
@@ -53,7 +54,12 @@ public class App extends AppBase<Strings>
 	    viewImage.show();
 	    setAppName(file.getName());
 	} else
+	{
 	    setAppName(getStrings().appName());
+	    if (file != null && file.isDirectory())
+		populateFiles(file.toPath()); else
+		populateFiles(Paths.get(getLuwrain().getPath("~")));
+	}
 	this.mainLayout = new MainLayout(this);
 	return mainLayout.getAreaLayout();
     }
@@ -62,6 +68,24 @@ public class App extends AppBase<Strings>
     {
 	closeApp();
 	return true;
+    }
+
+    void openPdf(Path path) throws IOException
+    {
+	final ViewPdf viewPdf = createPdfView(path.toFile());
+	    viewPdf.show();
+	    setAppName(path.getFileName().toString());
+    }
+
+    void populateFiles(Path dir) throws IOException
+    {
+	requireNonNull(dir);
+	try (final var stream = Files.list(dir))
+	{
+	    stream.filter(Files::isRegularFile)
+	    .sorted()
+	    .forEach(files::add);
+	}
     }
 
     private ViewPdf createPdfView(File file) throws IOException
