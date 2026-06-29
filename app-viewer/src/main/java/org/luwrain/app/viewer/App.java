@@ -6,6 +6,7 @@ package org.luwrain.app.viewer;
 import java.util.*;
 import java.io.*;
 import java.net.*;
+import java.nio.file.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.events.*;
@@ -24,6 +25,8 @@ public class App extends AppBase<Strings>
     private URL url = null;
     private String[] text = new String[0];
     private MainLayout mainLayout = null;
+
+    final List<Path> files = new ArrayList<>();
 
     public App() { this(null); }
     public App(String arg)

@@ -4,38 +4,57 @@
 package org.luwrain.app.viewer;
 
 import java.util.*;
+import java.nio.file.*;
 
 import org.luwrain.core.*;
 import org.luwrain.controls.*;
+import org.luwrain.controls.list.*;
 import org.luwrain.app.base.*;
 
 import static org.luwrain.core.DefaultEventResponse.*;
 
-final class MainLayout extends LayoutBase
+final class MainLayout extends LayoutBase implements ListArea.ClickHandler<Path>
 {
     private final App app;
-    final NavigationArea infoArea;
-
-    private List<String> info = new ArrayList<>();
+    final ListArea<Path> filesArea;
 
     MainLayout(App app)
     {
 	super(app);
 	this.app = app;
-	this.infoArea = new NavigationArea(getControlContext()){
-		@Override public int getLineCount()
-		{
-		    final int count = info.size();
-		    return count >= 1?count:1;
-		}
-		@Override public String getLine(int index)
-		{
-		    if (index < info.size())
-			return info.get(index);
-		    return "";
-		}
-		@Override public String getAreaName() { return app.getStrings().appName(); }
-	    };
-	setAreaLayout(infoArea, null);
+	this.filesArea = new ListArea<Path>(listParams(p -> {
+		    p.name = app.getStrings().appName();
+		    p.model = new ListModel<>(app.files);
+		    p.appearance = new FileAppearance(app);
+		    p.clickHandler = this;
+		}));
+	setAreaLayout(filesArea, null);
+    }
+
+    @Override public boolean onListClick(ListArea<Path> area, int index, Path path)
+    {
+	if (path == null)
+	    return false;
+	return false;
+    }
+
+    private static final class FileAppearance extends AbstractAppearance<Path>
+    {
+	final App app;
+
+	FileAppearance(App app)
+	{
+	    this.app = app;
+	}
+
+	@Override public void announceItem(Path path, Set<Flags> flags)
+	{
+	    app.setEventResponse(listItem(path.getFileName() != null ? path.getFileName().toString() : ""));
+	}
+
+	@Override public String getScreenAppearance(Path path, Set<Flags> flags)
+	{
+	    return path.getFileName() != null ? path.getFileName().toString() : "";
+	}
     }
 }
