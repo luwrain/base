@@ -5,6 +5,7 @@ package org.luwrain.app.video;
 
 import java.io.*;
 import java.util.*;
+import org.apache.logging.log4j.*;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -18,10 +19,12 @@ import org.luwrain.core.events.*;
 import org.luwrain.graphical.*;
 
 import static org.luwrain.graphical.FxThread.*;
-import static org.luwrain.app.video.App.*;
+//import static org.luwrain.app.video.App.*;
 
 abstract class ViewPlayer
 {
+
+    static private final Logger log = LogManager.getLogger();
     static private final double
 	SEEK_STEP = 10.0,
 	VOLUME_STEP = 0.05;
@@ -68,13 +71,12 @@ abstract class ViewPlayer
 		    playing = true;
 		    final String fileName = file.getName();
 		    announcePlaying(fileName);
-		    Log.debug(LOG_COMPONENT, "started video playback: " + fileName);
+		    log.trace("Started video playback: {}", fileName);
 		    return pane;
 		}
 		catch(Throwable e)
 		{
-		    Log.error(LOG_COMPONENT, "unable to initialize the video player: " + e.getClass().getName() + ": " + e.getMessage());
-		    e.printStackTrace();
+		    log.error("Unable to initialize the video player", e);
 		    this.pane = null;
 		    return null;
 		}
