@@ -8,10 +8,9 @@ import org.luwrain.core.*;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
-public @interface AppNoArgs
+public @interface AppSingleArg
 {
     String name();
-    String shortcut() default "";
     StarterCategory category() default StarterCategory.NONE;
     String[] title();
 }

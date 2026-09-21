@@ -31,6 +31,10 @@ public class AnnotationProcessor extends AbstractProcessor
 	for(var e: env.getElementsAnnotatedWith(a))
 	    write(e.toString() + "Extension", generateAppNoArgs(e));
 	break;
+	case "AppSingleArg":
+	for(var e: env.getElementsAnnotatedWith(a))
+	    write(e.toString() + "Extension", generateAppSingleArg(e));
+	break;
 		case "ResourceStrings":
 	for(var e: env.getElementsAnnotatedWith(a))
 	    write(e.toString() + "Extension", generateResourceStrings(e));
@@ -39,6 +43,55 @@ public class AnnotationProcessor extends AbstractProcessor
 	return true;
     }
 
+    String generateAppSingleArg(Element el)
+    {
+	final var a = el.getAnnotation(org.luwrain.core.annotations.AppSingleArg.class);
+	if (a == null)
+	    throw new IllegalStateException(el.toString() + " is not annotated with org.luwrain.core.annotations.AppSingleArg");
+	final var app = (org.luwrain.core.annotations.AppSingleArg)a;
+	final String
+	cl = el.toString(),
+	simpleCl = cl.substring(cl.lastIndexOf(".") + 1),
+		newCl = simpleCl + "Extension",
+	pkg = cl.substring(0, cl.lastIndexOf("."));
+
+	final var titles = new StringBuilder();
+	if (app.title() != null)
+	    for(var i: app.title())
+	{
+	    final var m = RE_I18N.matcher(i);
+	    if (!m.find())
+		throw new IllegalArgumentException("Illegal command title value: " + i);
+	    titles.append("        i18n.addCommandTitle(\"")
+	    .append(m.group(1))
+	    .append("\", \"")
+	    .append(app.name())
+	    .append("\", \"")
+	    .append(m.group(2))
+	    .append("\");")
+	    .append(LS);
+	}
+
+	final String starter;
+	if (app.category() != null && app.category() != StarterCategory.NONE)
+	{
+	    starter = ", new DefaultStarter(\"command:" + app.name() + "\", StarterCategory." + app.category().toString() + ")";
+	} else
+	    starter = "";
+
+	return "package " + pkg + ";" + LS  +
+	"import org.luwrain.core.*;" + LS +
+			   "import com.google.auto .service.*;" + LS +
+			   "@AutoService(org.luwrain.core.Extension.class)" + LS +
+			   "public final class " + newCl + " extends org.luwrain.core.EmptyExtension {" + LS +
+			   "@Override public ExtensionObject[] getExtObjects(Luwrain luwrain) { return new ExtensionObject[] { new SingleArgShortcut(\"" + app.name() + "\", " + simpleCl + ".class)" + starter + " }; }" + LS +
+				   "@Override public Command[] getCommands(Luwrain luwrain) { return new Command[] { new SimpleShortcutCommand(\"" + app.name() + "\") }; }" + LS +
+	        "@Override public void i18nExtension(Luwrain luwrain, org.luwrain.i18n.I18nExtension i18n)" + LS +
+    "{" + LS +
+	new String(titles) + LS +
+	"}" + LS +
+		"}" + LS;
+    }
 
 	    String generateAppNoArgs(Element el)
     {
