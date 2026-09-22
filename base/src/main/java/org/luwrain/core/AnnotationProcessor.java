@@ -35,12 +35,51 @@ public class AnnotationProcessor extends AbstractProcessor
 	for(var e: env.getElementsAnnotatedWith(a))
 	    write(e.toString() + "Extension", generateAppSingleArg(e));
 	break;
+	case "Cmd":
+	for(var e: env.getElementsAnnotatedWith(a))
+	    write(e.toString() + "Extension", generateCmd(e));
+	break;
 		case "ResourceStrings":
 	for(var e: env.getElementsAnnotatedWith(a))
 	    write(e.toString() + "Extension", generateResourceStrings(e));
 	break;
 	}
 	return true;
+    }
+
+    String generateCmd(Element el)
+    {
+	final var a = el.getAnnotation(org.luwrain.core.annotations.Cmd.class);
+	if (a == null)
+	    throw new IllegalStateException(el.toString() + " is not annotated with org.luwrain.core.annotations.Cmd");
+	final var cmd = (org.luwrain.core.annotations.Cmd)a;
+	final String
+	cl = el.toString(),
+	simpleCl = cl.substring(cl.lastIndexOf(".") + 1),
+		newCl = simpleCl + "Extension",
+	pkg = cl.substring(0, cl.lastIndexOf("."));
+
+	final String titles = generateTitles(cmd.title(), cmd.name());
+
+	final String starter;
+	if (cmd.category() != null && cmd.category() != StarterCategory.NONE)
+	{
+	    starter = ", new DefaultStarter(\"command:" + cmd.name() + "\", StarterCategory." + cmd.category().toString() + ")";
+	} else
+	    starter = "";
+
+	return "package " + pkg + ";" + LS  +
+	"import org.luwrain.core.*;" + LS +
+			   "import com.google.auto .service.*;" + LS +
+			   "@AutoService(org.luwrain.core.Extension.class)" + LS +
+			   "public final class " + newCl + " extends org.luwrain.core.EmptyExtension {" + LS +
+			   "@Override public ExtensionObject[] getExtObjects(Luwrain luwrain) { return new ExtensionObject[] { new " + simpleCl + "()" + starter + " }; }" + LS +
+				   "@Override public Command[] getCommands(Luwrain luwrain) { return new Command[] { new " + simpleCl + "() }; }" + LS +
+	        "@Override public void i18nExtension(Luwrain luwrain, org.luwrain.i18n.I18nExtension i18n)" + LS +
+    "{" + LS +
+	titles + LS +
+	"}" + LS +
+		"}" + LS;
     }
 
     String generateAppSingleArg(Element el)
@@ -55,22 +94,7 @@ public class AnnotationProcessor extends AbstractProcessor
 		newCl = simpleCl + "Extension",
 	pkg = cl.substring(0, cl.lastIndexOf("."));
 
-	final var titles = new StringBuilder();
-	if (app.title() != null)
-	    for(var i: app.title())
-	{
-	    final var m = RE_I18N.matcher(i);
-	    if (!m.find())
-		throw new IllegalArgumentException("Illegal command title value: " + i);
-	    titles.append("        i18n.addCommandTitle(\"")
-	    .append(m.group(1))
-	    .append("\", \"")
-	    .append(app.name())
-	    .append("\", \"")
-	    .append(m.group(2))
-	    .append("\");")
-	    .append(LS);
-	}
+	final String titles = generateTitles(app.title(), app.name());
 
 	final String starter;
 	if (app.category() != null && app.category() != StarterCategory.NONE)
@@ -88,7 +112,7 @@ public class AnnotationProcessor extends AbstractProcessor
 				   "@Override public Command[] getCommands(Luwrain luwrain) { return new Command[] { new SimpleShortcutCommand(\"" + app.name() + "\") }; }" + LS +
 	        "@Override public void i18nExtension(Luwrain luwrain, org.luwrain.i18n.I18nExtension i18n)" + LS +
     "{" + LS +
-	new String(titles) + LS +
+	titles + LS +
 	"}" + LS +
 		"}" + LS;
     }
@@ -105,22 +129,7 @@ public class AnnotationProcessor extends AbstractProcessor
 		newCl = simpleCl + "Extension",
 	pkg = cl.substring(0, cl.lastIndexOf("."));
 
-	final var titles = new StringBuilder();
-	if (app.title() != null)
-	    for(var i: app.title())
-	{
-	    final var m = RE_I18N.matcher(i);
-	    if (!m.find())
-		throw new IllegalArgumentException("Illegal command title value: " + i);
-	    titles.append("        i18n.addCommandTitle(\"")
-	    .append(m.group(1))
-	    .append("\", \"")
-	    .append(app.name())
-	    .append("\", \"")
-	    .append(m.group(2))
-	    .append("\");")
-	    .append(LS);
-	}
+	final String titles = generateTitles(app.title(), app.name());
 
 	final String starter;
 	if (app.category() != null && app.category() != StarterCategory.NONE)
@@ -138,9 +147,30 @@ public class AnnotationProcessor extends AbstractProcessor
 				   "@Override public Command[] getCommands(Luwrain luwrain) { return new Command[] { new SimpleShortcutCommand(\"" + app.name() + "\") }; }" + LS +
 	        "@Override public void i18nExtension(Luwrain luwrain, org.luwrain.i18n.I18nExtension i18n)" + LS +
     "{" + LS +
-	new String(titles) + LS +
+	titles + LS +
 	"}" + LS +
 		"}" + LS;
+    }
+
+    private String generateTitles(String[] titleValues, String name)
+    {
+	final var titles = new StringBuilder();
+	if (titleValues != null)
+	    for(var i: titleValues)
+	{
+	    final var m = RE_I18N.matcher(i);
+	    if (!m.find())
+		throw new IllegalArgumentException("Illegal command title value: " + i);
+	    titles.append("        i18n.addCommandTitle(\"")
+	    .append(m.group(1))
+	    .append("\", \"")
+	    .append(name)
+	    .append("\", \"")
+	    .append(m.group(2))
+	    .append("\");")
+	    .append(LS);
+	}
+	return titles.toString();
     }
 
     	    String generateResourceStrings(Element el)
