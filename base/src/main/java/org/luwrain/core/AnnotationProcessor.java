@@ -73,7 +73,7 @@ public class AnnotationProcessor extends AbstractProcessor
 			   "import com.google.auto .service.*;" + LS +
 			   "@AutoService(org.luwrain.core.Extension.class)" + LS +
 			   "public final class " + newCl + " extends org.luwrain.core.EmptyExtension {" + LS +
-			   "@Override public ExtensionObject[] getExtObjects(Luwrain luwrain) { return new ExtensionObject[] { new " + simpleCl + "()" + starter + " }; }" + LS +
+	//			   "@Override public ExtensionObject[] getExtObjects(Luwrain luwrain) { return new ExtensionObject[] { new " + simpleCl + "()" + starter + " }; }" + LS +
 				   "@Override public Command[] getCommands(Luwrain luwrain) { return new Command[] { new " + simpleCl + "() }; }" + LS +
 	        "@Override public void i18nExtension(Luwrain luwrain, org.luwrain.i18n.I18nExtension i18n)" + LS +
     "{" + LS +
