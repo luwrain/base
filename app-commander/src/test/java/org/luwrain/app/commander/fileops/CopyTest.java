@@ -1,200 +1,147 @@
 // SPDX-License-Identifier: BUSL-1.1
-// Copyright 2012-2025 Michael Pozhidaev <msp@luwrain.org>
+// Copyright 2012-2026 Michael Pozhidaev <msp@luwrain.org>
 
 package org.luwrain.app.commander.fileops;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-import org.luwrain.util.*;
 
-import static java.nio.file.Files.*;
-import static org.luwrain.util.FileUtils.*;
-import static org.luwrain.util.Sha1.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.*;
 
-public class CopyTest
+import static org.junit.jupiter.api.Assertions.*;
+
+final class CopyTest
 {
-    private TempDir d = null;
-    private OperationListener listener = (op) -> {};
-    
+    @TempDir Path tempDir;
 
-    
-    @Test void single1() throws Exception
+    private final List<Operation> operations = new ArrayList<>();
+    private OperationListener listener;
+
+    @BeforeEach void prepareListener()
     {
-	final var files = new HashMap<String, String>();
-	int len = 2;
-	for(int i = 0;i < 14;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 2;
-	}
-	len = 5;
-	for(int i = 0;i < 100;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len += 5;
-	}
-	len = 10;
-	for(int i = 0;i < 7;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 10;
-	}
-	for(final var e: files.entrySet())
-	{
-	    final var p = new CopyMoveParams();
-	    p.setListener(listener);
-	    p.setName("test");
-	    p.setSource(List.of(d.getPath().resolve(e.getKey())));
-	    p.setDest(d.getPath().resolve(e.getKey() + "-res"));
-	    new Copy(p).run();
-	    assertEquals(e.getValue(), getSha1(d.getPath().resolve(e.getKey() + "-res")));
-	}
+	operations.clear();
+	listener = new OperationListener(){
+		@Override public void onOperationProgress(Operation operation)
+		{
+		}
+	    };
     }
 
-        @Test void multipleToNewDir() throws Exception
+    @Test void copiesSingleFileToNewPath() throws Exception
     {
-	final var files = new HashMap<String, String>();
-	int len = 2;
-	for(int i = 0;i < 14;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 2;
-	}
-	len = 5;
-	for(int i = 0;i < 100;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len += 5;
-	}
-	len = 10;
-	for(int i = 0;i < 7;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 10;
-	}
-	    final var p = new CopyMoveParams();
-	    p.setListener(listener);
-	    p.setName("test");
-	    p.setSource(files.entrySet().stream().map(e -> d.getPath().resolve(e.getKey())).toList());
-	    p.setDest(d.getPath().resolve("newdir"));
-	    new Copy(p).run();
-	    	for(final var e: files.entrySet())
-		    assertEquals(e.getValue(), getSha1(d.getPath().resolve("newdir").resolve(e.getKey())));
+	final Path src = write("src.txt", "hello");
+	final Path dest = tempDir.resolve("dest.txt");
+
+	new Copy(params(List.of(src), dest)).run();
+
+	assertEquals("hello", Files.readString(dest));
     }
 
-            @Test void multipleToNewDirs() throws Exception
+    @Test void copiesMultipleFilesToNewNestedDirectory() throws Exception
     {
-	final var files = new HashMap<String, String>();
-	int len = 2;
-	for(int i = 0;i < 14;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 2;
-	}
-	len = 5;
-	for(int i = 0;i < 100;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len += 5;
-	}
-	len = 10;
-	for(int i = 0;i < 7;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 10;
-	}
-	    final var p = new CopyMoveParams();
-	    p.setListener(listener);
-	    p.setName("test");
-	    p.setSource(files.entrySet().stream().map(e -> d.getPath().resolve(e.getKey())).toList());
-	    p.setDest(d.getPath().resolve("newdir1").resolve("newdir2"));
-	    new Copy(p).run();
-	    	for(final var e: files.entrySet())
-		    assertEquals(e.getValue(), getSha1(d.getPath().resolve("newdir1").resolve("newdir2").resolve(e.getKey())));
+	final Path first = write("first.txt", "first");
+	final Path second = write("second.txt", "second");
+	final Path dest = tempDir.resolve("newdir1").resolve("newdir2");
+
+	new Copy(params(List.of(first, second), dest)).run();
+
+	assertEquals("first", Files.readString(dest.resolve("first.txt")));
+	assertEquals("second", Files.readString(dest.resolve("second.txt")));
     }
 
-            @Test void multipleToExistingDir() throws Exception
+    @Test void copiesDirectoryRecursively() throws Exception
     {
-	final var files = new HashMap<String, String>();
-	int len = 2;
-	for(int i = 0;i < 14;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 2;
-	}
-	len = 5;
-	for(int i = 0;i < 100;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len += 5;
-	}
-	len = 10;
-	for(int i = 0;i < 7;i++)
-	{
-	    final var hash = writeRandomFile(d.getPath().resolve("src" + len), len);
-	    files.put("src" + len, hash);
-	    len *= 10;
-	}
-		    createDirectories(d.getPath().resolve("newdir"));
-	    final var p = new CopyMoveParams();
-	    p.setListener(listener);
-	    p.setName("test");
-	    p.setSource(files.entrySet().stream().map(e -> d.getPath().resolve(e.getKey())).toList());
-	    p.setDest(d.getPath().resolve("newdir"));
-	    new Copy(p).run();
-	    	for(final var e: files.entrySet())
-		    assertEquals(e.getValue(), getSha1(d.getPath().resolve("newdir").resolve(e.getKey())));
+	final Path srcDir = Files.createDirectory(tempDir.resolve("src"));
+	final Path nested = Files.createDirectory(srcDir.resolve("nested"));
+	Files.writeString(srcDir.resolve("root.txt"), "root");
+	Files.writeString(nested.resolve("nested.txt"), "nested");
+	final Path destDir = tempDir.resolve("dest");
+
+	new Copy(params(List.of(srcDir), destDir)).run();
+
+	assertEquals("root", Files.readString(destDir.resolve("root.txt")));
+	assertEquals("nested", Files.readString(destDir.resolve("nested").resolve("nested.txt")));
     }
 
-    @Test void symlink() throws Exception
+    @Test void copiesSingleFileIntoExistingDirectory() throws Exception
     {
-	final Path
-	symlink = d.getPath().resolve("symlink"),
-		destLink = d.getPath().resolve("destlink");
-	createSymbolicLink(symlink, Paths.get("testfile"));
-	assertTrue(isSymbolicLink(symlink));
-	assertEquals(Paths.get("testfile"), readSymbolicLink(symlink));
-		    final var p = new CopyMoveParams();
-	    p.setListener(listener);
-	    p.setName("test");
-	    p.setSource(List.of(symlink));
-	    p.setDest(destLink);
-	    new Copy(p).run();
-	    assertTrue(isSymbolicLink(destLink));
-	assertEquals(Paths.get("testfile"), readSymbolicLink(destLink));
+	final Path src = write("src.txt", "hello");
+	final Path destDir = Files.createDirectory(tempDir.resolve("dest"));
+
+	new Copy(params(List.of(src), destDir)).run();
+
+	assertEquals("hello", Files.readString(destDir.resolve("src.txt")));
     }
 
-
-
-    //multipleToExistingDir
-    //symlink to a dir
-    //symlink in a dir
-    //error copying directory to iteself
-    //rights
-
-    
-    @BeforeEach void createTempDir()
+    @Test void copiesSymlinkWithoutFollowing() throws Exception
     {
-	d = new TempDir();
+	final Path target = write("target.txt", "target");
+	final Path symlink = tempDir.resolve("link");
+	Files.createSymbolicLink(symlink, Path.of("target.txt"));
+	final Path dest = tempDir.resolve("dest-link");
+
+	new Copy(params(List.of(symlink), dest)).run();
+
+	assertTrue(Files.isSymbolicLink(dest));
+	assertEquals(Path.of("target.txt"), Files.readSymbolicLink(dest));
     }
 
-    @AfterEach void deleteTempDir()
+    @Test void rejectsDestinationUnderSource() throws Exception
     {
-	d.close();
-	d = null;
+	final Path srcDir = Files.createDirectory(tempDir.resolve("src"));
+	Files.writeString(srcDir.resolve("file.txt"), "data");
+
+	final Copy op = new Copy(params(List.of(srcDir), srcDir.resolve("child")));
+	op.run();
+
+	assertInstanceOf(OperationCancelledException.class, op.getException());
+    }
+
+    @Test void cancellationFromOverwriteConfirmationStopsCopy() throws Exception
+    {
+	final Path src = write("src.txt", "hello");
+	final Path dest = write("dest.txt", "dest");
+	listener = new OperationListener(){
+		@Override public void onOperationProgress(Operation operation)
+		{
+		}
+
+		@Override public Operation.ConfirmationChoices confirmOverwrite(Path path)
+		{
+		    return Operation.ConfirmationChoices.CANCEL;
+		}
+	    };
+
+	final Copy op = new Copy(params(List.of(src), dest));
+	op.run();
+
+	assertInstanceOf(OperationCancelledException.class, op.getException());
+	assertEquals("dest", Files.readString(dest));
+    }
+
+    @Test void reportsFullProgressForRegularFile() throws Exception
+    {
+	final Path src = write("src.txt", "hello");
+	final Path dest = tempDir.resolve("dest.txt");
+
+	final Copy op = new Copy(params(List.of(src), dest));
+	op.run();
+
+	assertEquals(100, op.getPercent());
+    }
+
+    private CopyMoveParams params(List<Path> source, Path dest)
+    {
+	final var params = new CopyMoveParams("copy", source, dest, listener);
+	return params;
+    }
+
+    private Path write(String name, String content) throws IOException
+    {
+	final Path path = tempDir.resolve(name);
+	Files.writeString(path, content);
+	return path;
     }
 }

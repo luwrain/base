@@ -60,7 +60,7 @@ public abstract class Operation implements Runnable
 	    catch (Throwable e)
 	    {
 		this.ex = e;
-		Log.error("commander", name + ": " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+		Log.error("commander", name + ": " + e.getClass().getSimpleName() + ": " + e.getMessage());
 	    }
 	}
 	finally {
@@ -124,6 +124,7 @@ public abstract class Operation implements Runnable
 
     static protected boolean isRegularFile(Path path, boolean followSymlinks) throws IOException
     {
+	requireNonNull(path, "path");
 	if (followSymlinks)
 	    return Files.isRegularFile(path); else
 	    return Files.isRegularFile(path, LinkOption.NOFOLLOW_LINKS);
@@ -131,6 +132,7 @@ public abstract class Operation implements Runnable
 
     static protected boolean exists(Path path, boolean followSymlinks) throws IOException
     {
+	requireNonNull(path, "path");
 	if (followSymlinks)
 	    return Files.exists(path); else
 	    return Files.exists(path, LinkOption.NOFOLLOW_LINKS);

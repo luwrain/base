@@ -6,11 +6,11 @@ package org.luwrain.app.commander;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
-import org.apache.commons.vfs2.*;
 
 import org.luwrain.core.*;
-import org.luwrain.controls.*;
 import org.luwrain.app.commander.fileops.*;
+
+import static java.util.Objects.*;
 
 class OperationsNames
 {
@@ -24,6 +24,8 @@ class OperationsNames
 
     String copyOperationName(Path[] whatToCopy, Path copyTo)
     {
+	requireNonNull(whatToCopy, "whatToCopy");
+	requireNonNull(copyTo, "copyTo");
 	if (whatToCopy.length < 1)
 	    return "";
 	if (whatToCopy.length > 1)
@@ -31,24 +33,14 @@ class OperationsNames
 	return app.getStrings().copyOperationName(whatToCopy[0].getFileName().toString(), copyTo.getFileName().toString());
     }
 
-        String moveOperationName(Path[] whatToMove, Path moveTo)
+    String moveOperationName(Path[] whatToMove, Path moveTo)
     {
+	requireNonNull(whatToMove, "whatToMove");
+	requireNonNull(moveTo, "moveTo");
 	if (whatToMove.length < 1)
 	    return "";
 	if (whatToMove.length > 1)
 	    return app.getStrings().moveOperationName(whatToMove[0].getFileName().toString() + ",...", moveTo.getFileName().toString());
 	return app.getStrings().moveOperationName(whatToMove[0].getFileName().toString(), moveTo.getFileName().toString());
     }
-
-
-    /*
-    String moveOperationName(File[] whatToMove, File moveTo)
-    {
-	if (whatToMove.length < 1)
-	    return "";
-	if (whatToMove.length > 1)
-	    return app.getStrings().moveOperationName(whatToMove[0].getName() + ",...", moveTo.getName());
-	return app.getStrings().moveOperationName(whatToMove[0].getName(), moveTo.getName());
-    }
-    */
 }

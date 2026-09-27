@@ -15,13 +15,11 @@ class OperationsAppearance extends ListUtils.AbstractAppearance<Operation>
 {
     private final App app;
     private final Luwrain luwrain;
-    private final Strings strings;
 
     OperationsAppearance(App app)
     {
 	NullCheck.notNull(app, "app");
 	this.luwrain = app.getLuwrain();
-	this.strings = app.getStrings();
 	this.app = app;
     }
 
@@ -37,13 +35,15 @@ class OperationsAppearance extends ListUtils.AbstractAppearance<Operation>
 		sound = Sounds.ATTENTION;
 	} else
 	    sound = Sounds.LIST_ITEM;
-	luwrain.setEventResponse(listItem(sound, op.name, null));
+	luwrain.setEventResponse(listItem(sound, getScreenAppearance(op, flags), null));
     }
 
     @Override public String getScreenAppearance(Operation op, Set<Flags> flags)
     {
 	NullCheck.notNull(op, "op");
 	NullCheck.notNull(flags, "flags");
-	return op.name;
+	if (op.isDone())
+	    return op.name + " — " + app.getOperationResultDescr(op);
+	return op.name + " — " + op.getPercent() + "%";
     }
 }

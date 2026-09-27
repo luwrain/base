@@ -9,7 +9,6 @@ import org.luwrain.core.*;
 import org.luwrain.core.events.*;
 import org.luwrain.controls.*;
 import org.luwrain.app.base.*;
-import org.luwrain.app.commander.App.Side;
 import org.luwrain.app.commander.fileops.*;
 
 final class OperationsLayout extends LayoutBase implements ListArea.ClickHandler<Operation>
@@ -33,15 +32,31 @@ final class OperationsLayout extends LayoutBase implements ListArea.ClickHandler
 			return "Файловые операции отсутствуют";//FIXME:
 		    }
 		};
-	final Actions operationsActions = actions();
+	final Actions operationsActions = actions(
+						 action("cancel", "Отменить", new InputEvent(InputEvent.Special.F5), ()->onCancel())
+						 );
 	setAreaLayout(operationsArea, operationsActions);
     }
 
     @Override public boolean onListClick(ListArea area, int index, Operation op)
     {
+	if (!op.isDone())
+	    return false;
 	app.operations.remove(index);
 	operationsArea.refresh();
 	app.getLuwrain().playSound(Sounds.OK);
 	return true;
+    }
+
+    private boolean onCancel()
+    {
+	for(Operation op: app.operations)
+	    if (!op.isDone())
+	    {
+		op.interrupt();
+		app.getLuwrain().playSound(Sounds.OK);
+		return true;
+	    }
+	return false;
     }
 }

@@ -5,7 +5,7 @@ package org.luwrain.app.commander;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.io.*;
+import java.nio.file.*;
 
 import org.luwrain.core.*;
 import org.luwrain.core.events.*;
@@ -18,12 +18,11 @@ public final class App extends AppBase<Strings>
 {
     enum Side {LEFT, RIGHT};
 
-        public interface Layouts
+    public interface Layouts
     {
 	void main();
 	void operations();
     }
-
 
     final String startFrom;
     final List<Operation> operations = new ArrayList<>();
@@ -41,6 +40,7 @@ public final class App extends AppBase<Strings>
 	    this.startFrom = startFrom; else
 	    this.startFrom = null;
     }
+
     App() { this(null); }
 
     @Override public AreaLayout onAppInit()
@@ -81,26 +81,14 @@ public final class App extends AppBase<Strings>
 
     String getOperationResultDescr(Operation op)
     {
-	/*
-	  switch(op.getResult().getType())
-	  {
-	  case OK:
-	  return getStrings().opResultOk();
-	  case SOURCE_PARENT_OF_DEST:
-	  return "Целевой каталог является подкаталогом родительского";
-	  case MOVE_DEST_NOT_DIR:
-	  return "Целевой путь не указывает на каталог";
-	  case INTERRUPTED:
-	  return getStrings().opResultInterrupted();
-	  case EXCEPTION:
-	  if (op.getResult().getException() != null)
-	  return getLuwrain().i18n().getExceptionDescr(op.getResult().getException());
-	  return "Нет информации об ошибке";
-	  default:
-	  return "";
-	  }
-	*/
-	return "";
+	requireNonNull(op, "op");
+	if (op.getException() == null)
+	    return getStrings().opResultOk();
+	if (op.getException() instanceof OperationCancelledException)
+	    return getStrings().opResultInterrupted();
+	if (op.getException() instanceof java.nio.file.FileSystemException)
+	    return op.getException().getMessage();
+	return getLuwrain().i18n().getExceptionDescr(op.getException());
     }
 
     private OperationListener newOperationListener()
@@ -119,6 +107,13 @@ public final class App extends AppBase<Strings>
 			    mainLayout.rightPanel.reread(false);
 			}
 		    });
+	    }
+
+	    @Override public Operation.ConfirmationChoices confirmOverwrite(Path path)
+	    {
+		if (conv == null)
+		    return Operation.ConfirmationChoices.SKIP;
+		return conv.overwriteConfirmation(path);
 	    }
 	};
     }
@@ -139,7 +134,7 @@ public final class App extends AppBase<Strings>
 	if (mainLayout != null)
 	{
 	    mainLayout.leftPanel.close();
-	    mainLayout.rightPanel.close();	    
+	    mainLayout.rightPanel.close();
 	}
 	super.closeApp();
     }
