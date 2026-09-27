@@ -60,7 +60,7 @@ public final class Move extends CopyingBase
 		case OVERWRITE:
 		    break;
 		}
-		delete(d);
+		//FIXME:		delete(d);
 	    }
 	    movePath(p, d);
 	}
@@ -85,7 +85,7 @@ public final class Move extends CopyingBase
 	    case OVERWRITE:
 		break;
 	    }
-	    delete(d);
+	    //FIXME:	    delete(d);
 	}
 	movePath(toMove[0], d);
     }

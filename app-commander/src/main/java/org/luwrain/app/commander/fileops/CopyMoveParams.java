@@ -14,7 +14,7 @@ import static java.util.Objects.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public final class CopyMoveParams
 {
     String name;

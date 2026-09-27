@@ -88,7 +88,7 @@ public final class App extends AppBase<Strings>
 	    return getStrings().opResultInterrupted();
 	if (op.getException() instanceof java.nio.file.FileSystemException)
 	    return op.getException().getMessage();
-	return getLuwrain().i18n().getExceptionDescr(op.getException());
+	return getLuwrain().i18n().getExceptionDescr((Exception)op.getException()); //FIXME: Type cast
     }
 
     private OperationListener newOperationListener()

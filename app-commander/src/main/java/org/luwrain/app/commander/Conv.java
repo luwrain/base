@@ -44,9 +44,8 @@ final class Conv
 
     Path zipArchive(Path[] filesToCompress)
     {
-	NullCheck.notNullItems(filesToCompress, "filesToCompress");
 	final String defaultName = defaultZipName(filesToCompress);
-	return Popups.save(luwrain, strings.actionZip(), defaultName, filesToCompress[0].getParent().toFile());
+	return null; //FIXME: Popups.path(luwrain, strings.actionZip(), defaultName, filesToCompress[0].getParent().toFile());
     }
 
     private String defaultZipName(Path[] filesToCompress)
