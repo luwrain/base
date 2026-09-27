@@ -11,6 +11,8 @@ import java.nio.file.attribute.*;
 import org.luwrain.core.*;
 import org.luwrain.app.commander.*;
 
+import static java.util.Objects.*;
+
 public abstract class Operation implements Runnable
 {
     static public final String
@@ -22,36 +24,43 @@ public abstract class Operation implements Runnable
 	OVERWRITE,
 	SKIP,
 	CANCEL
-    };
+    }
 
     private final OperationListener listener;
     public final String name;
     private boolean finished = false;
     private Throwable ex = null;
-    private boolean finishingAccepted = false ;
+    private boolean finishingAccepted = false;
     protected boolean interrupted = false;
 
     Operation(OperationListener listener, String name)
     {
-	this.listener = listener;
-	this.name = name;
+	this.listener = requireNonNull(listener, "listener");
+	this.name = requireNonNull(name, "name");
+	if (name.trim().isEmpty())
+	    throw new IllegalArgumentException("name may not be empty");
     }
 
     protected abstract void work() throws IOException;
     public abstract int getPercent();
 
-    public void run()
+    @Override public void run()
     {
 	this.ex = null;
 	try {
 	    try {
+		if (interrupted)
+		    throw new OperationCancelledException();
 		work();
+	    }
+	    catch(OperationCancelledException e)
+	    {
+		this.ex = e;
 	    }
 	    catch (Throwable e)
 	    {
-		Log.error("commander", name + ": " + e.getClass().getSimpleName() + ": " + e.getMessage());
-		e.printStackTrace();
 		this.ex = e;
+		Log.error("commander", name + ": " + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 	    }
 	}
 	finally {
@@ -83,6 +92,18 @@ public abstract class Operation implements Runnable
 	return this.ex;
     }
 
+    protected final OperationListener getListener()
+    {
+	return listener;
+    }
+
+    protected final boolean checkInterrupted() throws OperationCancelledException
+    {
+	if (!interrupted)
+	    return false;
+	throw new OperationCancelledException();
+    }
+
     static protected boolean isDirectory(Path path, boolean followSymlinks) throws IOException
     {
 	if (followSymlinks)
@@ -92,11 +113,12 @@ public abstract class Operation implements Runnable
 
     static protected Path[] getDirContent(final Path path) throws IOException
     {
+	requireNonNull(path, "path");
 	final List<Path> res = new ArrayList<>();
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
-	    for (Path p : directoryStream) 
+	try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
+	    for (Path p : directoryStream)
 		res.add(p);
-	} 
+	}
 	return res.toArray(new Path[res.size()]);
     }
 
@@ -109,13 +131,15 @@ public abstract class Operation implements Runnable
 
     static protected boolean exists(Path path, boolean followSymlinks) throws IOException
     {
-	    if (followSymlinks)
-		return Files.exists(path); else
-		return Files.exists(path, LinkOption.NOFOLLOW_LINKS);
+	if (followSymlinks)
+	    return Files.exists(path); else
+	    return Files.exists(path, LinkOption.NOFOLLOW_LINKS);
     }
 
     protected void deleteFileOrDir(Path p) throws IOException
     {
+	requireNonNull(p, "p");
+	checkInterrupted();
 	if (isDirectory(p, false))
 	{
 	    final Path[] content = getDirContent(p);
@@ -125,50 +149,51 @@ public abstract class Operation implements Runnable
 	Files.delete(p);
     }
 
-    protected void status(String message)
+    protected final void status(String message)
     {
+	requireNonNull(message, "message");
 	Log.debug("fileops", message);
+	listener.onStatus(this, message);
     }
 
-    protected ConfirmationChoices confirmOverwrite(Path path)
+    protected final ConfirmationChoices confirmOverwrite(Path path)
     {
-	/*
-FIXME:
-	NullCheck.notNull(path, "path");
-	return listener.confirmOverwrite(path);
-	*/
-	return null;
+	requireNonNull(path, "path");
+	final ConfirmationChoices res = listener.confirmOverwrite(path);
+	return res != null?res:ConfirmationChoices.SKIP;
     }
 
-    protected void onProgress(Operation op)
+    protected final void onProgress()
     {
-	NullCheck.notNull(op, "op");
-	listener.onOperationProgress(op);
+	listener.onOperationProgress(this);
     }
 
     static long getTotalSize(Path p) throws IOException
     {
+	requireNonNull(p, "p");
 	if (Files.isRegularFile(p, LinkOption.NOFOLLOW_LINKS))
 	    return Files.size(p);
 	if (!Files.isDirectory(p, LinkOption.NOFOLLOW_LINKS))
 	    return 0;
 	long res = 0;
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(p)) {
-		for (Path pp : directoryStream) 
-		    res += getTotalSize(pp);
-	    } 
+	try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(p)) {
+	    for (Path pp : directoryStream)
+		res += getTotalSize(pp);
+	}
 	return res;
     }
 
-    static protected void ensureValidLocalPath(Path[] path)
+    static protected void ensureValidLocalPath(Path[] paths)
     {
-	for(Path p: path)
+	requireNonNull(paths, "paths");
+	for(Path p: paths)
 	    ensureValidLocalPath(p);
     }
 
-        static protected void ensureValidLocalPath(Path path)
+    static protected void ensureValidLocalPath(Path path)
     {
-	    if (!path.isAbsolute())
-		throw new IllegalArgumentException(path.toString() + " can't be relative");
+	requireNonNull(path, "path");
+	if (!path.isAbsolute())
+	    throw new IllegalArgumentException(path.toString() + " can't be relative");
     }
 }

@@ -10,76 +10,66 @@ import java.nio.file.*;
 import org.luwrain.core.*;
 import org.luwrain.app.commander.*;
 
-public class Move extends CopyingBase
+import static java.util.Objects.*;
+
+public final class Move extends CopyingBase
 {
     private final Path[] toMove;
     private final Path moveTo;
 
     public Move(OperationListener listener, String name,
-	 Path[] toMove, Path moveTo)
+		Path[] toMove, Path moveTo)
     {
 	super(listener, name);
-	NullCheck.notNullItems(toMove, "toMove");
-	NullCheck.notEmptyArray(toMove, "toMove");
-	NullCheck.notNull(moveTo, "moveTo");
 	this.toMove = toMove;
 	this.moveTo = moveTo;
+	ensureValidLocalPath(toMove);
+	ensureValidLocalPath(moveTo);
+	if (toMove.length == 0)
+	    throw new IllegalArgumentException("toMove may not be empty");
     }
 
     @Override protected void work() throws IOException
     {
 	Path dest = moveTo;
-	if (!dest.isAbsolute())
-	{
-	    final Path parent = toMove[0].getParent();
-	    NullCheck.notNull(parent, "parent");
-	    dest = parent.resolve(dest);
-	}
 	for(Path path: toMove)
-	    if (dest.startsWith(path))
-		throw new IOException(INTERRUPTED);
+	    if (dest.normalize().startsWith(path.normalize()))
+		throw new OperationCancelledException();
 	if (toMove.length > 1)
 	    multipleSource(dest); else
-singleSource(dest);
+	    singleSource(dest);
     }
 
-	private void multipleSource(Path dest) throws IOException
+    private void multipleSource(Path dest) throws IOException
+    {
+	requireNonNull(dest, "dest");
+	if (!isDirectory(dest, true))
+	    throw new java.nio.file.FileSystemException(dest.toString(), null, MOVE_DEST_NOT_DIR);
+	for(Path p: toMove)
 	{
-	    NullCheck.notNull(dest, "dest");
-	    //dest should be a directory (trying to implement the same behaviour as by 'mv' utility in Linux)
-	    if (!isDirectory(dest, true))
-		throw new IOException(MOVE_DEST_NOT_DIR);
-	    //All paths must belong to the same partition
-	    /*
-	    for(Path p: toMove)
-		if (!Files.getFileStore(p).equals(Files.getFileStore(dest)))
-		{
-		    movingThroughCopying();
-		    return;
-		}
-	    */
-	    //Do actual moving
-	    for(Path p: toMove)
+	    checkInterrupted();
+	    final Path d = dest.resolve(p.getFileName());
+	    if (exists(d, false))
 	    {
-		final Path d = dest.resolve(p.getFileName());
-		if (exists(d, false))
+		switch(confirmOverwrite(d))
 		{
-		    switch(confirmOverwrite(d))
-		    {
-		    case SKIP:
-			continue;
-		    case CANCEL:
-			throw new IOException(INTERRUPTED);
-		    }
-		    Files.delete(d);
-		} //if exists
-		Files.move(p, d, StandardCopyOption.ATOMIC_MOVE);
+		case SKIP:
+		    continue;
+		case CANCEL:
+		    throw new OperationCancelledException();
+		case OVERWRITE:
+		    break;
+		}
+		delete(d);
 	    }
+	    movePath(p, d);
 	}
+    }
 
     private void singleSource(Path dest) throws IOException
     {
-	NullCheck.notNull(dest, "dest");
+	requireNonNull(dest, "dest");
+	checkInterrupted();
 	final Path d;
 	if (exists(dest, false) && isDirectory(dest, true))
 	    d = dest.resolve(toMove[0].getFileName()); else
@@ -91,34 +81,56 @@ singleSource(dest);
 	    case SKIP:
 		return;
 	    case CANCEL:
-		throw new IOException(INTERRUPTED);
+		throw new OperationCancelledException();
+	    case OVERWRITE:
+		break;
 	    }
-	    Files.delete(d);
+	    delete(d);
 	}
-	status("singleSource:moving single path " + toMove[0].toString() + " to " + d.toString());
+	movePath(toMove[0], d);
+    }
+
+    private void movePath(Path source, Path dest) throws IOException
+    {
+	requireNonNull(source, "source");
+	requireNonNull(dest, "dest");
 	try {
-	Files.move(toMove[0], d, StandardCopyOption.ATOMIC_MOVE);
+	    status("Moving " + source + " to " + dest);
+	    Files.move(source, dest, StandardCopyOption.ATOMIC_MOVE);
 	}
-	catch(java.nio.file.AtomicMoveNotSupportedException e)
+	catch(AtomicMoveNotSupportedException e)
 	{
-	    status("singleSource:atomic move failed, launching moving through copying");
-	    //	    movingThroughCopying();
-	    return;
+	    status("Atomic move is not supported, falling back to copy and delete");
+	    moveThroughCopying(source, dest);
+	}
+	catch(FileSystemException e)
+	{
+	    if (!sameFileStore(source, dest))
+	    {
+		status("Moving across file systems, falling back to copy and delete");
+		moveThroughCopying(source, dest);
+	    } else
+		throw e;
 	}
     }
 
-    private void movingThroughCopying() throws IOException
+    private boolean sameFileStore(Path first, Path second)
     {
-	status("performing moving through copying to " + moveTo.toString());
-	final var params = new CopyMoveParams();
-	params.setSource(Arrays.asList(toMove));
-	params.setDest(moveTo);
-	copy(params);
-	status("deleting source files");
-	for(Path p: toMove)
-	{
-	    status("deleting " + p.toString());
-	    deleteFileOrDir(p);
+	try {
+	    return Files.getFileStore(first).equals(Files.getFileStore(second));
 	}
+	catch(IOException e)
+	{
+	    return false;
+	}
+    }
+
+    private void moveThroughCopying(Path source, Path dest) throws IOException
+    {
+	requireNonNull(source, "source");
+	requireNonNull(dest, "dest");
+	final var params = new CopyMoveParams(name, List.of(source), dest, getListener());
+	copy(params);
+	deleteFileOrDir(source);
     }
 }

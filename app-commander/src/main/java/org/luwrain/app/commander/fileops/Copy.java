@@ -4,9 +4,7 @@
 package org.luwrain.app.commander.fileops;
 
 import java.io.*;
-import java.nio.file.*;
 
-import org.luwrain.core.*;
 import org.luwrain.app.commander.*;
 
 public final class Copy extends CopyingBase
@@ -14,9 +12,9 @@ public final class Copy extends CopyingBase
     private final CopyMoveParams params;
 
     public Copy(CopyMoveParams params)
-	    {
-		super(params.getListener(), params.getName());
-		this.params = params;
+    {
+	super(params.getListener(), params.getName());
+	this.params = params;
     }
 
     @Override protected void work() throws IOException

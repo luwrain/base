@@ -3,12 +3,10 @@
 
 package org.luwrain.app.commander;
 
-import java.io.*;
 import java.nio.file.*;
 
 import org.luwrain.app.commander.fileops.*;
 import org.luwrain.core.annotations.*;
-
 
     @ResourceStrings(langs = { "en", "ru" })
 public interface Strings
@@ -16,7 +14,7 @@ public interface Strings
     String appName();
     String leftPanelName();
     String rightPanelName();
-        String infoAreaName();
+    String infoAreaName();
     String operationsAreaName();
     String panelActionTitle(String actionName, boolean multiple);
     String infoActionTitle(String actionName);
@@ -32,11 +30,13 @@ public interface Strings
     String mkdirOkMessage(String dirName);
     String delPopupName();
     String delPopupText(String whatToDelete);
-    String delOperationName(File[] filesToDelete);
+    String delOperationName(Path[] filesToDelete);
     String operationCompletedMessage(Operation op);
     String notAllOperationsFinished();
     String cancelOperationPopupName();
     String cancelOperationPopupText(Operation op);
+    String overwritePopupName();
+    String overwritePopupText(String path);
     String bytesNum(long num);
     String opResultOk();
     String opResultInterrupted();
@@ -51,7 +51,7 @@ public interface Strings
     String actionDelete();
     String actionInfo();
     String actionMkdir();
-            String actionMove();
+    String actionMove();
     String actionSize();
     String actionZip();
     String dirMayNotBePreviewed();
@@ -64,7 +64,7 @@ public interface Strings
     String actionCopyUrl();
     String actionOpenFtp();
     String leftPanelVolumePopupName();
-        String rightPanelVolumePopupName();
+    String rightPanelVolumePopupName();
     String leftPanelVolume();
     String rightPanelVolume();
 }

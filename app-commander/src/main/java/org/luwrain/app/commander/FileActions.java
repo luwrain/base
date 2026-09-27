@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.*;
 import java.io.*;
 import java.nio.file.*;
 import org.apache.logging.log4j.*;
-import org.apache.commons.vfs2.*;
 
 import org.luwrain.core.*;
 import org.luwrain.controls.*;
@@ -16,12 +15,10 @@ import org.luwrain.app.commander.fileops.*;
 import org.luwrain.io.json.*;
 import org.luwrain.app.commander.layouts.*;
 
-import static org.luwrain.util.PathUtils.*;
-
 final class FileActions extends OperationsNames
 {
     static private final Logger log = LogManager.getLogger();
-    
+
     FileActions(App app)
     {
 	super(app);
@@ -29,7 +26,7 @@ final class FileActions extends OperationsNames
 
     boolean size(PanelArea panelArea)
     {
-	final FileObject[] files = panelArea.getToProcess();
+	final var files = panelArea.getToProcess();
 	if (files.length == 0)
 	    return false;
 	final App.TaskId taskId = app.newTaskId();
@@ -47,19 +44,19 @@ final class FileActions extends OperationsNames
 	    });
     }
 
-    private long getSize(FileObject fileObj) throws org.apache.commons.vfs2.FileSystemException
+    private long getSize(org.apache.commons.vfs2.FileObject fileObj) throws org.apache.commons.vfs2.FileSystemException
     {
 	if (fileObj.getType().hasChildren())
 	    return getSize(fileObj.getChildren());
 	if (fileObj.isFile() && !fileObj.isSymbolicLink())
-    	    return fileObj.getContent().getSize();
+	    return fileObj.getContent().getSize();
 	return 0;
     }
 
-    private long getSize(FileObject[] files) throws org.apache.commons.vfs2.FileSystemException
+    private long getSize(org.apache.commons.vfs2.FileObject[] files) throws org.apache.commons.vfs2.FileSystemException
     {
 	long sum = 0;
-	for(FileObject f: files)
+	for(org.apache.commons.vfs2.FileObject f: files)
 	    sum += getSize(f);
 	return sum;
     }
@@ -81,13 +78,7 @@ final class FileActions extends OperationsNames
 	if (dest == null)
 	    return true;
 	final String name = copyOperationName(filesToCopy, dest);
-	final var params = new CopyMoveParams();
-	params.setName(name);
-	params.setListener(app.opListener);
-	params.setSource(Arrays.asList(filesToCopy));
-	params.setDest(dest);
-	final var copy = new Copy(params);
-	app.runOperation(copy);
+	app.runOperation(new Copy(new CopyMoveParams(name, Arrays.asList(filesToCopy), dest, app.opListener)));
 	return true;
     }
 
@@ -107,9 +98,8 @@ final class FileActions extends OperationsNames
 	final Path dest = app.conv.move(moveFromDir, filesToMove, moveToDir);
 	if (dest == null)
 	    return true;
-		final String name = moveOperationName(filesToMove, dest);
-	final Move move = new Move(app.opListener, name, filesToMove, dest);
-	app.runOperation(move);
+	final String name = moveOperationName(filesToMove, dest);
+	app.runOperation(new Move(app.opListener, name, filesToMove, dest));
 	return true;
     }
 
@@ -146,9 +136,7 @@ final class FileActions extends OperationsNames
 	    return false;
 	if (!app.conv.deleteConfirmation(files))
 	    return true;
-	final String opName = "Удаление";//app.getStrings().delOperationName(files);
-	Log.debug("proba", "preparing");
-	app.runOperation(new Delete(app.opListener, opName, files));
+	app.runOperation(new Delete(app.opListener, app.getStrings().delOperationName(files), files));
 	return true;
     }
 
@@ -182,7 +170,7 @@ final class FileActions extends OperationsNames
 	final var output = new AtomicReference<CommandOutputLayout>(null);
 	app.getLuwrain().newJob("sys", new String[]{new String(b)}, dir.toAbsolutePath().toString(),
 				EnumSet.noneOf(Luwrain.JobFlags.class), new EmptyJobListener(){
-					@Override public void onInfoChange(Job instance, String infoType, List<String> value) 
+					@Override public void onInfoChange(Job instance, String infoType, List<String> value)
 					{
 					    log.debug("Job info change: " + instance.getInstanceName() + ", type '" + infoType + "'");
 					    if (!infoType.equals("main"))
@@ -200,11 +188,11 @@ final class FileActions extends OperationsNames
 	return true;
     }
 
-        boolean localMail(PanelArea panelArea)
+    boolean localMail(PanelArea panelArea)
     {
 	if (!panelArea.isLocalDir())
 	    return false;
-		final Path[] toProcess = PanelArea.asPath(panelArea.getToProcess());
+	final Path[] toProcess = PanelArea.asPath(panelArea.getToProcess());
 	if (toProcess.length == 0)
 	    return false;
 	for(Path p: toProcess)
@@ -227,10 +215,11 @@ final class FileActions extends OperationsNames
 	final Path[] toProcess = PanelArea.asPath(panelArea.getToProcess());
 	if (toProcess.length == 0)
 	    return false;
-	final ZipCompress zipCompress = new ZipCompress(app.opListener, "zip", toProcess, Paths.get("/tmp/proba.zip"));
-	final App.TaskId taskId = app.newTaskId();
-	return app.runTask(taskId, ()->{
-		zipCompress.run();
-	    });
+	final Path zipFile = app.conv.zipArchive(toProcess);
+	if (zipFile == null)
+	    return true;
+	final String name = app.getStrings().actionZip();
+	app.runOperation(new ZipCompress(app.opListener, name, toProcess, zipFile));
+	return true;
     }
 }

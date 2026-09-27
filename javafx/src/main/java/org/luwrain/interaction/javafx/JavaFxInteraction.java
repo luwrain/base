@@ -93,7 +93,7 @@ public final class JavaFxInteraction implements Interaction
 		{
 		    app.setSizeAndShow(wndWidth, wndHeight);
 		}
-		return new Boolean(app.initTable());
+		return Boolean.valueOf(app.initTable());
 	    });
 	Platform.runLater(task);
 	final Boolean res;

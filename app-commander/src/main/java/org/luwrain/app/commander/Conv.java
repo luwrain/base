@@ -9,6 +9,7 @@ import java.nio.file.*;
 
 import org.luwrain.core.*;
 import org.luwrain.popups.*;
+import org.luwrain.app.commander.fileops.*;
 import org.luwrain.app.commander.popups.*;
 
 final class Conv
@@ -32,7 +33,7 @@ final class Conv
 	return popup.result().toPath();
     }
 
-    Path move(Path  moveFromDir, Path[] filesToMove, Path moveTo)
+    Path move(Path moveFromDir, Path[] filesToMove, Path moveTo)
     {
 	final DestPathPopup popup = new DestPathPopup(luwrain, strings, DestPathPopup.Type.MOVE, moveFromDir, filesToMove, moveTo);
 	luwrain.popup(popup);
@@ -41,10 +42,25 @@ final class Conv
 	return popup.result().toPath();
     }
 
+    Path zipArchive(Path[] filesToCompress)
+    {
+	NullCheck.notNullItems(filesToCompress, "filesToCompress");
+	final String defaultName = defaultZipName(filesToCompress);
+	return Popups.save(luwrain, strings.actionZip(), defaultName, filesToCompress[0].getParent().toFile());
+    }
+
+    private String defaultZipName(Path[] filesToCompress)
+    {
+	NullCheck.notNullItems(filesToCompress, "filesToCompress");
+	if (filesToCompress.length == 1)
+	    return filesToCompress[0].getFileName().toString() + ".zip";
+	return "archive.zip";
+    }
+
     File mkdirPopup(File createIn)
     {
 	final File res = Popups.path(luwrain,
-				     strings.mkdirPopupName(), strings.mkdirPopupPrefix(), createIn, 
+				     strings.mkdirPopupName(), strings.mkdirPopupPrefix(), createIn,
 				     (fileToCheck, announce)->{
 					 NullCheck.notNull(fileToCheck, "fileToCheck");
 					 if (fileToCheck.exists())
@@ -61,7 +77,21 @@ final class Conv
     boolean deleteConfirmation(Path[] files)
     {
 	final String text = strings.delPopupText(luwrain.i18n().getNumberStr(files.length, "items"));
-return Popups.confirmDefaultNo(luwrain, strings.delPopupName(), text);
+	return Popups.confirmDefaultNo(luwrain, strings.delPopupName(), text);
+    }
+
+    Operation.ConfirmationChoices overwriteConfirmation(Path file)
+    {
+	NullCheck.notNull(file, "file");
+	final String cancel = "Cancel";
+	final String overwrite = "Overwrite";
+	final String skip = "Skip";
+	final Object res = Popups.fixedList(luwrain, strings.overwritePopupName(), new String[]{overwrite, skip, cancel});
+	if (res == overwrite)
+	    return Operation.ConfirmationChoices.OVERWRITE;
+	if (res == skip)
+	    return Operation.ConfirmationChoices.SKIP;
+	return Operation.ConfirmationChoices.CANCEL;
     }
 
     String ftpAddress()
@@ -69,30 +99,12 @@ return Popups.confirmDefaultNo(luwrain, strings.delPopupName(), text);
 	return Popups.text(luwrain, strings.ftpConnectPopupName(), strings.ftpConnectPopupText(), "ftp://");
     }
 
-    /*
-    FilesOperation.ConfirmationChoices overrideConfirmation(File file)
-    {
-	NullCheck.notNull(file, "file");
-	final String cancel = "Прервать";
-	final String overwrite = "Перезаписать";
-	final String overwriteAll = "Перезаписать все";
-	final String skip = "Пропустить";
-	final String skipAll = "Пропустить все";
-	final Object res = Popups.fixedList(luwrain, "Подтверждение перезаписи " + file.getAbsolutePath(), new String[]{overwrite, overwriteAll, skip, skipAll, cancel});
-	if (res == overwrite || res == overwriteAll)
-	    return FilesOperation.ConfirmationChoices.OVERWRITE;
-	if (res == skip || res == skipAll)
-	    return FilesOperation.ConfirmationChoices.SKIP;
-	return FilesOperation.ConfirmationChoices.CANCEL;
-    }
-    */
-
     File leftPanelVolume()
     {
 	return Popups.disks(luwrain, strings.leftPanelVolumePopupName());
     }
 
-        File rightPanelVolume()
+    File rightPanelVolume()
     {
 	return Popups.disks(luwrain, strings.rightPanelVolumePopupName());
     }
