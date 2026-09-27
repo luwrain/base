@@ -41,9 +41,10 @@ final class CopyTest
 
     @Test void copiesMultipleFilesToNewNestedDirectory() throws Exception
     {
-	final Path first = write("first.txt", "first");
-	final Path second = write("second.txt", "second");
-	final Path dest = tempDir.resolve("newdir1").resolve("newdir2");
+	final Path
+	first = write("first.txt", "first"),
+	second = write("second.txt", "second"),
+	dest = tempDir.resolve("newdir1").resolve("newdir2");
 
 	new Copy(params(List.of(first, second), dest)).run();
 
@@ -53,8 +54,9 @@ final class CopyTest
 
     @Test void copiesDirectoryRecursively() throws Exception
     {
-	final Path srcDir = Files.createDirectory(tempDir.resolve("src"));
-	final Path nested = Files.createDirectory(srcDir.resolve("nested"));
+	final Path
+	srcDir = Files.createDirectory(tempDir.resolve("src")),
+	nested = Files.createDirectory(srcDir.resolve("nested"));
 	Files.writeString(srcDir.resolve("root.txt"), "root");
 	Files.writeString(nested.resolve("nested.txt"), "nested");
 	final Path destDir = tempDir.resolve("dest");
@@ -67,8 +69,9 @@ final class CopyTest
 
     @Test void copiesSingleFileIntoExistingDirectory() throws Exception
     {
-	final Path src = write("src.txt", "hello");
-	final Path destDir = Files.createDirectory(tempDir.resolve("dest"));
+	final Path
+	src = write("src.txt", "hello"),
+	destDir = Files.createDirectory(tempDir.resolve("dest"));
 
 	new Copy(params(List.of(src), destDir)).run();
 

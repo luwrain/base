@@ -5,18 +5,14 @@ plugins {
 }
 
 dependencies {
+  annotationProcessor libraries.autoService
+  annotationProcessor project(':luwrain-base')
   implementation libraries.base
   implementation libraries.apacheBase
   implementation libraries.graalvm
-  annotationProcessor libraries.autoService
   implementation (project(':luwrain-base'))
   implementation (project(':luwrain'))
   implementation (project(':luwrain-io'))
-  implementation (project(':luwrain-pim'))
-  annotationProcessor (project(':luwrain-base'))
-  testImplementation libraries.junit
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    implementation (project(':luwrain-pim'))
+    testImplementation libraries.junit
 }
