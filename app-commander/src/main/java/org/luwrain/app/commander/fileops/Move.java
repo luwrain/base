@@ -44,7 +44,7 @@ public final class Move extends CopyingBase
     {
 	requireNonNull(dest, "dest");
 	if (!isDirectory(dest, true))
-	    throw new java.nio.file.FileSystemException(dest.toString(), null, MOVE_DEST_NOT_DIR);
+ 	    throw new java.nio.file.FileSystemException(dest.toString(), null, MOVE_DEST_NOT_DIR);
 	for(Path p: toMove)
 	{
 	    checkInterrupted();

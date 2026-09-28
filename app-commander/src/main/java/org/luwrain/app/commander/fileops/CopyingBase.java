@@ -36,7 +36,6 @@ abstract class CopyingBase extends Operation
 
     protected void copy(CopyMoveParams params) throws IOException
     {
-	requireNonNull(params, "params");
 	validateParams(params);
 	resetProgress();
 	for(Path f: params.getSource())
@@ -165,15 +164,11 @@ abstract class CopyingBase extends Operation
 
     private void copyFileToDir(Path file, Path destDir) throws IOException
     {
-	requireNonNull(file, "file");
-	requireNonNull(destDir, "destDir");
 	copySingleFile(file, destDir.resolve(file.getFileName()));
     }
 
     private void copySingleFile(Path fromFile, Path toFile) throws IOException
     {
-	requireNonNull(fromFile, "fromFile");
-	requireNonNull(toFile, "toFile");
 	checkInterrupted();
 	if (exists(toFile, false))
 	{
@@ -261,7 +256,7 @@ abstract class CopyingBase extends Operation
 
     static private void validateParams(CopyMoveParams params)
     {
-	requireNonNull(params, "params");
+		requireNonNull(params, "params");
 	requireNonNull(params.getSource(), "source");
 	requireNonNull(params.getDest(), "dest");
 	if (params.getSource().isEmpty())
