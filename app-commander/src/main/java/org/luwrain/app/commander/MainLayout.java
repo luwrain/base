@@ -26,6 +26,8 @@ final class MainLayout extends LayoutBase
     private final App app;
     final PanelArea leftPanel, rightPanel;
     private final FileActions fileActions;
+    private SecondArea secondArea;
+    private Side secondAreaFor;
 
     MainLayout(App app)
     {
@@ -71,7 +73,7 @@ final class MainLayout extends LayoutBase
 		    return super.onSystemEvent(event);
 		}
 	    };
-	setAreaLayout(AreaLayout.LEFT_RIGHT, leftPanel, getPanelActions(Side.LEFT), rightPanel, getPanelActions(Side.RIGHT));
+	setDefaultLayout();
 
 	if (app.startFrom != null)
 	{
@@ -83,6 +85,25 @@ final class MainLayout extends LayoutBase
 	    	    leftPanel.openInitial(location);
 	    rightPanel.openInitial(location);
 	}
+    }
+
+    private void setDefaultLayout()
+    {
+		setAreaLayout(AreaLayout.LEFT_RIGHT, leftPanel, getPanelActions(Side.LEFT), rightPanel, getPanelActions(Side.RIGHT));
+    }
+
+    void openSecondArea(Side side, SecondArea secondArea)
+    {
+	switch(side)
+	{
+	case LEFT:
+	    setAreaLayout(AreaLayout.LEFT_RIGHT, leftPanel, getPanelActions(Side.LEFT), secondArea, null);
+			break;
+	case RIGHT:
+	    setAreaLayout(AreaLayout.LEFT_RIGHT, secondArea, null, rightPanel, getPanelActions(Side.RIGHT));
+		break;
+	}
+	app.setAreaLayout(this);
     }
 
     private Actions getPanelActions(Side side)
@@ -105,6 +126,7 @@ final class MainLayout extends LayoutBase
 		       action("delete", app.getStrings().actionDelete(), new InputEvent(InputEvent.Special.F8), ()->fileActions.localDelete(panelArea)),
 		       //		       action("run", "Выполнить", new InputEvent(Special.F4, EnumSet.of(Modifiers.CONTROL)), ()->fileActions.localRun(panelArea)),
 		       action("run", "Выполнить", new InputEvent('`'), ()->fileActions.localRun(panelArea)),
+		       action("dir-info", "FIXME:dir-info", new InputEvent('d', EnumSet.of(InputEvent.Modifiers.CONTROL)), () -> actDirectoryInfo(side, panelArea)),
 		       action("left-panel-volume", app.getStrings().leftPanelVolume(), new InputEvent(InputEvent.Special.F1, EnumSet.of(InputEvent.Modifiers.ALT)), ()->actPanelVolume(leftPanel)),
 		       action("right-panel-volume", app.getStrings().rightPanelVolume(), new InputEvent(Special.F2, EnumSet.of(Modifiers.ALT)), ()->actPanelVolume(rightPanel)),
 		       //action("zip", app.getStrings().actionZip(), ()->fileActions.zipCompress(panelArea)),
@@ -152,6 +174,14 @@ final class MainLayout extends LayoutBase
 	    app.getLuwrain().crash(e);
 	    return PanelArea.ClickHandler.Result.REJECTED;
 	}
+    }
+
+    private boolean actDirectoryInfo(Side side, PanelArea panelArea)
+    {
+	final var secondArea = new DirectoryInfoSecondArea(app, getControlContext());
+	openSecondArea(side, secondArea);
+	setActiveArea(secondArea);
+	return true;
     }
 
     private boolean actPanelVolume(PanelArea panelArea)
