@@ -109,6 +109,7 @@ class PanelArea extends CommanderArea<FileObject>
 	}
     }
 
+
     void showHidden()
     {
 	setCommanderFilter(new AllEntriesFilter<>());
@@ -160,7 +161,6 @@ class PanelArea extends CommanderArea<FileObject>
 
             static Path[] asPath(FileObject[] fileObjects)
     {
-	NullCheck.notNullItems(fileObjects, "fileObjects");
 	final List<Path> res = new ArrayList<>();
 	for(FileObject f: fileObjects)
 	{
@@ -173,7 +173,6 @@ class PanelArea extends CommanderArea<FileObject>
 
         static File[] asFile(FileObject[] fileObjects)
     {
-	NullCheck.notNullItems(fileObjects, "fileObjects");
 	final List<File> res = new ArrayList<>();
 	for(FileObject f: fileObjects)
 	{

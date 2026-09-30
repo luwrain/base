@@ -54,6 +54,9 @@ public interface Strings
     String actionMove();
     String actionSize();
     String actionZip();
+    String actionRun();
+    String actionDirectoryInfo();
+    String actionSearch();
     String dirMayNotBePreviewed();
     String enteredPathExists(String path);
     String actionCopyToClipboard();
@@ -67,4 +70,6 @@ public interface Strings
     String rightPanelVolumePopupName();
     String leftPanelVolume();
     String rightPanelVolume();
+
+    String directoryInfoAreaName();
 }

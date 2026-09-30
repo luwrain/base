@@ -118,6 +118,7 @@ final class MainLayout extends LayoutBase
 	    panelArea = rightPanel;
 	    oppositePanelArea = leftPanel;
 	}
+	final var s = app.getStrings();
 	return actions(
 		       app.hooks.panelActions(this, panelArea, oppositePanelArea),
 		       action("copy", app.getStrings().actionCopy(), new InputEvent(InputEvent.Special.F5), ()->fileActions.localCopy(panelArea, oppositePanelArea)),
@@ -126,7 +127,7 @@ final class MainLayout extends LayoutBase
 		       action("delete", app.getStrings().actionDelete(), new InputEvent(InputEvent.Special.F8), ()->fileActions.localDelete(panelArea)),
 		       //		       action("run", "Выполнить", new InputEvent(Special.F4, EnumSet.of(Modifiers.CONTROL)), ()->fileActions.localRun(panelArea)),
 		       action("run", "Выполнить", new InputEvent('`'), ()->fileActions.localRun(panelArea)),
-		       action("dir-info", "FIXME:dir-info", new InputEvent('d', EnumSet.of(InputEvent.Modifiers.CONTROL)), () -> actDirectoryInfo(side, panelArea)),
+		       action("dir-info", s.actionDirectoryInfo(), new InputEvent('d', EnumSet.of(InputEvent.Modifiers.CONTROL)), () -> actDirectoryInfo(side, panelArea)),
 		       action("left-panel-volume", app.getStrings().leftPanelVolume(), new InputEvent(InputEvent.Special.F1, EnumSet.of(InputEvent.Modifiers.ALT)), ()->actPanelVolume(leftPanel)),
 		       action("right-panel-volume", app.getStrings().rightPanelVolume(), new InputEvent(Special.F2, EnumSet.of(Modifiers.ALT)), ()->actPanelVolume(rightPanel)),
 		       //action("zip", app.getStrings().actionZip(), ()->fileActions.zipCompress(panelArea)),
@@ -178,7 +179,13 @@ final class MainLayout extends LayoutBase
 
     private boolean actDirectoryInfo(Side side, PanelArea panelArea)
     {
-	final var secondArea = new DirectoryInfoSecondArea(app, getControlContext());
+	if (!panelArea.isLocalDir())
+	    return false;
+	final var secondArea = new DirectoryInfoSecondArea(app, getControlContext(), PanelArea.asPath(panelArea.opened()), () -> {
+				setDefaultLayout();
+				app.setAreaLayout(this);
+		setActiveArea(panelArea);
+	});
 	openSecondArea(side, secondArea);
 	setActiveArea(secondArea);
 	return true;

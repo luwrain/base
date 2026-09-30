@@ -7,4 +7,5 @@ import org.luwrain.core.*;
 
 interface SecondArea extends Area
 {
+    boolean cancel();
 }

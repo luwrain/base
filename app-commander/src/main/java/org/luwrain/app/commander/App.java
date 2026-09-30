@@ -120,8 +120,19 @@ public final class App extends AppBase<Strings>
 
     @Override public boolean onEscape()
     {
-	closeApp();
+		closeApp();
 	return true;
+    }
+
+	@Override public boolean onInputEvent(Area area, InputEvent event, Runnable closing)
+    {
+		    if (event.isSpecial() && !event.isModified() && event.getSpecial() == InputEvent.Special.ESCAPE)
+		    {
+	final var realArea = mainLayout.unwrapArea(area);
+	if (realArea != null && realArea instanceof SecondArea secondArea)
+	    return secondArea.cancel();
+		    }
+	return super.onInputEvent(area, event, closing);
     }
 
     @Override public void closeApp()
