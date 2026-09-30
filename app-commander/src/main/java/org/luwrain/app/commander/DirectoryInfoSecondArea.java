@@ -22,6 +22,7 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
     private final List<String> lines = new ArrayList<>();
         private final Thread worker;
     private volatile boolean cancelled = false;
+    private long lastUpdated = System.currentTimeMillis();
     
     DirectoryInfoSecondArea(App app, ControlContext controlContext, Path path, Runnable closing)
     {
@@ -29,13 +30,15 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
 	this.app = app;
 	this.path = path;
 	this.closing = closing;
-	        this.worker = new Thread(this::scanLoop, "dir-info-scanner");
+	        this.worker = new Thread(this::collectInfo, "commander-dir-info");
         this.worker.setDaemon(true);
         this.worker.start();
     }
 
     @Override public boolean cancel()
     {
+	cancelled = true;
+	worker.interrupt();
 	closing.run();
 	return true;
     }
@@ -56,91 +59,56 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
     }
 
     
-    private void scanLoop()
+    private void collectInfo()
     {
-        while (!cancelled)
-        {
-            List<String> snapshot = collectInfo();
-            lines.clear();
-            lines.addAll(snapshot);
-
-            try
-            {
-                Thread.sleep(UPDATE_INTERVAL_MILLIS);
-            }
-            catch (InterruptedException e)
-            {
-                Thread.currentThread().interrupt();
-                return;
-            }
-        }
-    }
-
-    private List<String> collectInfo()
-    {
-        List<String> result = new ArrayList<>();
-
         if (!Files.isDirectory(path))
-        {
-            result.add("Directory: " + path);
-            result.add("Error: path is not a directory");
-            return result;
-        }
-
-        ScanStats stats = new ScanStats();
-
+	    return;
+	        final ScanStats stats = new ScanStats();
         try
         {
             Files.walkFileTree(path, new SimpleFileVisitor<Path>()
             {
-                @Override
-                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+                @Override public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                 {
                     stats.directories++;
                     stats.entries++;
-                    return FileVisitResult.CONTINUE;
+		    updateLines(stats);
+                    return cancelled ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
                 }
 
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                 {
                     stats.entries++;
-
                     if (Files.isSymbolicLink(file))
                     {
                         stats.symbolicLinks++;
-                        return FileVisitResult.CONTINUE;
+			updateLines(stats);
+                    return cancelled ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
                     }
-
                     if (Files.isRegularFile(file, LinkOption.NOFOLLOW_LINKS))
                     {
                         stats.files++;
-
                         long size = 0;
-                        try
-                        {
+                        try {
                             size = Files.size(file);
                         }
                         catch (IOException e)
                         {
                             stats.incomplete = true;
                         }
-
                         stats.totalSize += size;
                         if (size == 0)
-                        {
                             stats.emptyFiles++;
-                        }
                     }
-
-                    return FileVisitResult.CONTINUE;
+		    updateLines(stats);
+                    return cancelled ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
                 }
 
-                @Override
-                public FileVisitResult visitFileFailed(Path file, IOException exc)
+                @Override public FileVisitResult visitFileFailed(Path file, IOException exc)
                 {
                     stats.incomplete = true;
-                    return FileVisitResult.CONTINUE;
+		    updateLines(stats);
+                    return cancelled ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
                 }
             });
         }
@@ -148,9 +116,22 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
         {
             stats.incomplete = true;
         }
+	fillLines(stats);
+    }
 
-        double averageSize = stats.files == 0 ? 0.0 : (double) stats.totalSize / stats.files;
+    private void updateLines(ScanStats stats)
+    {
+	final long currentTime = System.currentTimeMillis();
+	if (currentTime < lastUpdated + UPDATE_INTERVAL_MILLIS)
+	    return;
+	lastUpdated = currentTime;
+	fillLines(stats);
+    }
 
+    private void fillLines(ScanStats stats)
+    {
+	final var result = new ArrayList<String>();
+	        double averageSize = stats.files == 0 ? 0.0 : (double) stats.totalSize / stats.files;
         result.add("Directory: " + path);
         result.add("Files: " + stats.files);
         result.add("Total size: " + stats.totalSize + " bytes");
@@ -159,7 +140,6 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
         result.add("Empty files: " + stats.emptyFiles);
         result.add("Directories: " + stats.directories);
         result.add("Total entries: " + stats.entries);
-
         try
         {
             FileStore store = Files.getFileStore(path);
@@ -167,7 +147,6 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
             long freeSpace = store.getUsableSpace();
             long usedSpace = totalSpace - freeSpace;
             double share = usedSpace == 0 ? 0.0 : (stats.totalSize * 100.0) / usedSpace;
-
             result.add("Disk total space: " + totalSpace + " bytes");
             result.add("Disk free space: " + freeSpace + " bytes");
             result.add("Directory share of used space: " + String.format(Locale.ROOT, "%.2f%%", share));
@@ -177,13 +156,13 @@ final class DirectoryInfoSecondArea extends NavigationArea implements SecondArea
             stats.incomplete = true;
             result.add("Disk information: unavailable");
         }
-
         if (stats.incomplete)
         {
             result.add("Warning: information is incomplete because some directories could not be read");
         }
-
-        return result;
+	lines.clear();
+	lines.addAll(result);
+	context.onAreaNewContent(this);
     }
 
     private static final class ScanStats
